@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>QLNCKH.API</name>
+    </assembly>
+    <members>
+        <member name="T:QLNCKH.API.Controllers.AccountsController">
+            <summary>
+            Quản lý tài khoản
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.AccountsController.#ctor(Microsoft.AspNetCore.Identity.UserManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole})">
+            <summary>
+            Khởi tạo
+            </summary>
+            <param name="userManager"></param>
+            <param name="signInManager"></param>
+            <param name="roleManager"></param>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.AccountsController.CreateAccount(QLNCKH.Common.Dictionary.Account)">
+            <summary>
+            Tạo tài khoản mới cho user. Đăng nhập dưới quyền admin mới làm được
+            </summary>
+            <param name="account">Thông tin TK</param>
+            <returns></returns>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.AccountsController.Login(QLNCKH.Common.Dictionary.LoginParamDto)">
+            <summary>
+            Login
+            </summary>
+            <param name="loginParamDto">Tài khoản để Login</param>
+            <returns></returns>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.AccountsController.Logout">
+            <summary>
+            API Đăng xuất
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:QLNCKH.API.Controllers.BaseController`1">
+            <summary>
+            Controller dung cung
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:QLNCKH.API.Controllers.BaseController`1._baseBL">
+            <summary>
+            Biến baseBL
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.BaseController`1.#ctor(QLNCKH.BL.Interface.IBaseBL{`0})">
+            <summary>
+            Contructor
+            </summary>
+            <param name="baseBL"></param>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.BaseController`1.GetAll">
+            <summary>
+            Lấy tất cả danh sách đối tượng
+            </summary>
+            <returns></returns>
+            created by vtthien 08.03.2021
+        </member>
+        <member name="M:QLNCKH.API.Controllers.BaseController`1.GetByID(System.Guid)">
+            <summary>
+            Lấy thông tin theo định danh
+            </summary>
+            <param name="id">Định danh đối tượng cần lấy</param>
+            <returns>Đối tượng có id trùng với id truyền lên</returns>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.BaseController`1.GetBySKU(System.String)">
+            <summary>
+            Lấy thông tin theo code
+            </summary>
+            <param name="code">Mã đối tượng cần lấy</param>
+            <returns>Đối tượng có sku trùng với sku nhập vào</returns>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.BaseController`1.Post(`0)">
+            <summary>
+            Thêm mới bản ghi
+            </summary>
+            <param name="entity">Đối tượng cần thêm mới</param>
+            <returns></returns>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.BaseController`1.Put(System.Guid,`0)">
+            <summary>
+            Cập nhật thông tin
+            </summary>
+            <param name="id">Định danh đối tượng</param>
+            <param name="entity">Đối tượng thay đổi</param>
+            <returns></returns>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.BaseController`1.Delete(System.Guid)">
+            <summary>
+            Xoá thông tin
+            </summary>
+            <param name="id">Định danh thông tin cần xoá</param>
+            <returns></returns>
+        </member>
+        <member name="T:QLNCKH.API.Controllers.ResearchTopicController">
+            <summary>
+            API Đề tài
+            </summary>
+        </member>
+        <member name="F:QLNCKH.API.Controllers.ResearchTopicController._researchTopicBL">
+            <summary>
+            Biến productBL gọi lên tầng Bussiness xử lý nghiệp vụ hàng hoá
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.ResearchTopic},QLNCKH.BL.Interface.IResearchTopicBL)">
+            <summary>
+            Controller đề tài kế thừa từ Base
+            </summary>
+            <param name="baseBL"></param>
+            <param name="researchTopicBL"></param>
+        </member>
+        <member name="F:QLNCKH.API.Controllers.UserController._userBL">
+            <summary>
+            Biến productBL gọi lên tầng Bussiness xử lý nghiệp vụ hàng hoá
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.UserController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.User},QLNCKH.BL.Interface.IUserBL)">
+            <summary>
+            Controller
+            </summary>
+            <param name="baseBL"></param>
+            <param name="productBL"></param>
+        </member>
+        <member name="T:QLNCKH.API.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:QLNCKH.API.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:QLNCKH.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>
