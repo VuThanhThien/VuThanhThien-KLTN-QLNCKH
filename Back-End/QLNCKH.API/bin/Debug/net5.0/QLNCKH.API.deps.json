@@ -913,7 +913,8 @@
       "QLNCKH.BL/1.0.0": {
         "dependencies": {
           "QLNCKH.Common": "1.0.0",
-          "QLNCKH.DL": "1.0.0"
+          "QLNCKH.DL": "1.0.0",
+          "System.IdentityModel.Tokens.Jwt": "6.10.0"
         },
         "runtime": {
           "QLNCKH.BL.dll": {}

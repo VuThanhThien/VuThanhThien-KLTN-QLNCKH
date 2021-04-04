@@ -1,19 +1,31 @@
 import App from './App'
-import LandingPage from './components/marketing/LandingPage'
 import About from './components/marketing/About'
 import Login from './components/auth/Login'
 import Logout from './components/auth/Logout'
 import Register from './components/auth/Register'
-
+import GridTopic from './components/grid/GridTopic.vue'
+import GridAuthor from './components/grid/GridAuthor.vue'
 const routes = [
+  
   {
-    path: '/',
-    name: 'home',
-    component: LandingPage
+    path: '/ListTopic',
+    name: 'ListTopic',
+    component: GridTopic,
+    meta: {
+      requiresAuth: false,
+    }
   },
   {
-    path: '/todo',
-    name: 'todo',
+    path: '/ListAuthor',
+    name: 'ListAuthor',
+    component: GridAuthor,
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
+    path: '/Home',
+    name: 'Home',
     component: App,
     meta: {
       requiresAuth: true,

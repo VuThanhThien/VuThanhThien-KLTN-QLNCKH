@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1X/ZURkQh1YPsT7RzZfEfTb018hrWfoY8MDvLW9TUqXMWVLFNwi/6U9fPW/FWfA8ATdrN+avaZ9hYye/IZ6i/Q==",
+  "dgSpecHash": "5TI1TAbuwL3LZCU807M91HCmMS+1a7eI00W/E9lYnim+w42d6gIYNGmyJh+swQp0V+FwJlzHpRLoBfVhikKPJA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

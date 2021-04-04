@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {
+    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
         "projectName": "QLNCKH.Common",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",

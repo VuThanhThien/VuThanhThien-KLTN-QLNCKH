@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "17Ozi76FshSmuPUxJ4D2v1m9/g+wJQAR+L6Q06kLAIG5JXS0x8/F+uNDJ5sSXfBFuoSSuouq27SrocfJCk8rkg==",
+  "dgSpecHash": "9jKhAiMBjQhpJ0gnlRW3CpAEQBcxF9Wd/470r3lNxndB4DiUd/wq+sC5POVnhRCdRbUTzP+gxitOhGu7uLEADQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.API\\QLNCKH.API.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.API\\QLNCKH.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\dapper\\2.0.78\\dapper.2.0.78.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",

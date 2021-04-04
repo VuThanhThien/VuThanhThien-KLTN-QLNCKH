@@ -1,51 +1,39 @@
 <template>
-  <div>
-    <div class="navBar">
-      <DxButton
-        :width="120"
-        text="Đề tài"
-        type="default"
-        styling-mode="contained"
-      />
-      <DxButton
-        :width="120"
-        text="Tác giả"
-        type="default"
-        styling-mode="contained"
-      />
-      <DxButton
-        :width="120"
-        text="Thống kê"
-        type="default"
-        styling-mode="contained"
-      />
-    </div>
+  <div id="app" class="container">
+    <div class="bodyApp">
+  </div>
   </div>
 </template>
 
 <script>
-import DxButton from "devextreme-vue/button";
+import GridTopic from './components/grid/GridTopic.vue'
 
 export default {
-  name: 'todo-list',
+  name: 'App',
   components: {
-    DxButton,
+    GridTopic    
   },
-  data() {
-    return {
-    }
-  },
-  created() {
-  },
-  computed: {
-  },
-  methods: {
-  }
 }
 </script>
 
 <style lang="scss">
+
+.container {
+  margin: 0 auto;
+}
+
+.logo {
+  display: block;
+  margin: 20px auto;
+  height: 75px;
+}
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
+
+.bodyApp{
+  height: calc(100vh - 63px);
+  position: relative;
+  display: flex;
+}
 
 .todo-input {
   width: 100%;

@@ -11,7 +11,6 @@ namespace QLNCKH.BL.Dictionary
         {
         }
 
-        private readonly IUserDL _userDL;
 
     }
 }

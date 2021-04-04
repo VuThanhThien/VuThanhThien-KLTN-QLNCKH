@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using QLNCKH.BL.Base;
+using QLNCKH.BL.Interface;
 using QLNCKH.Common.Dictionary;
 using QLNCKH.Common.IdentityApplication;
+using QLNCKH.Common.Model;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -28,54 +31,87 @@ namespace QLNCKH.API.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-
+        protected readonly IBaseBL<UserInfo> _baseBL;
         /// <summary>
         /// Khởi tạo
         /// </summary>
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="roleManager"></param>
-        public AccountsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public AccountsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IBaseBL<UserInfo> baseBL)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _baseBL = baseBL;
         }
+
+       
+
+        
 
         // POST api/<AccountsController>
         //TODO tạo mới account là tạo mới cả user
         /// <summary>
         /// Tạo tài khoản mới cho user. Đăng nhập dưới quyền admin mới làm được
         /// </summary>
-        /// <param name="account">Thông tin TK</param>
+        /// <param name="accountDto">Thông tin TK</param>
         /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateAccount([FromBody] Account account)
+        public async Task<IActionResult> CreateAccount([FromBody] ParamRegisterDto accountDto)
         {
-            var user2 = new ApplicationUser()
+            var user = new ApplicationUser()
             {
-                UserName = account.UserName,
-                FullName = account.FullName,
-                Email = account.Email,
+                UserName = accountDto.UserName,
+                FullName = accountDto.FullName,
+                Email = accountDto.Email,
                 EmailConfirmed = true,
             };
 
-            var isCreated = await _userManager.CreateAsync(user2, account.Password);
+            // check confirm password và password
+            if (accountDto.Password != accountDto.ConfirmPassword)
+                return BadRequest("Xác thực mật khẩu không trùng khớp");
 
-            if (isCreated.Succeeded)
+            // todo: nghiệp vụ check trùng
+
+
+            // tạo mới một đối tượng identity
+            var isCreated = await _userManager.CreateAsync(user, accountDto.Password);
+
+            if (!isCreated.Succeeded)
+                return BadRequest("Tạo mới thất bại");
+
+            // nếu tạo mới thành công => thêm quyền "User" cho người dùng này
+            var result = await _userManager.AddToRoleAsync(user, "User");
+            if (!result.Succeeded)
+                return BadRequest("Tạo mới thất bại");
+
+            user = await _userManager.FindByNameAsync(accountDto.UserName);
+
+            // tạo mới thông tin người dùng trong bảng UserInfo
+            var userInfo = new UserInfo(Guid.Parse(user.Id));
+            userInfo.Position = accountDto.Position;
+            userInfo.UserCode = accountDto.UserCode;
+            userInfo.FullName = accountDto.FullName;
+            userInfo.Address = accountDto.Address;
+            userInfo.DateOfBirth = accountDto.DateOfBirth;
+            userInfo.Email = accountDto.Email;
+            userInfo.Department = accountDto.Department;
+            userInfo.PhoneNumber = accountDto.PhoneNumber;
+            userInfo.IdentityCode = accountDto.IdentityCode;
+            userInfo.BusinessAddress = accountDto.BusinessAddress;
+            // gọi lên tầng BL để insert vào userinfo
+            var insertResult = _baseBL.Insert(userInfo);
+
+            //mapping dữ liệu trả về
+            var response = new ResponseAccountDto()
             {
-                var result1 = await _userManager.AddToRoleAsync(user2, "User");
-
-                if (result1.Succeeded)
-                {
-                    user2 = await _userManager.FindByNameAsync(account.UserName);
-
-                    return Ok(user2);
-                }
-            }
-
-            return BadRequest();
+                UserID = userInfo.UserID,
+                Email = user.Email,
+                Position = userInfo.Position
+            };
+            return Ok(response);
         }
 
         /// <summary>
@@ -84,7 +120,7 @@ namespace QLNCKH.API.Controllers
         /// <param name="loginParamDto">Tài khoản để Login</param>
         /// <returns></returns>
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginParamDto loginParamDto)
+        public async Task<IActionResult> Login([FromBody] ParamLoginDto loginParamDto)
         {
             // tìm thông tin user theo userName
             var user = await _userManager.FindByNameAsync(loginParamDto.UserName);
@@ -103,32 +139,12 @@ namespace QLNCKH.API.Controllers
             // lấy role của người dùng
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
 
-            foreach (var userRole in userRoles)
-            {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            }
-
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ByYM000OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SNM"));
-
-            var token = new JwtSecurityToken(
-                issuer: "http://localhost:61955",
-                audience: "http://localhost:4200",
-                expires: DateTime.Now.AddHours(3),
-                claims: authClaims,
-                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                );
+            // tạo một đối tượng userinfo -> query để lấy thông tin
 
             return Ok(new
             {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo,
+                token = JWTHelper.GenAccessToken(user, userRoles),
                 role = userRoles
             });
 

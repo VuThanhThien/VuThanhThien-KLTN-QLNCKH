@@ -9,7 +9,7 @@
             Quản lý tài khoản
             </summary>
         </member>
-        <member name="M:QLNCKH.API.Controllers.AccountsController.#ctor(Microsoft.AspNetCore.Identity.UserManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole})">
+        <member name="M:QLNCKH.API.Controllers.AccountsController.#ctor(Microsoft.AspNetCore.Identity.UserManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.UserInfo})">
             <summary>
             Khởi tạo
             </summary>
@@ -17,14 +17,14 @@
             <param name="signInManager"></param>
             <param name="roleManager"></param>
         </member>
-        <member name="M:QLNCKH.API.Controllers.AccountsController.CreateAccount(QLNCKH.Common.Dictionary.Account)">
+        <member name="M:QLNCKH.API.Controllers.AccountsController.CreateAccount(QLNCKH.Common.Model.ParamRegisterDto)">
             <summary>
             Tạo tài khoản mới cho user. Đăng nhập dưới quyền admin mới làm được
             </summary>
-            <param name="account">Thông tin TK</param>
+            <param name="accountDto">Thông tin TK</param>
             <returns></returns>
         </member>
-        <member name="M:QLNCKH.API.Controllers.AccountsController.Login(QLNCKH.Common.Dictionary.LoginParamDto)">
+        <member name="M:QLNCKH.API.Controllers.AccountsController.Login(QLNCKH.Common.Model.ParamLoginDto)">
             <summary>
             Login
             </summary>
@@ -114,6 +114,11 @@
             <param name="baseBL"></param>
             <param name="researchTopicBL"></param>
         </member>
+        <member name="T:QLNCKH.API.Controllers.UserController">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="F:QLNCKH.API.Controllers.UserController._userBL">
             <summary>
             Biến productBL gọi lên tầng Bussiness xử lý nghiệp vụ hàng hoá
@@ -121,10 +126,10 @@
         </member>
         <member name="M:QLNCKH.API.Controllers.UserController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.User},QLNCKH.BL.Interface.IUserBL)">
             <summary>
-            Controller
+            
             </summary>
             <param name="baseBL"></param>
-            <param name="productBL"></param>
+            <param name="userBL"></param>
         </member>
         <member name="T:QLNCKH.API.Startup">
             <summary>

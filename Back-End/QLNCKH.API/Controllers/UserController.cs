@@ -1,10 +1,14 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QLNCKH.BL.Interface;
 using QLNCKH.Common.Dictionary;
 
 namespace QLNCKH.API.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : BaseController<User>
@@ -15,13 +19,14 @@ namespace QLNCKH.API.Controllers
         private readonly IUserBL _userBL;
 
         /// <summary>
-        /// Controller
+        /// 
         /// </summary>
         /// <param name="baseBL"></param>
-        /// <param name="productBL"></param>
+        /// <param name="userBL"></param>
         public UserController(IBaseBL<User> baseBL, IUserBL userBL) : base(baseBL)
         {
             _userBL = userBL;
         }
+
     }
 }

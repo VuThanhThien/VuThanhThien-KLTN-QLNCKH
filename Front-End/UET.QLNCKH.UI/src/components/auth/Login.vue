@@ -37,7 +37,7 @@ export default {
         Password: this.Password,
       })
         .then(response => {
-          this.$router.push({ name: 'todo' })
+          this.$router.push({ name: 'Home' })
         })
     }
   }

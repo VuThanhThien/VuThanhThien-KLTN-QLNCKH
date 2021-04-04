@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.BL\\QLNCKH.BL.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.BL\\QLNCKH.BL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.BL\\QLNCKH.BL.csproj": {
+    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.BL\\QLNCKH.BL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.BL\\QLNCKH.BL.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.BL\\QLNCKH.BL.csproj",
         "projectName": "QLNCKH.BL",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.BL\\QLNCKH.BL.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.BL\\QLNCKH.BL.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.BL\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.BL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,11 +28,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj"
+              "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj"
               },
-              "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj"
+              "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj"
               }
             }
           }
@@ -46,6 +46,12 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.10.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -65,14 +71,14 @@
         }
       }
     },
-    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {
+    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
         "projectName": "QLNCKH.Common",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -139,14 +145,14 @@
         }
       }
     },
-    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj": {
+    "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj",
         "projectName": "QLNCKH.DL",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.DL\\QLNCKH.DL.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.DL\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.DL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -163,8 +169,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj"
+              "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Desktop\\UET.QLNCKH.VTT\\Project\\VuThanhThien-KLTN-QLNCKH\\Back-End\\QLNCKH.Common\\QLNCKH.Common.csproj"
               }
             }
           }
