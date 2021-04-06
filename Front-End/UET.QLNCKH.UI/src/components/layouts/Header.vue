@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <ul class="nav">
+      <li><a>{{this.currentName}}</a></li>
       <li><router-link :to="{ name: 'Home' }">Home</router-link></li>
       <li><router-link :to="{ name: 'about' }">About</router-link></li>
       <li v-if="!loggedIn">
@@ -30,6 +31,14 @@ export default {
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
+    currentName(){
+      return this.$store.getters.currentName;
+    }
+  },
+  data(){
+    return{
+      
+    }
   },
 };
 </script>

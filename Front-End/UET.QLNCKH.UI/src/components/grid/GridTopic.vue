@@ -1,38 +1,23 @@
 <template>
   <div class="GridTopic">
-    <DxDataGrid :data-source="sales" :show-borders="true" key-expr="orderId">
-      <DxEditing
-        mode="popup"
-        :allow-updating="true"
-        :allow-adding="true"
-        :allow-deleting="true"
-        v-if="currentRole == 'Admin'"
-      />
+    <DxDataGrid :data-source="sales" :show-borders="true" key-expr="orderId" @selection-changed="selectSale">
       <DxColumn :width="90" data-field="orderId" caption="Order ID" />
       <DxColumn data-field="city" />
       <DxColumn :width="180" data-field="country" />
       <DxColumn data-field="region" />
       <DxColumn data-field="date" data-type="date" />
       <DxColumn :width="90" data-field="amount" format="currency" />
-      <DxColumn :visible="false" data-field="Notes">
-        <DxFormItem
-          :col-span="2"
-          :editor-options="{ height: 100 }"
-          editor-type="dxTextArea"
-        />
-      </DxColumn>
       <DxPaging :page-size="15" />
-      <DxSelection
-        :select-all-mode="allMode"
-        :show-check-boxes-mode="checkBoxesMode"
-        mode="multiple"
-      />
+      <DxSelection mode="single" />
       <DxFilterRow :visible="true" />
     </DxDataGrid>
+    <p id="selected-employee" v-if="selectedSale">
+      Selected : {{ selectedSale.city }}
+    </p>
   </div>
 </template>
 <script>
-import { sales } from "../../data.js";
+import { sales } from "../../../modules/data.js";
 import { DxSelectBox } from "devextreme-vue/select-box";
 import {
   DxDataGrid,
@@ -60,11 +45,21 @@ export default {
       return this.$store.getters.currentRole;
     },
   },
+  methods:{
+    selectSale(e) {
+      e.component.byKey(e.currentSelectedRowKeys[0]).done((sale) => {
+        if (sale) {
+          this.selectedSale = sale;
+        }
+      });
+    },
+  },
   data() {
     return {
       allMode: "page",
       checkBoxesMode: "always",
       sales,
+      selectedSale: undefined,
     };
   },
 };

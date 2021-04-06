@@ -1,10 +1,10 @@
-import App from './App'
-import About from './components/marketing/About'
-import Login from './components/auth/Login'
-import Logout from './components/auth/Logout'
-import Register from './components/auth/Register'
-import GridTopic from './components/grid/GridTopic.vue'
-import GridAuthor from './components/grid/GridAuthor.vue'
+import App from '@/App'
+import About from '@/components/marketing/About'
+import Login from '@/components/auth/Login'
+import Logout from '@/components/auth/Logout'
+import Register from '@/components/auth/Register'
+import GridTopic from '@/components/grid/GridTopic.vue'
+import GridAuthor from '@/components/grid/GridAuthor.vue'
 const routes = [
   
   {

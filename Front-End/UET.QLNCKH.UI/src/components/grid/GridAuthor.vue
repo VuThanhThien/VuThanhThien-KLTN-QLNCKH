@@ -39,13 +39,7 @@
       <DxSummary>
         <DxGroupItem summary-type="count" />
       </DxSummary>
-      <DxEditing
-        mode="popup"
-        :allow-updating="true"
-        :allow-adding="true"
-        :allow-deleting="true"
-        v-if="currentRole == 'Admin'"
-      />
+      <DxPaging :page-size="15" />
       <DxExport :enabled="true" />
     </DxDataGrid>
     <p id="selected-employee" v-if="selectedEmployee">
@@ -67,11 +61,11 @@ import {
   DxSelection,
   DxSummary,
   DxGroupItem,
-  DxEditing,
   DxMasterDetail,
   DxExport,
+  DxPaging
 } from "devextreme-vue/data-grid";
-import service from "../../employees.service";
+import service from "../../../modules/employees.service";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
@@ -89,9 +83,9 @@ export default {
     DxSelection,
     DxSummary,
     DxGroupItem,
-    DxEditing,
     DxMasterDetail,
     DxExport,
+    DxPaging
   },
   data() {
     return {
@@ -100,11 +94,13 @@ export default {
     };
   },
   computed: {
+    /**Role hiện tại */
     currentRole() {
       return this.$store.getters.currentRole;
     },
   },
   methods: {
+    /**Chọn dòng */
     selectEmployee(e) {
       e.component.byKey(e.currentSelectedRowKeys[0]).done((employee) => {
         if (employee) {
@@ -112,6 +108,7 @@ export default {
         }
       });
     },
+    /**Xuất file */
     exportGrid(e) {
       const workbook = new Workbook();
       const worksheet = workbook.addWorksheet("Main sheet");

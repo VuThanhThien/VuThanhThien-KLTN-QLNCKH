@@ -3,8 +3,8 @@ import 'devextreme/dist/css/dx.light.css';
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import routes from './routes'
-import Master from './components/layouts/Master'
+import routes from './routers/routes'
+import Header from './components/layouts/Header'
 import { store } from './store/store'
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
@@ -46,6 +46,6 @@ new Vue({
   el: '#app',
   router: router,
   store: store,
-  components: { Master },
-  template: '<Master/>'
+  components: { Header },
+  template: '<Header/>'
 })
