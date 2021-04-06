@@ -63,7 +63,7 @@ namespace QLNCKH.API.Controllers
         /// <param name="code">Mã đối tượng cần lấy</param>
         /// <returns>Đối tượng có sku trùng với sku nhập vào</returns>
         [Authorize]
-        [HttpGet("TopicByCode/{code}")]
+        [HttpGet("ByCode/{code}")]
         public virtual IActionResult GetBySKU([FromRoute] string code)
         {
             var result = _baseBL.GetByCode(code);

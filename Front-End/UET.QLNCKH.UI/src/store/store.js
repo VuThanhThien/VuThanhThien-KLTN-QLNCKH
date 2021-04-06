@@ -8,19 +8,25 @@ axios.defaults.baseURL = 'https://localhost:44323/api/Accounts'
 export const store = new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || null,
+    role: localStorage.getItem('role') || null,
   },
   getters: {
     loggedIn(state) {
       return state.token !== null
     },
+    currentRole(state) {
+      return state.role
+    }
   },
   mutations: {
     
-    retrieveToken(state, token) {
-      state.token = token
+    retrieveToken(state, data) {
+      state.token = data.token,
+      state.role = data.role
     },
     destroyToken(state) {
-      state.token = null
+      state.token = null,
+      state.role = null
     },
     clearTodos(state) {
       state.todos = []
@@ -42,6 +48,7 @@ export const store = new Vuex.Store({
           })
       })
     },
+
     destroyToken(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 
@@ -61,6 +68,8 @@ export const store = new Vuex.Store({
         })
       }
     },
+
+
     retrieveToken(context, credentials) {
 
       return new Promise((resolve, reject) => {
@@ -70,9 +79,10 @@ export const store = new Vuex.Store({
         })
           .then(response => {
             const token = response.data.token
-
+            const role = response.data.role
             localStorage.setItem('token', token)
-            context.commit('retrieveToken', token)
+            localStorage.setItem('role', role)
+            context.commit('retrieveToken', response.data)
             resolve(response)
             // console.log(response);
             // context.commit('addTodo', response.data)

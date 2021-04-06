@@ -145,7 +145,7 @@ namespace QLNCKH.API.Controllers
             return Ok(new
             {
                 token = JWTHelper.GenAccessToken(user, userRoles),
-                role = userRoles
+                role = userRoles.FirstOrDefault()
             });
 
         }

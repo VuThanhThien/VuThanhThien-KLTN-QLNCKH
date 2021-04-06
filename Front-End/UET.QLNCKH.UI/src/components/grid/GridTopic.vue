@@ -1,7 +1,13 @@
 <template>
   <div class="GridTopic">
     <DxDataGrid :data-source="sales" :show-borders="true" key-expr="orderId">
-    <DxEditing :allow-updating="true" mode="form" />
+      <DxEditing
+        mode="popup"
+        :allow-updating="true"
+        :allow-adding="true"
+        :allow-deleting="true"
+        v-if="currentRole == 'Admin'"
+      />
       <DxColumn :width="90" data-field="orderId" caption="Order ID" />
       <DxColumn data-field="city" />
       <DxColumn :width="180" data-field="country" />
@@ -15,7 +21,7 @@
           editor-type="dxTextArea"
         />
       </DxColumn>
-      <DxPaging :page-size="20" />
+      <DxPaging :page-size="15" />
       <DxSelection
         :select-all-mode="allMode"
         :show-check-boxes-mode="checkBoxesMode"
@@ -35,6 +41,7 @@ import {
   DxSelection,
   DxFilterRow,
   DxEditing,
+  DxFormItem,
 } from "devextreme-vue/data-grid";
 
 export default {
@@ -46,6 +53,12 @@ export default {
     DxSelection,
     DxFilterRow,
     DxEditing,
+    DxFormItem,
+  },
+  computed: {
+    currentRole() {
+      return this.$store.getters.currentRole;
+    },
   },
   data() {
     return {

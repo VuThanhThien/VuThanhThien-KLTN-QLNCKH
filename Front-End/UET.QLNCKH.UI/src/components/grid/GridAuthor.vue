@@ -1,105 +1,149 @@
 <template>
-  <div class="GridTopic">
+  <div id="app-container">
     <DxDataGrid
-      :data-source="sales"
-      :show-borders="true"
-      key-expr="orderId"
+      id="dataGrid"
+      :data-source="employees"
+      key-expr="EmployeeID"
+      :allow-column-resizing="true"
+      :column-auto-width="true"
+      :allow-column-reordering="true"
+      @selection-changed="selectEmployee"
+      @exporting="exportGrid"
     >
-
-      <DxColumn
-        :width="90"
-        data-field="orderId"
-        caption="Order ID"
+      <DxColumn data-field="FullName" :fixed="true">
+        <DxRequiredRule />
+      </DxColumn>
+      <DxColumn data-field="Position">
+        <DxRequiredRule />
+      </DxColumn>
+      <DxColumn data-field="BirthDate" data-type="date" :width="100">
+        <DxRequiredRule />
+      </DxColumn>
+      <DxColumn data-field="HireDate" data-type="date" :width="100">
+        <DxRequiredRule />
+      </DxColumn>
+      <DxColumn data-field="City" />
+      <DxColumn data-field="Country" >
+        <!-- :group-index="0" sort-order="asc" -->
+        <DxRequiredRule />
+      </DxColumn>
+      <DxColumn data-field="Address" />
+      <DxColumn data-field="HomePhone" />
+      <DxColumn data-field="PostalCode" :visible="false" />
+      <DxColumnChooser :enabled="true" />
+      <DxColumnFixing :enabled="true" />
+      <DxFilterRow :visible="true" />
+      <DxSearchPanel :visible="true" />
+      <DxGroupPanel :visible="true" />
+      <DxSelection mode="single" />
+      <DxSummary>
+        <DxGroupItem summary-type="count" />
+      </DxSummary>
+      <DxEditing
+        mode="popup"
+        :allow-updating="true"
+        :allow-adding="true"
+        :allow-deleting="true"
+        v-if="currentRole == 'Admin'"
       />
-      <DxColumn data-field="city"/>
-      <DxColumn
-        :width="180"
-        data-field="country"
-      />
-      <DxColumn data-field="region"/>
-      <DxColumn
-        data-field="date"
-        data-type="date"
-      />
-      <DxColumn
-        :width="90"
-        data-field="amount"
-        format="currency"
-      />
-
-      <DxPaging :page-size="20"/>
-      <DxSelection
-        :select-all-mode="allMode"
-        :show-check-boxes-mode="checkBoxesMode"
-        mode="multiple"
-      />
-      <DxFilterRow :visible="true"/>
+      <DxExport :enabled="true" />
     </DxDataGrid>
-
+    <p id="selected-employee" v-if="selectedEmployee">
+      Selected employee: {{ selectedEmployee.FullName }}
+    </p>
   </div>
 </template>
+
 <script>
-import { sales } from '../../data.js';
-import { DxSelectBox } from 'devextreme-vue/select-box';
 import {
   DxDataGrid,
   DxColumn,
-  DxPaging,
+  DxRequiredRule,
+  DxColumnChooser,
+  DxColumnFixing,
+  DxFilterRow,
+  DxSearchPanel,
+  DxGroupPanel,
   DxSelection,
-  DxFilterRow
-} from 'devextreme-vue/data-grid';
-
+  DxSummary,
+  DxGroupItem,
+  DxEditing,
+  DxMasterDetail,
+  DxExport,
+} from "devextreme-vue/data-grid";
+import service from "../../employees.service";
+import { Workbook } from "exceljs";
+import saveAs from "file-saver";
+import { exportDataGrid } from "devextreme/excel_exporter";
 export default {
+  name: "App",
   components: {
-    DxSelectBox,
     DxDataGrid,
     DxColumn,
-    DxPaging,
+    DxRequiredRule,
+    DxColumnChooser,
+    DxColumnFixing,
+    DxFilterRow,
+    DxSearchPanel,
+    DxGroupPanel,
     DxSelection,
-    DxFilterRow
+    DxSummary,
+    DxGroupItem,
+    DxEditing,
+    DxMasterDetail,
+    DxExport,
   },
   data() {
     return {
-      allMode: 'page',
-      checkBoxesMode: 'always',
-      sales
+      employees: service.getEmployees(),
+      selectedEmployee: undefined,
     };
-  }
+  },
+  computed: {
+    currentRole() {
+      return this.$store.getters.currentRole;
+    },
+  },
+  methods: {
+    selectEmployee(e) {
+      e.component.byKey(e.currentSelectedRowKeys[0]).done((employee) => {
+        if (employee) {
+          this.selectedEmployee = employee;
+        }
+      });
+    },
+    exportGrid(e) {
+      const workbook = new Workbook();
+      const worksheet = workbook.addWorksheet("Main sheet");
+      exportDataGrid({
+        worksheet: worksheet,
+        component: e.component,
+      }).then(function () {
+        workbook.xlsx.writeBuffer().then(function (buffer) {
+          saveAs(
+            new Blob([buffer], { type: "application/octet-stream" }),
+            "DataGrid.xlsx"
+          );
+        });
+      });
+      e.cancel = true;
+    },
+  },
 };
 </script>
-<style scoped>
-.GridTopic{
-    margin: 10px;
+
+<style>
+#dataGrid {
+  /* height: 500px; */
+  padding: 15px;
 }
-.options {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: rgba(191, 191, 191, 0.15);
+#app-container {
+  /* width: 900px; */
   position: relative;
 }
-
-.caption {
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.option {
-  margin-top: 10px;
-}
-
-.checkboxes-mode {
+#selected-employee {
   position: absolute;
-  right: 20px;
-  bottom: 20px;
-}
-
-.option > .dx-selectbox {
-  width: 150px;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.option > span {
-  margin-right: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 </style>
