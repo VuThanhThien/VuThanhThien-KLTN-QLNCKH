@@ -20,6 +20,9 @@ export const store = new Vuex.Store({
     },
     currentName(state) {
       return state.name
+    },
+    currentToken(state){
+      return state.token
     }
   },
   mutations: {

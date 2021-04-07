@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="navBar"  v-if="loggedIn">
     <div class="headerBtn">
       <router-link :to="{ name: 'ListTopic' }">
@@ -29,6 +30,10 @@
         styling-mode="contained"
       />
     </div>
+  </div>
+
+  
+
   </div>
 </template>
 

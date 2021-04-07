@@ -1,5 +1,34 @@
 <template>
   <div class="GridTopic">
+
+    <div class="navBar"  v-if="loggedIn">
+    <div class="headerBtn">
+        <DxButton
+          :width="120"
+          text="Thêm mới"
+          type="default"
+          styling-mode="contained"
+        />
+    </div>
+    <div class="headerBtn" v-if="currentRole=='Admin'">
+        <DxButton
+          :width="120"
+          text="Sửa"
+          type="default"
+          styling-mode="contained"
+        />
+    </div>
+
+    <div class="headerBtn" v-if="currentRole=='Admin'">
+      <DxButton
+        :width="120"
+        text="Xóa"
+        type="default"
+        styling-mode="contained"
+      />
+    </div>
+  </div>
+
     <DxDataGrid :data-source="sales" :show-borders="true" key-expr="orderId" @selection-changed="selectSale">
       <DxColumn :width="90" data-field="orderId" caption="Order ID" />
       <DxColumn data-field="city" />
@@ -19,6 +48,7 @@
 <script>
 import { sales } from "../../../modules/data.js";
 import { DxSelectBox } from "devextreme-vue/select-box";
+import DxButton from "devextreme-vue/button";
 import {
   DxDataGrid,
   DxColumn,
@@ -39,10 +69,14 @@ export default {
     DxFilterRow,
     DxEditing,
     DxFormItem,
+    DxButton,
   },
   computed: {
     currentRole() {
       return this.$store.getters.currentRole;
+    },
+    loggedIn() {
+      return this.$store.getters.loggedIn;
     },
   },
   methods:{
@@ -65,9 +99,9 @@ export default {
 };
 </script>
 <style scoped>
-.GridTopic {
+/* .GridTopic {
   margin: 10px;
-}
+} */
 .options {
   margin-top: 20px;
   padding: 20px;
@@ -98,5 +132,17 @@ export default {
 
 .option > span {
   margin-right: 10px;
+}
+.navBar {
+  display: flex;
+  list-style: none;
+  padding: 15px 0;
+  margin: 0;
+  justify-content: flex-end;
+  background: #f5f8fa;
+  border-bottom: 1px solid lightgrey;
+}
+.headerBtn{
+  margin-right: 15px;
 }
 </style>

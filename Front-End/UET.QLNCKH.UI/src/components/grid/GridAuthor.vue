@@ -1,35 +1,63 @@
 <template>
   <div id="app-container">
+    <div class="navBar" v-if="currentRole == 'Admin'">
+      <div class="headerBtn">
+        <DxButton
+          :width="120"
+          text="Thêm mới"
+          type="default"
+          styling-mode="contained"
+        />
+      </div>
+      <div class="headerBtn">
+        <DxButton
+          :width="120"
+          text="Sửa"
+          type="default"
+          styling-mode="contained"
+        />
+      </div>
+
+      <div class="headerBtn">
+        <DxButton
+          :width="120"
+          text="Xóa"
+          type="default"
+          styling-mode="contained"
+        />
+      </div>
+    </div>
+
     <DxDataGrid
       id="dataGrid"
-      :data-source="employees"
-      key-expr="EmployeeID"
+      :data-source="user"
+      key-expr="userID"
       :allow-column-resizing="true"
       :column-auto-width="true"
       :allow-column-reordering="true"
       @selection-changed="selectEmployee"
       @exporting="exportGrid"
     >
-      <DxColumn data-field="FullName" :fixed="true">
+      <DxColumn data-field="fullName" >
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="Position">
+      <DxColumn data-field="position">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="BirthDate" data-type="date" :width="100">
+      <DxColumn data-field="dateOfBirth" data-type="date" :width="100">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="HireDate" data-type="date" :width="100">
+      <DxColumn data-field="department" :width="100">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="City" />
-      <DxColumn data-field="Country" >
+      <DxColumn data-field="userCode" />
+      <DxColumn data-field="businessAddress">
         <!-- :group-index="0" sort-order="asc" -->
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="Address" />
-      <DxColumn data-field="HomePhone" />
-      <DxColumn data-field="PostalCode" :visible="false" />
+      <DxColumn data-field="email" />
+      <DxColumn data-field="phoneNumber" />
+      <DxColumn data-field="address" :visible="false" />
       <DxColumnChooser :enabled="true" />
       <DxColumnFixing :enabled="true" />
       <DxFilterRow :visible="true" />
@@ -63,12 +91,14 @@ import {
   DxGroupItem,
   DxMasterDetail,
   DxExport,
-  DxPaging
+  DxPaging,
 } from "devextreme-vue/data-grid";
+import * as axios from "axios";
 import service from "../../../modules/employees.service";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
+import DxButton from "devextreme-vue/button";
 export default {
   name: "App",
   components: {
@@ -85,12 +115,14 @@ export default {
     DxGroupItem,
     DxMasterDetail,
     DxExport,
-    DxPaging
+    DxPaging,
+    DxButton,
   },
   data() {
     return {
       employees: service.getEmployees(),
       selectedEmployee: undefined,
+      user: {},
     };
   },
   computed: {
@@ -98,8 +130,51 @@ export default {
     currentRole() {
       return this.$store.getters.currentRole;
     },
+    loggedIn() {
+      return this.$store.getters.loggedIn;
+    },
+    currentToken() {
+      return this.$store.getters.currentToken;
+    },
   },
   methods: {
+    async getAuthorList() {
+      const config = {
+        headers: { Authorization: `Bearer ${currentToken}` },
+      };
+      await axios
+        .get("https://localhost:44323/api/User", config)
+        .then((response) => {
+          if (response.data) {
+            this.$notify({
+              type: "success",
+              title: "THÔNG BÁO",
+              text: "Cập nhật thành công ",
+            });
+          }
+          this.user = response.data;
+          console.log(this.user);
+        })
+        .catch((e) => {
+          if (e.response.status == 401) {
+            this.$notify({
+              // bad request
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Unauthorized",
+            });
+          }
+
+          if (e.response.status == 500) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+            });
+          }
+        });
+    },
     /**Chọn dòng */
     selectEmployee(e) {
       e.component.byKey(e.currentSelectedRowKeys[0]).done((employee) => {
@@ -126,6 +201,45 @@ export default {
       e.cancel = true;
     },
   },
+  async created() {
+    debugger;
+    await axios
+      .get("https://localhost:44323/api/User", {
+        headers: {
+          Authorization: `Bearer ${this.currentToken}`,
+        },
+      })
+      .then((response) => {
+        if (response.data) {
+          this.$notify({
+            type: "success",
+            title: "THÔNG BÁO",
+            text: "Cập nhật thành công ",
+          });
+          this.user = response.data;
+          console.log(this.user);
+        }
+      })
+      .catch((e) => {
+        if (e.response.status == 401) {
+          this.$notify({
+            // bad request
+            type: "error",
+            title: "THÔNG BÁO",
+            text: "Unauthorized",
+          });
+        }
+
+        if (e.response.status == 500) {
+          this.$notify({
+            //Lỗi server
+            type: "error",
+            title: "THÔNG BÁO",
+            text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+          });
+        }
+      });
+  },
 };
 </script>
 
@@ -142,5 +256,17 @@ export default {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
+}
+.navBar {
+  display: flex;
+  list-style: none;
+  padding: 15px 0;
+  margin: 0;
+  justify-content: flex-end;
+  background: #f5f8fa;
+  border-bottom: 1px solid lightgrey;
+}
+.headerBtn {
+  margin-right: 15px;
 }
 </style>

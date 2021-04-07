@@ -2,6 +2,7 @@
   <div id="app" class="container">
     <div class="bodyApp">
   </div>
+  <notifications position="bottom right" clean: true style="margin-bottom: 20px"/>
   </div>
 </template>
 

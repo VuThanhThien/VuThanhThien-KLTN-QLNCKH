@@ -1,6 +1,6 @@
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
-
+import Notifications from 'vue-notification'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routers/routes'
@@ -12,7 +12,7 @@ window.eventBus = new Vue()
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-
+Vue.use(Notifications)
 const router = new VueRouter({
   routes,
   mode: 'history'
