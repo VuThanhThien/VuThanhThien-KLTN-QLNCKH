@@ -35,30 +35,28 @@
       :allow-column-resizing="true"
       :column-auto-width="true"
       :allow-column-reordering="true"
-      @selection-changed="selectEmployee"
+      @selection-changed="selectUser"
       @exporting="exportGrid"
     >
-      <DxColumn data-field="fullName" >
+      <DxColumn data-field="fullName" caption="Họ và Tên">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="position">
+      <DxColumn data-field="position" caption="Vị trí">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="dateOfBirth" data-type="date" :width="100">
+      <DxColumn data-field="dateOfBirth" data-type="date" :width="100" caption="Ngày sinh">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="department" :width="100">
+      <DxColumn data-field="department" :width="100" caption="Phòng ban">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="userCode" />
-      <DxColumn data-field="businessAddress">
-        <!-- :group-index="0" sort-order="asc" -->
+      <DxColumn data-field="userCode" caption="Mã người dùng"/>
+      <DxColumn data-field="businessAddress" caption="Nơi công tác">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="email" />
-      <DxColumn data-field="phoneNumber" />
-      <DxColumn data-field="address" :visible="false" />
-      <DxColumnChooser :enabled="true" />
+      <DxColumn data-field="email" caption="Email"/>
+      <DxColumn data-field="phoneNumber" caption="Số điện thoại"/>
+      <DxColumn data-field="address" :visible="false" caption="Địa chỉ"/>
       <DxColumnFixing :enabled="true" />
       <DxFilterRow :visible="true" />
       <DxSearchPanel :visible="true" />
@@ -70,8 +68,8 @@
       <DxPaging :page-size="15" />
       <DxExport :enabled="true" />
     </DxDataGrid>
-    <p id="selected-employee" v-if="selectedEmployee">
-      Selected employee: {{ selectedEmployee.FullName }}
+    <p id="selected-employee" v-if="selectedUser">
+      Selected user: {{ selectedUser.userID }}
     </p>
   </div>
 </template>
@@ -81,7 +79,6 @@ import {
   DxDataGrid,
   DxColumn,
   DxRequiredRule,
-  DxColumnChooser,
   DxColumnFixing,
   DxFilterRow,
   DxSearchPanel,
@@ -105,7 +102,6 @@ export default {
     DxDataGrid,
     DxColumn,
     DxRequiredRule,
-    DxColumnChooser,
     DxColumnFixing,
     DxFilterRow,
     DxSearchPanel,
@@ -121,8 +117,8 @@ export default {
   data() {
     return {
       employees: service.getEmployees(),
-      selectedEmployee: undefined,
-      user: {},
+      selectedUser: undefined,
+      user: [],
     };
   },
   computed: {
@@ -153,7 +149,6 @@ export default {
             });
           }
           this.user = response.data;
-          console.log(this.user);
         })
         .catch((e) => {
           if (e.response.status == 401) {
@@ -176,10 +171,10 @@ export default {
         });
     },
     /**Chọn dòng */
-    selectEmployee(e) {
-      e.component.byKey(e.currentSelectedRowKeys[0]).done((employee) => {
-        if (employee) {
-          this.selectedEmployee = employee;
+    selectUser(e) {
+      e.component.byKey(e.currentSelectedRowKeys[0]).done((user) => {
+        if (user) {
+          this.selectedUser = user;
         }
       });
     },
@@ -202,7 +197,6 @@ export default {
     },
   },
   async created() {
-    debugger;
     await axios
       .get("https://localhost:44323/api/User", {
         headers: {
@@ -217,7 +211,6 @@ export default {
             text: "Cập nhật thành công ",
           });
           this.user = response.data;
-          console.log(this.user);
         }
       })
       .catch((e) => {
@@ -245,11 +238,10 @@ export default {
 
 <style>
 #dataGrid {
-  /* height: 500px; */
   padding: 15px;
 }
 #app-container {
-  /* width: 900px; */
+  margin: 10px;
   position: relative;
 }
 #selected-employee {

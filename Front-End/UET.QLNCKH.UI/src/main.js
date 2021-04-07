@@ -9,7 +9,8 @@ import { store } from './store/store'
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 window.eventBus = new Vue()
-
+import VueSession from 'vue-session'
+Vue.use(VueSession)
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(Notifications)

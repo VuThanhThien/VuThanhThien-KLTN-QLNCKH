@@ -2,16 +2,16 @@
   <div id="app">
     <ul class="nav">
       <li><a>{{this.currentName}}</a></li>
-      <li><router-link :to="{ name: 'Home' }">Home</router-link></li>
-      <li><router-link :to="{ name: 'about' }">About</router-link></li>
+      <li><router-link :to="{ name: 'Home' }">Trang chủ</router-link></li>
+      <li><router-link :to="{ name: 'about' }">Chi tiết</router-link></li>
       <li v-if="!loggedIn">
-        <router-link :to="{ name: 'Login' }">Login</router-link>
+        <router-link :to="{ name: 'Login' }">Đăng nhập</router-link>
       </li>
       <li v-if="!loggedIn">
-        <router-link :to="{ name: 'register' }">Register</router-link>
+        <router-link :to="{ name: 'register' }">Đăng ký</router-link>
       </li>
       <li v-if="loggedIn">
-        <router-link :to="{ name: 'logout' }">Logout</router-link>
+        <router-link :to="{ name: 'logout' }">Đăng xuất</router-link>
       </li>
     </ul>
     <nav-bar/>
@@ -64,6 +64,7 @@ export default {
 }
 
 .nav {
+  margin-right: 10px;
   display: flex;
   list-style: none;
   padding: 15px 0;

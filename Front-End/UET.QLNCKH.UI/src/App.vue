@@ -31,7 +31,6 @@ export default {
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
 
 .bodyApp{
-  height: calc(100vh - 63px);
   position: relative;
   display: flex;
 }

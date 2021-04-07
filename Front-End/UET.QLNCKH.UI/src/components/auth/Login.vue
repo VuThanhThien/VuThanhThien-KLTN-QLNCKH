@@ -1,20 +1,20 @@
 <template>
   <div class="login-form">
-    <h2 class="login-heading">Login</h2>
+    <h1 class="login-heading">Đăng nhập</h1>
     <form action="#" @submit.prevent="login">
 
       <div class="form-control">
-        <label for="email">UserName</label>
+        <label for="email">Tên tài khoản:</label>
         <input type="text" name="UserName" id="UserName" class="login-input" v-model="UserName">
       </div>
 
       <div class="form-control mb-more">
-        <label for="Password">Password</label>
+        <label for="Password">Mật khẩu:</label>
         <input type="Password" name="Password" id="Password" class="login-input" v-model="Password">
       </div>
 
       <div class="form-control">
-        <button type="submit" class="btn-submit">Login</button>
+        <button type="submit" class="btn-submit">Đăng nhập</button>
       </div>
 
     </form>

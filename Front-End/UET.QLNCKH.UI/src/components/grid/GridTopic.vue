@@ -1,51 +1,71 @@
 <template>
   <div class="GridTopic">
-
-    <div class="navBar"  v-if="loggedIn">
-    <div class="headerBtn">
+    <div class="navBar" v-if="loggedIn">
+      <div class="headerBtn">
         <DxButton
           :width="120"
           text="Thêm mới"
           type="default"
           styling-mode="contained"
         />
-    </div>
-    <div class="headerBtn" v-if="currentRole=='Admin'">
+      </div>
+      <div class="headerBtn" v-if="currentRole == 'Admin'">
         <DxButton
           :width="120"
           text="Sửa"
           type="default"
           styling-mode="contained"
         />
+      </div>
+
+      <div class="headerBtn" v-if="currentRole == 'Admin'">
+        <DxButton
+          :width="120"
+          text="Xóa"
+          type="default"
+          styling-mode="contained"
+        />
+      </div>
     </div>
 
-    <div class="headerBtn" v-if="currentRole=='Admin'">
-      <DxButton
-        :width="120"
-        text="Xóa"
-        type="default"
-        styling-mode="contained"
+    <DxDataGrid
+      :data-source="topic"
+      :show-borders="true"
+      key-expr="researchID"
+      @selection-changed="selectUser"
+    >
+      <DxColumn :width="90" data-field="researchCode" caption="Mã đề tài" />
+      <DxColumn data-field="researchName" caption="Tên đề tài" />
+      <DxColumn :width="180" data-field="description" caption="Mô tả" />
+      <DxColumn data-field="status" caption="Kết quả" />
+      <DxColumn data-field="process" caption="Tiến trình nghiên cứu" />
+      <DxColumn :width="120" data-field="createdDate" data-type="date" caption="Ngày tạo" />
+      <DxColumn :width="120" data-field="endDate" data-type="date" caption="Ngày kết thúc" />
+      <DxColumn
+        data-field="expiredDate"
+        data-type="date"
+        caption="Ngày nghiệm thu"
       />
-    </div>
-  </div>
-
-    <DxDataGrid :data-source="sales" :show-borders="true" key-expr="orderId" @selection-changed="selectSale">
-      <DxColumn :width="90" data-field="orderId" caption="Order ID" />
-      <DxColumn data-field="city" />
-      <DxColumn :width="180" data-field="country" />
-      <DxColumn data-field="region" />
-      <DxColumn data-field="date" data-type="date" />
-      <DxColumn :width="90" data-field="amount" format="currency" />
+      <DxColumn
+        :width="180"
+        data-field="expense"
+        caption="Kinh phí"
+      />
       <DxPaging :page-size="15" />
+      <DxColumnFixing :enabled="true" />
       <DxSelection mode="single" />
       <DxFilterRow :visible="true" />
+      <DxGroupPanel :visible="true" />
+      <DxExport :enabled="true" />
+      <DxSearchPanel :visible="true" />
     </DxDataGrid>
-    <p id="selected-employee" v-if="selectedSale">
-      Selected : {{ selectedSale.city }}
+    <p id="selected-employee" v-if="selectedUser">
+      Selected : {{ selectedUser.researchID }}
     </p>
   </div>
 </template>
 <script>
+import * as axios from "axios";
 import { sales } from "../../../modules/data.js";
 import { DxSelectBox } from "devextreme-vue/select-box";
 import DxButton from "devextreme-vue/button";
@@ -57,6 +77,11 @@ import {
   DxFilterRow,
   DxEditing,
   DxFormItem,
+  DxExport,
+  DxGroupItem,
+  DxColumnFixing,
+  DxSearchPanel,
+  DxGroupPanel
 } from "devextreme-vue/data-grid";
 
 export default {
@@ -70,6 +95,11 @@ export default {
     DxEditing,
     DxFormItem,
     DxButton,
+    DxExport,
+    DxGroupItem,
+    DxColumnFixing,
+    DxSearchPanel,
+    DxGroupPanel
   },
   computed: {
     currentRole() {
@@ -78,12 +108,52 @@ export default {
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
+    currentToken() {
+      return this.$store.getters.currentToken;
+    },
   },
-  methods:{
-    selectSale(e) {
-      e.component.byKey(e.currentSelectedRowKeys[0]).done((sale) => {
-        if (sale) {
-          this.selectedSale = sale;
+  methods: {
+    async getTopicList() {
+      const config = {
+        headers: { Authorization: `Bearer ${currentToken}` },
+      };
+      await axios
+        .get("https://localhost:44323/api/ResearchTopic", config)
+        .then((response) => {
+          if (response.data) {
+            this.$notify({
+              type: "success",
+              title: "THÔNG BÁO",
+              text: "Cập nhật thành công ",
+            });
+          }
+          this.topic = response.data;
+        })
+        .catch((e) => {
+          if (e.response.status == 401) {
+            this.$notify({
+              // bad request
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Unauthorized",
+            });
+          }
+
+          if (e.response.status == 500) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+            });
+          }
+        });
+    },
+
+    selectUser(e) {
+      e.component.byKey(e.currentSelectedRowKeys[0]).done((topic) => {
+        if (topic) {
+          this.selectedUser = topic;
         }
       });
     },
@@ -93,15 +163,54 @@ export default {
       allMode: "page",
       checkBoxesMode: "always",
       sales,
-      selectedSale: undefined,
+      selectedUser: undefined,
+      topic: [],
     };
+  },
+
+  async created() {
+    await axios
+      .get("https://localhost:44323/api/ResearchTopic", {
+        headers: {
+          Authorization: `Bearer ${this.currentToken}`,
+        },
+      })
+      .then((response) => {
+        if (response.data) {
+          this.$notify({
+            type: "success",
+            title: "THÔNG BÁO",
+            text: "Cập nhật thành công ",
+          });
+          this.topic = response.data;
+        }
+      })
+      .catch((e) => {
+        if (e.response.status == 401) {
+          this.$notify({
+            // bad request
+            type: "error",
+            title: "THÔNG BÁO",
+            text: "Unauthorized",
+          });
+        }
+
+        if (e.response.status == 500) {
+          this.$notify({
+            //Lỗi server
+            type: "error",
+            title: "THÔNG BÁO",
+            text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+          });
+        }
+      });
   },
 };
 </script>
 <style scoped>
-/* .GridTopic {
+.GridTopic {
   margin: 10px;
-} */
+}
 .options {
   margin-top: 20px;
   padding: 20px;
@@ -142,7 +251,7 @@ export default {
   background: #f5f8fa;
   border-bottom: 1px solid lightgrey;
 }
-.headerBtn{
+.headerBtn {
   margin-right: 15px;
 }
 </style>
