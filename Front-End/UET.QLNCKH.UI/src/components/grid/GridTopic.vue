@@ -29,6 +29,7 @@
     </div>
 
     <DxDataGrid
+    id="dataGrid"
       :data-source="topic"
       :show-borders="true"
       key-expr="researchID"
@@ -36,12 +37,26 @@
     >
       <DxColumn :width="90" data-field="researchCode" caption="Mã đề tài" />
       <DxColumn data-field="researchName" caption="Tên đề tài" />
-      <DxColumn :width="180" data-field="description" caption="Mô tả" />
-      <DxColumn data-field="status" caption="Kết quả" />
-      <DxColumn data-field="process" caption="Tiến trình nghiên cứu" />
-      <DxColumn :width="120" data-field="createdDate" data-type="date" caption="Ngày tạo" />
-      <DxColumn :width="120" data-field="endDate" data-type="date" caption="Ngày kết thúc" />
+      <DxColumn :width="280" data-field="description" caption="Mô tả" />
+      <DxColumn :calculate-cell-value="formatStatus" caption="Kết quả" />
       <DxColumn
+        :calculate-cell-value="formatProcess"
+        caption="Tiến trình nghiên cứu"
+      />
+      <DxColumn
+        :width="120"
+        data-field="createdDate"
+        data-type="date"
+        caption="Ngày tạo"
+      />
+      <DxColumn
+        :width="120"
+        data-field="endDate"
+        data-type="date"
+        caption="Ngày kết thúc"
+      />
+      <DxColumn
+        :width="120"
         data-field="expiredDate"
         data-type="date"
         caption="Ngày nghiệm thu"
@@ -49,13 +64,13 @@
       <DxColumn
         :width="180"
         data-field="expense"
+        data-type="number"
         caption="Kinh phí"
       />
       <DxPaging :page-size="15" />
       <DxColumnFixing :enabled="true" />
       <DxSelection mode="single" />
       <DxFilterRow :visible="true" />
-      <DxGroupPanel :visible="true" />
       <DxExport :enabled="true" />
       <DxSearchPanel :visible="true" />
     </DxDataGrid>
@@ -81,7 +96,7 @@ import {
   DxGroupItem,
   DxColumnFixing,
   DxSearchPanel,
-  DxGroupPanel
+  DxGroupPanel,
 } from "devextreme-vue/data-grid";
 
 export default {
@@ -99,7 +114,7 @@ export default {
     DxGroupItem,
     DxColumnFixing,
     DxSearchPanel,
-    DxGroupPanel
+    DxGroupPanel,
   },
   computed: {
     currentRole() {
@@ -113,6 +128,20 @@ export default {
     },
   },
   methods: {
+    /**Format trạng thái */
+    formatStatus(rowData) {
+      if (rowData.status == 1) return "Hoàn thành nhiệm vụ";
+      if (rowData.status == 2) return "Không hoàn thành nhiệm vụ";
+      if (rowData.status == 3) return "Bị hủy";
+      if (rowData.status == 4) return "Chưa cập nhật";
+    },
+
+    /**Format tiến trính */
+    formatProcess(rowData) {
+      if (rowData.process == 1) return "Đợi xét chọn";
+      if (rowData.process == 2) return "Đang thực hiện";
+      if (rowData.process == 3) return "Đã hết hạn";
+    },
     async getTopicList() {
       const config = {
         headers: { Authorization: `Bearer ${currentToken}` },
@@ -208,9 +237,12 @@ export default {
 };
 </script>
 <style scoped>
-.GridTopic {
-  margin: 10px;
+#dataGrid {
+  padding: 15px;
 }
+/* .GridTopic {
+  margin: 10px;
+} */
 .options {
   margin-top: 20px;
   padding: 20px;
