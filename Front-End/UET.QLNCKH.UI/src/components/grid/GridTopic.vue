@@ -16,9 +16,14 @@
           text="Sửa"
           type="success"
           styling-mode="contained"
+          @click="btnEditOnClick"
         />
       </div>
-    <TopicDetail :isHide="isHideParent" @outIsHide="outIsHide" :selectedTopic="selectedTopic"/>
+      <TopicDetail
+        :isHide="isHideParent"
+        @outIsHide="outIsHide"
+        :selectedTopic="selectedTopic"
+      />
       <div class="headerBtn" v-if="currentRole == 'Admin'">
         <DxButton
           :width="120"
@@ -77,9 +82,9 @@
       <DxSearchPanel :visible="true" />
     </DxDataGrid>
 
-    <p id="selected-employee" v-if="selectedTopic">
+    <!-- <p id="selected-employee" v-if="selectedTopic">
       Selected topic : {{ selectedTopic.researchID }}
-    </p>
+    </p> -->
   </div>
 </template>
 <script>
@@ -135,6 +140,19 @@ export default {
     btnAddOnClick() {
       // Mở form
       this.isHideParent = !this.isHideParent;
+      this.selectedTopic = {};
+    },
+    btnEditOnClick() {
+      if (this.selectedTopic == {}) {
+        this.$notify({
+          title: "THÔNG BÁO",
+          text: "Vui lòng chọn đề tài muốn sửa",
+        });
+        this.isHideParent = true;
+      }
+      else{
+        this.isHideParent = !this.isHideParent;
+      }
     },
     outIsHide(e) {
       this.isHideParent = e;
@@ -203,7 +221,7 @@ export default {
     return {
       allMode: "page",
       checkBoxesMode: "always",
-      selectedTopic: undefined,
+      selectedTopic: {},
       topic: [],
       isHideParent: true,
     };

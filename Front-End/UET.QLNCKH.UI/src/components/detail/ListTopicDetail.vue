@@ -34,7 +34,7 @@
               <div class="block-1-topic">
                 <div class="fieldName">Mã đề tài (<span>*</span>)</div>
                 <!-- nhập mã nhân viên  -->
-                <input id="txtEmployeeCode" type="text" />
+                <input id="txtEmployeeCode" type="text" v-model="selectedTopic.researchCode"/>
               </div>
               <!-- Nhập họ tên  -->
               <div class="block-1-topic">
@@ -44,6 +44,7 @@
                   fieldName="FullName"
                   class="input-required"
                   type="text"
+                  v-model="selectedTopic.researchName"
                 />
               </div>
             </div>
@@ -51,12 +52,12 @@
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <div class="fieldName">Ngày nghiệm thu</div>
-                <input type="date" />
+                <input type="date" v-model="selectedTopic.expiredDate"/>
               </div>
               <!-- Nhập giới tính  -->
               <div class="block-1-topic">
                 <div class="fieldName">Kinh phí</div>
-                <input type="number" />
+                <input type="number" v-model="selectedTopic.expense"/>
               </div>
             </div>
             <div class="block-2-topic">
@@ -85,6 +86,7 @@
                 <div class="fieldName">Mô tả</div>
                 <textarea
                   style="margin: 0px; width: 650px; height: 107px; resize: none"
+                  v-model="selectedTopic.description"
                 ></textarea>
               </div>
             </div>
@@ -92,12 +94,12 @@
               <div class="block-1-topic">
                 <!-- Email  -->
                 <div class="fieldName">Ngày bắt đầu (<span>*</span>)</div>
-                <input type="date" />
+                <input type="date" v-model="selectedTopic.createdDate"/>
               </div>
               <div class="block-1-topic">
                 <!-- Số điện thoại  -->
                 <div class="fieldName">Ngày kết thúc (<span>*</span>)</div>
-                <input type="date" />
+                <input type="date" v-model="selectedTopic.endDate"/>
               </div>
             </div>
             <div class="block-2-topic">
@@ -133,6 +135,12 @@ export default {
         return true;
       },
     },
+    selectedTopic:{
+      type: Object,
+      default(){
+        return {};
+      }
+    }
   },
   components: {},
   methods: {
@@ -187,6 +195,7 @@ export default {
   left: 33%;
   top: 13%;
   background-color: #fff;
+  padding: 15px;
 }
 .dialog-mask {
   position: fixed;

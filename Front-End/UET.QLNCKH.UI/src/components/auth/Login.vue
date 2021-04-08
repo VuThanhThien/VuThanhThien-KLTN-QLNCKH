@@ -44,10 +44,8 @@ export default {
 }
 </script>
 <style scoped>
-.UserName{
-  height: 50px !important;
-}
-.PassWord{
+
+input{
   height: 50px;
 }
 .btn-submit {
