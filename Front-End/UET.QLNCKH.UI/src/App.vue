@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+@import "./style/root.css";
 .container {
   margin: 0 auto;
 }

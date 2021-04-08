@@ -114,6 +114,13 @@
             <param name="baseBL"></param>
             <param name="researchTopicBL"></param>
         </member>
+        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.Post(QLNCKH.Common.Dictionary.ResearchTopic)">
+            <summary>
+            Thêm mới bản ghi
+            </summary>
+            <param name="topic">Đối tượng cần thêm mới</param>
+            <returns></returns>
+        </member>
         <member name="T:QLNCKH.API.Controllers.UserController">
             <summary>
             

@@ -7,6 +7,7 @@
           text="Thêm mới"
           type="default"
           styling-mode="contained"
+          @click="btnAddOnClick"
         />
       </div>
       <div class="headerBtn" v-if="currentRole == 'Admin'">
@@ -17,7 +18,7 @@
           styling-mode="contained"
         />
       </div>
-
+      <TopicDetail :isHide="isHideParent" @outIsHide="outIsHide" />
       <div class="headerBtn" v-if="currentRole == 'Admin'">
         <DxButton
           :width="120"
@@ -29,7 +30,7 @@
     </div>
 
     <DxDataGrid
-    id="dataGrid"
+      id="dataGrid"
       :data-source="topic"
       :show-borders="true"
       key-expr="researchID"
@@ -66,6 +67,7 @@
         data-field="expense"
         data-type="number"
         caption="Kinh phí"
+        format="#,##0"
       />
       <DxPaging :page-size="15" />
       <DxColumnFixing :enabled="true" />
@@ -81,6 +83,7 @@
 </template>
 <script>
 import * as axios from "axios";
+import TopicDetail from "../detail/ListTopicDetail.vue";
 import { sales } from "../../../modules/data.js";
 import { DxSelectBox } from "devextreme-vue/select-box";
 import DxButton from "devextreme-vue/button";
@@ -115,6 +118,7 @@ export default {
     DxColumnFixing,
     DxSearchPanel,
     DxGroupPanel,
+    TopicDetail,
   },
   computed: {
     currentRole() {
@@ -128,6 +132,13 @@ export default {
     },
   },
   methods: {
+    btnAddOnClick() {
+      // Mở form
+      this.isHideParent = !this.isHideParent;
+    },
+    outIsHide(e) {
+      this.isHideParent = e;
+    },
     /**Format trạng thái */
     formatStatus(rowData) {
       if (rowData.status == 1) return "Hoàn thành nhiệm vụ";
@@ -194,6 +205,7 @@ export default {
       sales,
       selectedUser: undefined,
       topic: [],
+      isHideParent: true,
     };
   },
 
