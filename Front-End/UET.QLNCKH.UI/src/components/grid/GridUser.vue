@@ -4,25 +4,29 @@
       <div class="headerBtn">
         <DxButton
           :width="120"
-          text="Thêm mới"
-          type="default"
+          text="Thêm User"
+          type="success"
           styling-mode="contained"
+          @click="btnAddOnClick"
         />
       </div>
       <div class="headerBtn">
         <DxButton
           :width="120"
-          text="Sửa"
-          type="default"
+          text="Sửa User"
+          type="success"
           styling-mode="contained"
         />
       </div>
-
+      <UserDetail
+        :isHide="isHideParent"
+        @outIsHide="outIsHide"
+      />
       <div class="headerBtn">
         <DxButton
           :width="120"
-          text="Xóa"
-          type="default"
+          text="Xóa User"
+          type="success"
           styling-mode="contained"
         />
       </div>
@@ -39,6 +43,9 @@
       @exporting="exportGrid"
     >
       <DxColumn data-field="fullName" caption="Họ và Tên">
+        <DxRequiredRule />
+      </DxColumn>
+      <DxColumn data-field="gender" caption="Giới tính">
         <DxRequiredRule />
       </DxColumn>
       <DxColumn :calculate-cell-value="formatPosition" caption="Vị trí">
@@ -99,6 +106,7 @@ import {
   DxPaging,
 } from "devextreme-vue/data-grid";
 import * as axios from "axios";
+import UserDetail from "../detail/ListUserDetail.vue";
 import service from "../../../modules/employees.service";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
@@ -121,12 +129,14 @@ export default {
     DxExport,
     DxPaging,
     DxButton,
+    UserDetail,
   },
   data() {
     return {
       employees: service.getEmployees(),
       selectedUser: undefined,
       user: [],
+      isHideParent: true,
     };
   },
   computed: {
@@ -142,6 +152,13 @@ export default {
     },
   },
   methods: {
+    btnAddOnClick() {
+      // Mở form
+      this.isHideParent = !this.isHideParent;
+    },
+    outIsHide(e) {
+      this.isHideParent = e;
+    },
     /**Format phòng ban */
     formatDepartment(rowData) {
       if (rowData.department == 1) return "Ban Giám hiệu";

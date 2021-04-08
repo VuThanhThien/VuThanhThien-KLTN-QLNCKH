@@ -5,7 +5,7 @@
         <DxButton
           :width="120"
           text="Thêm mới"
-          type="default"
+          type="success"
           styling-mode="contained"
           @click="btnAddOnClick"
         />
@@ -14,16 +14,16 @@
         <DxButton
           :width="120"
           text="Sửa"
-          type="default"
+          type="success"
           styling-mode="contained"
         />
       </div>
-      <TopicDetail :isHide="isHideParent" @outIsHide="outIsHide" />
+    <TopicDetail :isHide="isHideParent" @outIsHide="outIsHide" :selectedTopic="selectedTopic"/>
       <div class="headerBtn" v-if="currentRole == 'Admin'">
         <DxButton
           :width="120"
           text="Xóa"
-          type="default"
+          type="success"
           styling-mode="contained"
         />
       </div>
@@ -76,15 +76,15 @@
       <DxExport :enabled="true" />
       <DxSearchPanel :visible="true" />
     </DxDataGrid>
-    <p id="selected-employee" v-if="selectedUser">
-      Selected : {{ selectedUser.researchID }}
+
+    <p id="selected-employee" v-if="selectedTopic">
+      Selected topic : {{ selectedTopic.researchID }}
     </p>
   </div>
 </template>
 <script>
 import * as axios from "axios";
 import TopicDetail from "../detail/ListTopicDetail.vue";
-import { sales } from "../../../modules/data.js";
 import { DxSelectBox } from "devextreme-vue/select-box";
 import DxButton from "devextreme-vue/button";
 import {
@@ -190,10 +190,11 @@ export default {
         });
     },
 
+    /**khi chọn một hàng thì lấy đề tài đã chọn sang */
     selectUser(e) {
       e.component.byKey(e.currentSelectedRowKeys[0]).done((topic) => {
         if (topic) {
-          this.selectedUser = topic;
+          this.selectedTopic = topic;
         }
       });
     },
@@ -202,8 +203,7 @@ export default {
     return {
       allMode: "page",
       checkBoxesMode: "always",
-      sales,
-      selectedUser: undefined,
+      selectedTopic: undefined,
       topic: [],
       isHideParent: true,
     };

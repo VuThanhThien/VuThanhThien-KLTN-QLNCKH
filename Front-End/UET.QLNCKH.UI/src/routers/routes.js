@@ -4,7 +4,7 @@ import Login from '@/components/auth/Login'
 import Logout from '@/components/auth/Logout'
 import Register from '@/components/auth/Register'
 import GridTopic from '@/components/grid/GridTopic.vue'
-import GridAuthor from '@/components/grid/GridAuthor.vue'
+import GridUser from '@/components/grid/GridUser.vue'
 const routes = [
   
   {
@@ -18,7 +18,7 @@ const routes = [
   {
     path: '/ListAuthor',
     name: 'ListAuthor',
-    component: GridAuthor,
+    component: GridUser,
     meta: {
       requiresAuth: true,
     }

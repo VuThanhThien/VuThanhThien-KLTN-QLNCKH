@@ -6,7 +6,7 @@
         <DxButton
           :width="120"
           text="Đề tài"
-          type="default"
+          type="success"
           styling-mode="contained"
         />
       </router-link>
@@ -16,7 +16,7 @@
         <DxButton
           :width="120"
           text="Tác giả"
-          type="default"
+          type="success"
           styling-mode="contained"
         />
       </router-link>
@@ -26,7 +26,7 @@
       <DxButton
         :width="120"
         text="Thống kê"
-        type="default"
+        type="success"
         styling-mode="contained"
       />
     </div>

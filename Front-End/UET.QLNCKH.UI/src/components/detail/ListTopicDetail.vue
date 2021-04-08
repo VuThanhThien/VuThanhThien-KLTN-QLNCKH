@@ -1,42 +1,131 @@
-<template>
-  <div class="formBody" :class="{ isHide: isHide }">
-    <div class="myButtonDialog" style="border-bottom: solid 1px gray">
-      <button class="myButton" id="buttonSave">
-        <div class="iconSave"></div>
-        Lưu
-      </button>
-      <button class="myButton" id="buttonCancel" @click="cancel">
-        <div class="iconCancel"></div>
-        Hủy bỏ
-      </button>
-    </div>
 
-    <div class="bodyDialog">
-    </div>
-    <div
-      class="myButtonDialog"
-      style="border-top: solid 1px gray"
-      id="buttonBottom"
-    >
-      <button class="myButton" id="buttonSave" @click.prevent="save">
-        <div class="iconSave"></div>
-        Lưu
-      </button>
-      <button class="myButton" id="buttonCancel" @click="cancel">
-        <div class="iconCancel"></div>
-        Hủy bỏ
-      </button>
+<template>
+  <div class="modal" :class="{ isHide: isHide }">
+    <div class="dialog-mask">
+      <div draggable="true" class="dialog-topic">
+        <!-- nút x thoát dialog  -->
+        <button class="close-dialog" @click="cancel">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-x"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <!-- tiêu đề dialog  -->
+        <h3>THÔNG TIN ĐỀ TÀI</h3>
+        <!-- body dialog  -->
+        <div class="dialog-content">
+          <!-- khối avatar  -->
+          <!-- Khối điền thông tin  -->
+          <div class="block-right">
+            <!-- block 2 là khối chưa 2 trường nhập  -->
+            <div class="block-2-topic">
+              <!-- block 1 là khối chứ 1 trường nhập  -->
+              <div class="block-1-topic">
+                <div class="fieldName">Mã đề tài (<span>*</span>)</div>
+                <!-- nhập mã nhân viên  -->
+                <input id="txtEmployeeCode" type="text" />
+              </div>
+              <!-- Nhập họ tên  -->
+              <div class="block-1-topic">
+                <div class="fieldName">Tên đề tài (<span>*</span>)</div>
+                <input
+                  id="txtFullName"
+                  fieldName="FullName"
+                  class="input-required"
+                  type="text"
+                />
+              </div>
+            </div>
+            <!-- Nhập ngày sinh  -->
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Ngày nghiệm thu</div>
+                <input type="date" />
+              </div>
+              <!-- Nhập giới tính  -->
+              <div class="block-1-topic">
+                <div class="fieldName">Kinh phí</div>
+                <input type="number" />
+              </div>
+            </div>
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <!-- Nhập cmtnd/ căn cước  -->
+                <div class="fieldName">Kết quả nghiên cứu(<span>*</span>)</div>
+                <select id="cbxPosition" class="m-control">
+                  <option>
+                    {{}}
+                  </option>
+                </select>
+              </div>
+              <!-- Ngầy cấp cmtnd/cc  -->
+              <div class="block-1-topic">
+                <div class="fieldName">Trạng thái nghiên cứu</div>
+                <select id="cbxPosition" class="m-control">
+                  <option>
+                    {{}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <!-- Nới cấp cmtnd/cc  -->
+                <div class="fieldName">Mô tả</div>
+                <textarea
+                  style="margin: 0px; width: 650px; height: 107px; resize: none"
+                ></textarea>
+              </div>
+            </div>
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <!-- Email  -->
+                <div class="fieldName">Ngày bắt đầu (<span>*</span>)</div>
+                <input type="date" />
+              </div>
+              <div class="block-1-topic">
+                <!-- Số điện thoại  -->
+                <div class="fieldName">Ngày kết thúc (<span>*</span>)</div>
+                <input type="date" />
+              </div>
+            </div>
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <!-- Vị trí công việc  -->
+                <div class="fieldName">Tác giả</div>
+                <input type="text" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- footer dialog  -->
+        <div class="dialog-footer">
+          <div class="footer-content">
+            <button id="btn-cancel" @click="cancel">Hủy</button>
+            <button id="btn-save">Lưu</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import * as axios from "axios";
-import DxNumberBox from "devextreme-vue/number-box";
+import service from "../../../modules/data.js";
 export default {
-  name: "ProductDetails",
-  components: { DxNumberBox },
-
+  name: "UserDetails",
   props: {
     isHide: {
       type: Boolean,
@@ -45,248 +134,169 @@ export default {
       },
     },
   },
-
-  data() {
-    return {};
-  },
+  components: {},
   methods: {
-    /**
-     * Input chỉ đc nhập số
-     */
-    onlyNumber($event) {
-      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
-      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
-        // 46 is dot
-        $event.preventDefault();
-      }
-    },
-
     /**Sự kiện hủy */
     cancel() {
-      this.closeForm();
-    },
-    /**Đóng form */
-    closeForm() {
       this.$emit("outIsHide", !this.isHide);
     },
-    /**format tiền */
-    formatPrice(value) {
-      let val = (value / 1).toFixed(2).replace(".", ",");
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    validEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
     },
+
+    // formatPrice(value) {
+    //   if (value) {
+    //     var salary = value.toString();
+    //     return salary.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    //   }
+    // },
+
+    //   saveEmployee() {
+    //     if (this.employee.EmployeeId == null && this.checkForm()) {
+    //       axios({
+    //         method: "POST",
+    //         url: "http://api.manhnv.net/api/employees",
+    //         data: this.employee,
+    //       }).catch((e) => console.log(e));
+    //       console.log(this.employee);
+    //     }
+    //     if (this.employee.EmployeeId != null && this.checkForm()) {
+    //       axios({
+    //         method: "PUT",
+    //         url: "http://api.manhnv.net/api/employees",
+    //         data: this.employee,
+    //       }).catch((e) => console.log(e));
+    //     }
+    //     this.closeDialog();
+    //   },
   },
-  computed: {},
-  async created() {},
+  data() {
+    return {
+      departments: service.getDepartment(),
+      positions: service.getPosition(),
+    };
+  },
 };
 </script>
 
 <style>
-.borders {
-  border: 1px solid red !important;
+.dialog-topic {
+  position: absolute;
+  width: 700px;
+  left: 33%;
+  top: 13%;
+  background-color: #fff;
 }
-.imgValidate {
-  width: 16px;
-  height: 16px;
-  margin: 6px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  /* background-image: url("../../assets/images/exclamation.png"); */
-}
-
-.formBody {
+.dialog-mask {
   position: fixed;
-  z-index: 10;
-  top: 60px;
-  height: calc(100vh - 70px);
-  width: calc(100% - 170px);
-  background-color: #ffffff;
-}
-
-.rowForm {
-  display: flex;
-  margin: 10px 10px 10px 10px;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
 }
 .isHide {
   display: none;
 }
-.myButtonDialog {
-  position: relative;
-  display: flex;
-  padding: 10px;
-  height: 52px;
-  width: 100%;
-  align-items: center;
-  justify-content: flex-start !important;
-  align-items: center;
-  justify-content: space-between;
-  background-color: white;
-}
-
-.myButton {
-  height: 35px;
-  width: auto;
-  margin-left: 5px;
-  margin-right: 5px;
-  outline: none;
+.close-dialog {
+  margin: 5px;
+  float: right;
+  top: 0;
   border: none;
+  background-color: #fff !important;
   cursor: pointer;
-  padding: 0 14px 0 14px;
+}
+.dialog-content {
   display: flex;
-  border-radius: 3px;
+  justify-content: space-between;
+}
+
+.block-right {
+  display: block;
+}
+.block-2-topic {
+  display: flex;
+  justify-content: space-between;
+  width: 700px;
   align-items: center;
 }
-
-.colorName {
-  height: 100%;
-  width: 160px;
-  justify-content: center;
-  padding-top: 10px;
-  padding-left: 10px;
-  background-color: #d3d0d0;
+.block-1-topic {
+  width: 350px;
+  height: calc(100% - 2px);
+  margin-left: 15px;
+  margin-top: 10px;
 }
-
-.bodyDialog {
-  max-height: calc(100% - 108px);
-  overflow: auto;
+.block-1-topic span {
+  color: #ff0000;
 }
-.labelForm {
-  width: 250px;
+.fieldName {
+  font-size: 13px;
 }
-#buttonBottom {
-  position: absolute;
-  bottom: 0px;
-}
-.boxImage {
-  height: 200px;
-  width: 200px;
-  border-color: #636dde !important;
-  border-width: 1px !important;
-  border-style: dashed;
-  border-radius: 5px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-}
-
-.xboxInner {
-  overflow: hidden;
-  position: relative;
-  left: 0;
-  top: 24px;
-  width: 198px;
-  height: 32px;
-  justify-content: center !important;
-}
-.inputfile {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-}
-.inputfile + label {
-  display: inline-block;
-  cursor: pointer;
-  background-color: #2b3173;
-  color: white !important;
-  width: 40px;
-  height: 24px;
-  right: auto;
-  margin-left: 79px;
+.block-1-topic input,
+.block-1-topic select {
+  padding-left: 20px;
   margin-top: 4px;
-  text-align: center;
-  border-radius: 3px;
-}
-.inputNumber {
-  width: 200px;
-  background-color: #d3d0d0;
-}
-.iconPlusContain {
-  width: 30px;
-  height: 32px;
-  background-color: #cccaca;
-  padding: 9px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-.gridDetail {
-  max-height: 300px;
-  min-width: 1450px;
-  overflow: auto;
-}
-/* .detailBodyTable{
-    border: solid 1px black !important;
-  } */
-.detailTable th {
-  text-align: center;
-  align-items: center;
-  height: 32px;
-  padding: 0;
-  z-index: 10;
-  background-color: #cccaca;
-}
-.detailBodyTable td {
-  padding: 10px 0 10px 0 !important;
-}
-.detailBodyTable input {
-  border: none !important;
-  background-color: transparent !important;
-}
-.description {
-  min-height: 180px;
-  max-height: 300px;
-  width: 438px;
-  overflow: auto;
-}
-.imgBlock {
-  padding: 0px;
-  right: auto;
-  left: 0px;
-  top: 0px;
-  margin: 0px;
-  width: 198px;
-  height: 146px;
+  width: 300px;
+  height: 30px;
+  border-radius: 5px;
+  border: 0.5px solid rgb(156, 153, 153);
+  padding: 5px;
 }
 
-.imgProduct {
+.dialog-footer {
+  margin-top: 20px;
   width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  background-image: url("https://testmisatrinhmisa.mshopkeeper.vn/backendg2/api/Image?id=12EB2AFC-16CA-45EC-8E9A-1A1B829EBFB9&type=4&mode=pad&CompanyCode=testmisatrinhmisa&w=200&h=180");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  height: 43px;
+  background-color: #e9ebee;
+  border-radius: 0 0 5px 5px;
+  display: flex;
+  align-items: center;
+  justify-items: right;
+  border-radius: 2px;
 }
 
-.symbolPen {
-  margin: -1px;
-  display: flex;
-  width: 100px;
-  padding: 6px;
-  height: 29px !important;
-  margin-left: 50%;
-  color: #aaaaaa;
-  font-weight: bold;
-  border: 1px solid #aaaaaa;
-  border-radius: 4px;
+.dialog-footer .footer-content {
+  position: absolute;
+  right: 0px;
+  margin-right: 9px;
 }
-.symbolPen:hover {
+
+.dialog-footer button {
+  margin-right: 20px;
+  height: 31px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #5cb85c;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
-.iconPen {
-  background: url("../../assets/common-icon.png") no-repeat -79px -180px;
-  width: 12px;
-  padding: 8px;
-  margin-top: 3px;
+
+#btn-save {
+  width: 70px;
+  border: solid 1px #ffffff;
 }
-.dx-texteditor-input {
-  width: 300px !important;
-  height: 32px !important;
-  text-align: right !important;
+
+#btn-cancel {
+  border: solid 1px #ffffff;
+  width: 70px;
+  background-color: Transparent !important;
 }
-.dx-widget input,
-.dx-widget textarea {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.35715;
+
+.currency-for-input {
+  position: absolute;
+  right: 40px;
+  line-height: 40px;
+  font-size: xx-small;
+  font-style: italic;
+  color: black !important;
+}
+
+.dialog-footer button:hover {
+  background-color: azure;
 }
 </style>

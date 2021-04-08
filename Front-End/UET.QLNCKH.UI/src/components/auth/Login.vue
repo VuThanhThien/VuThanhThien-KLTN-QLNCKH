@@ -43,4 +43,23 @@ export default {
   }
 }
 </script>
-
+<style scoped>
+.UserName{
+  height: 50px !important;
+}
+.PassWord{
+  height: 50px;
+}
+.btn-submit {
+    width: 100%;
+    padding: 14px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #60bd4f;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+</style>

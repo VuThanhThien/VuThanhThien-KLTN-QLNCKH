@@ -63,5 +63,6 @@ namespace QLNCKH.Common.Dictionary
         /// Yêu cầu của người dùng
         /// </summary>
         public string Request { get; set; }
+        public int Gender { get; set; }
     }
 }
