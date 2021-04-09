@@ -64,6 +64,10 @@ namespace QLNCKH.Common.Dictionary
         /// Yêu cầu của người dùng
         /// </summary>
         public string Request { get; set; }
+
+        /// <summary>
+        /// Giới tính createdby VTT 09/04/21
+        /// </summary>
         public int Gender { get; set; }
 
         public UserInfo(Guid userID)

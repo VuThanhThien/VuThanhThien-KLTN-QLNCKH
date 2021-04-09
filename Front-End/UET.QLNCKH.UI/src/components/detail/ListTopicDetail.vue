@@ -34,16 +34,18 @@
               <div class="block-1-topic">
                 <div class="fieldName">Mã đề tài (<span>*</span>)</div>
                 <!-- nhập mã nhân viên  -->
-                <input id="txtEmployeeCode" type="text" v-model="selectedTopic.researchCode"/>
+                <input
+                  id="txtEmployeeCode"
+                  type="text"
+                  v-model="selectedTopic.researchCode"
+                />
               </div>
               <!-- Nhập họ tên  -->
               <div class="block-1-topic">
                 <div class="fieldName">Tên đề tài (<span>*</span>)</div>
                 <input
-                  id="txtFullName"
-                  fieldName="FullName"
-                  class="input-required"
                   type="text"
+                  ref="name"
                   v-model="selectedTopic.researchName"
                 />
               </div>
@@ -52,31 +54,45 @@
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <div class="fieldName">Ngày nghiệm thu</div>
-                <input type="date" v-model="selectedTopic.expiredDate"/>
+                <!-- <input type="date" v-model="selectedTopic.expiredDate" /> -->
+                <input
+                  type="date"
+                  v-model="
+                    moment(selectedTopic.expiredDate).format('YYYY-MM-DD')
+                  "
+                  v-on:input="
+                    selectedTopic.expiredDate = moment(
+                      $event.target.value
+                    ).toDate()
+                  "
+                />
               </div>
               <!-- Nhập giới tính  -->
               <div class="block-1-topic">
                 <div class="fieldName">Kinh phí</div>
-                <input type="number" v-model="selectedTopic.expense"/>
+                <input type="number" v-model="selectedTopic.expense" />
               </div>
             </div>
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <!-- Nhập cmtnd/ căn cước  -->
-                <div class="fieldName">Kết quả nghiên cứu(<span>*</span>)</div>
-                <select id="cbxPosition" class="m-control">
-                  <option>
-                    {{}}
-                  </option>
+                <div class="fieldName">Kết quả nghiên cứu </div>
+                <select v-model="selectedTopic.status">
+                  <option value="0" disabled>Chọn một kết quả</option>
+                  <option value="1">Hoàn thành nhiệm vụ</option>
+                  <option value="2">Chưa hoàn thành nhiệm vụ</option>
+                  <option value="3">Bị hủy</option>
+                  <option value="4">Chưa cập nhật</option>
                 </select>
               </div>
               <!-- Ngầy cấp cmtnd/cc  -->
               <div class="block-1-topic">
                 <div class="fieldName">Trạng thái nghiên cứu</div>
-                <select id="cbxPosition" class="m-control">
-                  <option>
-                    {{}}
-                  </option>
+                <select v-model="selectedTopic.process">
+                  <option value="0" disabled>Chọn một trạng thái</option>
+                  <option value="1">Đợi xét chọn</option>
+                  <option value="2">Đang làm</option>
+                  <option value="3">Đã hết hạn</option>
                 </select>
               </div>
             </div>
@@ -93,20 +109,47 @@
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <!-- Email  -->
-                <div class="fieldName">Ngày bắt đầu (<span>*</span>)</div>
-                <input type="date" v-model="selectedTopic.createdDate"/>
+                <div class="fieldName">Ngày bắt đầu </div>
+                <!-- <input type="date" v-model="selectedTopic.createdDate" :formatter="format"/> -->
+                <input
+                  type="date"
+                  v-model="
+                    moment(selectedTopic.createdDate).format('YYYY-MM-DD')
+                  "
+                  v-on:input="
+                    selectedTopic.createdDate = moment(
+                      $event.target.value
+                    ).toDate()
+                  "
+                />
               </div>
               <div class="block-1-topic">
                 <!-- Số điện thoại  -->
-                <div class="fieldName">Ngày kết thúc (<span>*</span>)</div>
-                <input type="date" v-model="selectedTopic.endDate"/>
+                <div class="fieldName">Ngày kết thúc </div>
+                <!-- <input type="date" v-model="selectedTopic.endDate" /> -->
+                <input
+                  type="date"
+                  v-model="moment(selectedTopic.endDate).format('YYYY-MM-DD')"
+                  v-on:input="
+                    selectedTopic.endDate = moment($event.target.value).toDate()
+                  "
+                />
               </div>
             </div>
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <!-- Vị trí công việc  -->
-                <div class="fieldName">Tác giả</div>
-                <input type="text" />
+                <div class="fieldName">Tác giả (<span>*</span>)</div>
+                <select v-model="selectedTopic.userID">
+                  <option value="0" disabled>Chọn tác giả</option>
+                  <option
+                    v-for="user in users"
+                    :key="user.userID"
+                    :value="user.userID"
+                  >
+                    {{ user.fullName }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -115,11 +158,12 @@
         <div class="dialog-footer">
           <div class="footer-content">
             <button id="btn-cancel" @click="cancel">Hủy</button>
-            <button id="btn-save">Lưu</button>
+            <button id="btn-save" @click="btnSaveOnClick">Lưu</button>
           </div>
         </div>
       </div>
     </div>
+    
   </div>
 </template>
 
@@ -135,15 +179,66 @@ export default {
         return true;
       },
     },
-    selectedTopic:{
+    selectedTopic: {
       type: Object,
-      default(){
+      default() {
         return {};
-      }
-    }
+      },
+    },
   },
   components: {},
+  computed: {
+    currentRole() {
+      return this.$store.getters.currentRole;
+    },
+    loggedIn() {
+      return this.$store.getters.loggedIn;
+    },
+    currentToken() {
+      return this.$store.getters.currentToken;
+    },
+    validateTopic() {
+      let returnData = {
+        error: false,
+        msg: "",
+        typeError: "",
+      };
+
+      if (
+        this.selectedTopic.researchName === "" ||
+        this.selectedTopic.researchName == null
+      ) {
+        returnData = {
+          error: true,
+          msg: "Vui lòng nhập tên đề tài",
+          typeError: "name",
+        };
+      }
+      if (
+        this.selectedTopic.researchCode === "" ||
+        this.selectedTopic.researchCode == null
+      ) {
+        returnData = {
+          error: true,
+          msg: "Vui lòng nhập mã đề tài",
+          typeError: "code",
+        };
+      }
+      if (this.selectedTopic.userID == 0) {
+        returnData = {
+          error: true,
+          msg: "Vui lòng chọn tác giả",
+          typeError: "user",
+        };
+      }
+
+      return returnData;
+    },
+  },
   methods: {
+    format(value, event) {
+      return moment(value).format("YYYY-MM-DD");
+    },
     /**Sự kiện hủy */
     cancel() {
       this.$emit("outIsHide", !this.isHide);
@@ -153,37 +248,149 @@ export default {
       return re.test(email);
     },
 
-    // formatPrice(value) {
-    //   if (value) {
-    //     var salary = value.toString();
-    //     return salary.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-    //   }
-    // },
+    formatPrice(value) {
+      if (value) {
+        var salary = value.toString();
+        return salary.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+      }
+    },
 
-    //   saveEmployee() {
-    //     if (this.employee.EmployeeId == null && this.checkForm()) {
-    //       axios({
-    //         method: "POST",
-    //         url: "http://api.manhnv.net/api/employees",
-    //         data: this.employee,
-    //       }).catch((e) => console.log(e));
-    //       console.log(this.employee);
-    //     }
-    //     if (this.employee.EmployeeId != null && this.checkForm()) {
-    //       axios({
-    //         method: "PUT",
-    //         url: "http://api.manhnv.net/api/employees",
-    //         data: this.employee,
-    //       }).catch((e) => console.log(e));
-    //     }
-    //     this.closeDialog();
-    //   },
+    /**Hàm insert */
+    postTopic() {
+      const config = {
+        headers: { Authorization: `Bearer ${this.currentToken}` },
+      };
+
+      const bodyParameters = this.selectedTopic;
+      axios
+        .post(
+          "https://localhost:44323/api/ResearchTopic",
+          bodyParameters,
+          config
+        )
+        .then((response) => {
+          if (response.data) {
+            this.topic = response.data;
+            this.cancel();
+            this.$notify({
+              type: "success",
+              title: "THÔNG BÁO",
+              text: "Cập nhật thành công ",
+            });
+          }
+        })
+        .catch((e) => {
+          if (e.response.status == 401) {
+            this.$notify({
+              // bad request
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Unauthorized",
+            });
+          }
+
+          if (e.response.status == 500) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+            });
+          }
+        });
+    },
+
+    /**Hàm sửa */
+    putTopic() {
+      const config = {
+        headers: { Authorization: `Bearer ${this.currentToken}` },
+      };
+
+      const bodyParameters = this.selectedTopic;
+      axios
+        .put(
+          "https://localhost:44323/api/ResearchTopic/" +
+            this.selectedTopic.researchID,
+          bodyParameters,
+          config
+        )
+        .then((response) => {
+          if (response.data) {
+            this.topic = response.data;
+            this.cancel();
+            this.$notify({
+              type: "success",
+              title: "THÔNG BÁO",
+              text: "Cập nhật thành công ",
+            });
+          }
+        })
+        .catch((e) => {
+          if (e.response.status == 401) {
+            this.$notify({
+              // bad request
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Unauthorized",
+            });
+          }
+
+          if (e.response.status == 500) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+            });
+          }
+        });
+    },
+
+    /**Sự kiện nút lưu */
+    btnSaveOnClick() {
+      if (this.validateTopic.error) {
+        this.$notify({
+          title: "THÔNG BÁO",
+          type: "warn",
+          text: this.validateTopic.msg,
+        });
+        //focus
+        if (this.validateTopic.typeError == "name") {
+          this.$refs.name.focus();
+        }
+      } else {
+        if (this.selectedTopic.researchID == null) {
+          this.selectedTopic.researchID =
+            "00000000-0000-0000-0000-000000000000";
+          this.postTopic();
+        } else {
+          this.putTopic();
+        }
+      }
+    },
   },
   data() {
     return {
       departments: service.getDepartment(),
       positions: service.getPosition(),
+      users: [],
     };
+  },
+
+  async created() {
+    const config = {
+      headers: { Authorization: `Bearer ${this.currentToken}` },
+    };
+    await axios
+      .get("https://localhost:44323/api/User", config)
+      .then((response) => {
+        if (response.data) {
+          this.users = response.data;
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   },
 };
 </script>
@@ -195,7 +402,7 @@ export default {
   left: 33%;
   top: 13%;
   background-color: #fff;
-  padding: 15px;
+  padding: 10px;
 }
 .dialog-mask {
   position: fixed;
@@ -307,5 +514,9 @@ export default {
 
 .dialog-footer button:hover {
   background-color: azure;
+}
+textarea{
+  border-radius: 3px;
+  padding-left: 5px;
 }
 </style>

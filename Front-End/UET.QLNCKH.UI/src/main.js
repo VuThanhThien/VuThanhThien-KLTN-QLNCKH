@@ -8,8 +8,11 @@ import Header from './components/layouts/Header'
 import { store } from './store/store'
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
+import VueSession from 'vue-session';
+import moment from 'moment'
+
+Vue.prototype.moment = moment
 window.eventBus = new Vue()
-import VueSession from 'vue-session'
 Vue.use(VueSession)
 Vue.config.productionTip = false
 Vue.use(VueRouter)

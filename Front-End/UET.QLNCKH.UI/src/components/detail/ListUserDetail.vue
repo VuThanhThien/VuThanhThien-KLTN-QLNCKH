@@ -43,10 +43,7 @@
               <div class="block-1">
                 <div class="fieldName">Mã số cán bộ (<span>*</span>)</div>
                 <!-- nhập mã nhân viên  -->
-                <input
-                  id="txtEmployeeCode"
-                  type="text"
-                />
+                <input id="txtEmployeeCode" type="text" />
               </div>
               <!-- Nhập họ tên  -->
               <div class="block-1">
@@ -69,7 +66,7 @@
               <div class="block-1">
                 <div class="fieldName">Giới tính</div>
                 <select name="gender" id="cbxGender">
-                  <option value="-1">Chọn giới tính</option>
+                  <option value="0" disabled>Chọn giới tính</option>
                   <option value="1">Nữ</option>
                   <option value="2">Nam</option>
                   <option value="3">Khác</option>
@@ -117,6 +114,8 @@
                 <!-- Vị trí công việc  -->
                 <div class="fieldName">Vị trí</div>
                 <select id="cbxPosition" class="m-control">
+                  <option value="0" disabled>Chọn một vị trí</option>
+
                   <option
                     v-for="position in positions"
                     :key="position.id"
@@ -130,6 +129,8 @@
                 <!-- Phòng ban  -->
                 <div class="fieldName">Phòng ban</div>
                 <select id="cbnDepartment" class="m-control">
+                  <option value="0" disabled>Chọn một phòng ban</option>
+
                   <option
                     v-for="department in departments"
                     :key="department.id"

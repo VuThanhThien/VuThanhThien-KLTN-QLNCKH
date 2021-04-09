@@ -50,22 +50,25 @@
         caption="Tiến trình nghiên cứu"
       />
       <DxColumn
-        :width="120"
+        :width="150"
         data-field="createdDate"
         data-type="date"
         caption="Ngày tạo"
+        format="dd/MM/yyyy"
       />
       <DxColumn
-        :width="120"
+        :width="150"
         data-field="endDate"
         data-type="date"
         caption="Ngày kết thúc"
+        format="dd/MM/yyyy"
       />
       <DxColumn
-        :width="120"
+        :width="150"
         data-field="expiredDate"
         data-type="date"
         caption="Ngày nghiệm thu"
+        format="dd/MM/yyyy"
       />
       <DxColumn
         :width="180"
@@ -81,7 +84,8 @@
       <DxExport :enabled="true" />
       <DxSearchPanel :visible="true" />
     </DxDataGrid>
-
+    <notifications position="bottom right" clean: true style="margin-bottom:
+    20px"/>
     <!-- <p id="selected-employee" v-if="selectedTopic">
       Selected topic : {{ selectedTopic.researchID }}
     </p> -->
@@ -149,13 +153,13 @@ export default {
           text: "Vui lòng chọn đề tài muốn sửa",
         });
         this.isHideParent = true;
-      }
-      else{
+      } else {
         this.isHideParent = !this.isHideParent;
       }
     },
     outIsHide(e) {
       this.isHideParent = e;
+      this.getTopicList();
     },
     /**Format trạng thái */
     formatStatus(rowData) {
@@ -172,20 +176,16 @@ export default {
       if (rowData.process == 3) return "Đã hết hạn";
     },
     async getTopicList() {
-      const config = {
-        headers: { Authorization: `Bearer ${currentToken}` },
-      };
       await axios
-        .get("https://localhost:44323/api/ResearchTopic", config)
+        .get("https://localhost:44323/api/ResearchTopic", {
+          headers: {
+            Authorization: `Bearer ${this.currentToken}`,
+          },
+        })
         .then((response) => {
           if (response.data) {
-            this.$notify({
-              type: "success",
-              title: "THÔNG BÁO",
-              text: "Cập nhật thành công ",
-            });
+            this.topic = response.data;
           }
-          this.topic = response.data;
         })
         .catch((e) => {
           if (e.response.status == 401) {
@@ -236,11 +236,6 @@ export default {
       })
       .then((response) => {
         if (response.data) {
-          this.$notify({
-            type: "success",
-            title: "THÔNG BÁO",
-            text: "Cập nhật thành công ",
-          });
           this.topic = response.data;
         }
       })

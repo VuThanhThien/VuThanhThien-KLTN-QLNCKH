@@ -1,20 +1,16 @@
 <template>
   <div id="app" class="container">
-    <div class="bodyApp">
-  </div>
-  <notifications position="bottom right" clean: true style="margin-bottom: 20px"/>
+    <div class="bodyApp"></div>
+    <notifications position="bottom right" clean: true style="margin-bottom:
+    20px"/>
   </div>
 </template>
 
 <script>
-import GridTopic from './components/grid/GridTopic.vue'
-
 export default {
-  name: 'App',
-  components: {
-    GridTopic    
-  },
-}
+  name: "App",
+  components: {},
+};
 </script>
 
 <style lang="scss">
@@ -30,7 +26,7 @@ export default {
 }
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
 
-.bodyApp{
+.bodyApp {
   position: relative;
   display: flex;
 }
