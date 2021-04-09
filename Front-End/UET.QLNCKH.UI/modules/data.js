@@ -120,11 +120,51 @@ const positions = [
     "name": "Cán bộ"
   },
 ];
+
+const statuses = [
+  {
+    "id": 1,
+    "name": "Hoàn thành nhiệm vụ"
+  },
+  {
+    "id": 2,
+    "name": "Không hoàn thành nhiệm vụ"
+  },
+  {
+    "id": 3,
+    "name": "Bị hủy"
+  },
+  {
+    "id": 4,
+    "name": "Chưa cập nhật"
+  },
+];
+
+const processArr = [
+  {
+    "id": 1,
+    "name": "Đợi xét chọn"
+  },
+  {
+    "id": 2,
+    "name": "Đang xét chọn"
+  },
+  {
+    "id": 3,
+    "name": "Đã hết hạn"
+  },
+];
 export default {
   getDepartment() {
     return departments;
   },
   getPosition(){
     return positions;
+  },
+  getStatus(){
+    return statuses;
+  },
+  getProcess(){
+    return processArr;
   }
 };

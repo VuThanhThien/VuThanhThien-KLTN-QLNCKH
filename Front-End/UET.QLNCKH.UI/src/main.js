@@ -10,7 +10,10 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 import VueSession from 'vue-session';
 import moment from 'moment'
-
+import VueConfirmDialog from 'vue-confirm-dialog'
+ 
+Vue.use(VueConfirmDialog)
+Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 Vue.prototype.moment = moment
 window.eventBus = new Vue()
 Vue.use(VueSession)

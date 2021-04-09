@@ -185,6 +185,12 @@ export default {
         return {};
       },
     },
+    editMode:{
+      type: Number,
+      default(){
+        return 0;
+      }
+    }
   },
   components: {},
   computed: {
@@ -243,17 +249,6 @@ export default {
     cancel() {
       this.$emit("outIsHide", !this.isHide);
     },
-    validEmail(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
-
-    formatPrice(value) {
-      if (value) {
-        var salary = value.toString();
-        return salary.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-      }
-    },
 
     /**Hàm insert */
     postTopic() {
@@ -275,7 +270,7 @@ export default {
             this.$notify({
               type: "success",
               title: "THÔNG BÁO",
-              text: "Cập nhật thành công ",
+              text: "Thêm mới thành công đề tài "+ this.selectedTopic.researchName,
             });
           }
         })
@@ -321,7 +316,7 @@ export default {
             this.$notify({
               type: "success",
               title: "THÔNG BÁO",
-              text: "Cập nhật thành công ",
+              text: "Cập nhật thành công đề tài "+ this.selectedTopic.researchName,
             });
           }
         })
@@ -359,7 +354,7 @@ export default {
           this.$refs.name.focus();
         }
       } else {
-        if (this.selectedTopic.researchID == null) {
+        if (this.editMode == 1) {
           this.selectedTopic.researchID =
             "00000000-0000-0000-0000-000000000000";
           this.postTopic();

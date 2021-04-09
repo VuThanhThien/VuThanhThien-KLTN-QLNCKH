@@ -1,5 +1,5 @@
 <template>
-  <div class="GridTopic">
+  <div class="GridTopic" id="gridTopic">
     <div class="navBar" v-if="loggedIn">
       <div class="headerBtn">
         <DxButton
@@ -23,6 +23,7 @@
         :isHide="isHideParent"
         @outIsHide="outIsHide"
         :selectedTopic="selectedTopic"
+        :editMode="editMode"
       />
       <div class="headerBtn" v-if="currentRole == 'Admin'">
         <DxButton
@@ -30,10 +31,29 @@
           text="Xóa"
           type="success"
           styling-mode="contained"
+          @click="btnDeleteOnClick"
+        />
+      </div>
+
+      <div class="headerBtn">
+        <DxButton
+          :width="120"
+          text="Đề tài của tôi"
+          type="success"
+          styling-mode="contained"
         />
       </div>
     </div>
-
+    <DxLoadPanel
+      :position="position"
+      :visible="loadingVisible"
+      :show-indicator="true"
+      :show-pane="true"
+      :shading="true"
+      :close-on-outside-click="false"
+      :on-shown="onShown"
+      shading-color="rgba(0,0,0,0.4)"
+    />
     <DxDataGrid
       id="dataGrid"
       :data-source="topic"
@@ -44,11 +64,16 @@
       <DxColumn :width="90" data-field="researchCode" caption="Mã đề tài" />
       <DxColumn data-field="researchName" caption="Tên đề tài" />
       <DxColumn :width="280" data-field="description" caption="Mô tả" />
-      <DxColumn :calculate-cell-value="formatStatus" caption="Kết quả" />
-      <DxColumn
-        :calculate-cell-value="formatProcess"
-        caption="Tiến trình nghiên cứu"
-      />
+      <DxColumn data-field="status" caption="Kết quả">
+        <DxLookup :data-source="statuses" display-expr="name" value-expr="id" />
+      </DxColumn>
+      <DxColumn data-field="process" caption="Tiến trình nghiên cứu">
+        <DxLookup
+          :data-source="processArr"
+          display-expr="name"
+          value-expr="id"
+        />
+      </DxColumn>
       <DxColumn
         :width="150"
         data-field="createdDate"
@@ -82,13 +107,18 @@
       <DxSelection mode="single" />
       <DxFilterRow :visible="true" />
       <DxExport :enabled="true" />
-      <DxSearchPanel :visible="true" />
+      <DxSearchPanel
+        :visible="true"
+        empty-panel-text="Kéo cột muốn nhóm lại vào đây!"
+      />
+      <DxGroupPanel :visible="true" />
     </DxDataGrid>
     <notifications position="bottom right" clean: true style="margin-bottom:
     20px"/>
-    <!-- <p id="selected-employee" v-if="selectedTopic">
+    <vue-confirm-dialog></vue-confirm-dialog>
+    <p id="selected-employee" v-if="selectedTopic">
       Selected topic : {{ selectedTopic.researchID }}
-    </p> -->
+    </p>
   </div>
 </template>
 <script>
@@ -96,6 +126,8 @@ import * as axios from "axios";
 import TopicDetail from "../detail/ListTopicDetail.vue";
 import { DxSelectBox } from "devextreme-vue/select-box";
 import DxButton from "devextreme-vue/button";
+import { DxLoadPanel } from "devextreme-vue/load-panel";
+import service from "../../../modules/data.js";
 import {
   DxDataGrid,
   DxColumn,
@@ -109,6 +141,7 @@ import {
   DxColumnFixing,
   DxSearchPanel,
   DxGroupPanel,
+  DxLookup,
 } from "devextreme-vue/data-grid";
 
 export default {
@@ -128,6 +161,8 @@ export default {
     DxSearchPanel,
     DxGroupPanel,
     TopicDetail,
+    DxLoadPanel,
+    DxLookup,
   },
   computed: {
     currentRole() {
@@ -141,13 +176,30 @@ export default {
     },
   },
   methods: {
+    /**Hiển thị panel loading */
+    showLoadPanel() {
+      this.loadingVisible = true;
+      this.getTopicList();
+    },
+    onShown() {
+      setTimeout(() => {
+        this.loadingVisible = false;
+      }, 500);
+    },
+    /**Sự kiện nút thêm mới
+     * created by VTT 09/04/21
+     */
     btnAddOnClick() {
       // Mở form
       this.isHideParent = !this.isHideParent;
-      this.selectedTopic = {};
+      this.editMode = 1;
     },
+
+    /**Sự kiện nút sửa
+     * Createdby VTT 09/04/21
+     */
     btnEditOnClick() {
-      if (this.selectedTopic == {}) {
+      if (this.selectedTopic.researchID == null) {
         this.$notify({
           title: "THÔNG BÁO",
           text: "Vui lòng chọn đề tài muốn sửa",
@@ -155,26 +207,69 @@ export default {
         this.isHideParent = true;
       } else {
         this.isHideParent = !this.isHideParent;
+        this.editMode = 2;
       }
     },
+
+    /**Sự kiện nút xóa */
+    btnDeleteOnClick() {
+      if (this.selectedTopic.researchID == null) {
+        this.$notify({
+          title: "THÔNG BÁO",
+          text: "Vui lòng chọn đề tài muốn xóa",
+        });
+      } else {
+        this.$confirm({
+          message: `Bạn có chắc chắn muốn xóa đề tài này không?`,
+          button: {
+            no: "Hủy",
+            yes: "Chắc chắn",
+          },
+          callback: (confirm) => {
+            if (confirm) {
+              // ... do something
+              const config = {
+                headers: { Authorization: `Bearer ${this.currentToken}` },
+              };
+              axios
+                .delete(
+                  "https://localhost:44323/api/ResearchTopic/" +
+                    this.selectedTopic.researchID,
+                  config
+                )
+                .then((response) => {
+                  if (response.data) {
+                    this.showLoadPanel();
+                    this.$notify({
+                      type: "success",
+                      title: "THÔNG BÁO",
+                      text:
+                        "Xóa thành công đề tài " +
+                        this.selectedTopic.researchName,
+                    });
+                  }
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
+            }
+          },
+        });
+      }
+    },
+    /**Đóng form detail */
     outIsHide(e) {
       this.isHideParent = e;
-      this.getTopicList();
-    },
-    /**Format trạng thái */
-    formatStatus(rowData) {
-      if (rowData.status == 1) return "Hoàn thành nhiệm vụ";
-      if (rowData.status == 2) return "Không hoàn thành nhiệm vụ";
-      if (rowData.status == 3) return "Bị hủy";
-      if (rowData.status == 4) return "Chưa cập nhật";
+      this.showLoadPanel();
     },
 
-    /**Format tiến trính */
-    formatProcess(rowData) {
-      if (rowData.process == 1) return "Đợi xét chọn";
-      if (rowData.process == 2) return "Đang thực hiện";
-      if (rowData.process == 3) return "Đã hết hạn";
+    /**Đóng popup */
+    outIsHidePopup(e) {
+      this.isHidePopupParent = e;
+      this.showLoadPanel();
     },
+
+    /**Lấy danh sách đề tài */
     async getTopicList() {
       await axios
         .get("https://localhost:44323/api/ResearchTopic", {
@@ -219,11 +314,17 @@ export default {
   },
   data() {
     return {
+      editMode: 0,
       allMode: "page",
       checkBoxesMode: "always",
       selectedTopic: {},
       topic: [],
       isHideParent: true,
+      loadingVisible: false,
+      position: { of: "#gridTopic" },
+      statuses: service.getStatus(),
+      processArr: service.getProcess(),
+      isHidePopupParent: true,
     };
   },
 
@@ -262,6 +363,10 @@ export default {
 };
 </script>
 <style scoped>
+#gridTopic {
+  height: 820px;
+  overflow: auto;
+}
 #dataGrid {
   padding: 15px;
 }
@@ -295,7 +400,9 @@ export default {
   display: inline-block;
   vertical-align: middle;
 }
-
+.dx-datagrid-text-content {
+  color: black !important ;
+}
 .option > span {
   margin-right: 10px;
 }
