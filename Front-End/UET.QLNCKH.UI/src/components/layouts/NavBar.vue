@@ -1,49 +1,46 @@
 <template>
-<div>
-  <div class="navBar"  v-if="loggedIn">
+  <div>
+    <div class="navBar" v-if="loggedIn">
+      <router-link :to="{ name: 'MyTopic' }">
+        <div class="headerBtn">
+          <DxButton
+            :width="120"
+            text="Đề tài của tôi"
+            type="success"
+            styling-mode="contained"
+          />
+        </div>
+      </router-link>
+      <div class="headerBtn">
+        <router-link :to="{ name: 'ListTopic' }">
+          <DxButton
+            :width="120"
+            text="Đề tài"
+            type="success"
+            styling-mode="contained"
+          />
+        </router-link>
+      </div>
+      <div class="headerBtn">
+        <router-link :to="{ name: 'ListAuthor' }">
+          <DxButton
+            :width="120"
+            text="Tác giả"
+            type="success"
+            styling-mode="contained"
+          />
+        </router-link>
+      </div>
 
-    <div class="headerBtn">
+      <div class="headerBtn">
         <DxButton
           :width="120"
-          text="Đề tài của tôi"
+          text="Thống kê"
           type="success"
           styling-mode="contained"
         />
       </div>
-
-    <div class="headerBtn">
-      <router-link :to="{ name: 'ListTopic' }">
-        <DxButton
-          :width="120"
-          text="Đề tài"
-          type="success"
-          styling-mode="contained"
-        />
-      </router-link>
     </div>
-    <div class="headerBtn">
-      <router-link :to="{ name: 'ListAuthor' }">
-        <DxButton
-          :width="120"
-          text="Tác giả"
-          type="success"
-          styling-mode="contained"
-        />
-      </router-link>
-    </div>
-
-    <div class="headerBtn">
-      <DxButton
-        :width="120"
-        text="Thống kê"
-        type="success"
-        styling-mode="contained"
-      />
-    </div>
-  </div>
-
-  
-
   </div>
 </template>
 
@@ -72,7 +69,7 @@ export default {
   background: #f5f8fa;
   border-bottom: 1px solid lightgrey;
 }
-.headerBtn{
+.headerBtn {
   margin-right: 15px;
 }
 </style>

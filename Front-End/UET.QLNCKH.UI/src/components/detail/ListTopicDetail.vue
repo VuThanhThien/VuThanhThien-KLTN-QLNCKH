@@ -315,12 +315,12 @@ export default {
           }
         })
         .catch((e) => {
-          if (e.response.status == 401) {
+          if (e.response.status == 403) {
             this.$notify({
               // bad request
               type: "error",
               title: "THÔNG BÁO",
-              text: "Unauthorized",
+              text: "Bạn không đủ quyền để chỉnh sửa, vui lòng liên hệ Admin!",
             });
           }
 

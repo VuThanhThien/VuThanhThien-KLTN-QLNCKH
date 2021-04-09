@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     token: localStorage.getItem('token') || null,
     role: localStorage.getItem('role') || null,
     name: localStorage.getItem('name') || null,
-    name: localStorage.getItem('id') || null,
+    id: localStorage.getItem('id') || null,
   },
   getters: {
     loggedIn(state) {
