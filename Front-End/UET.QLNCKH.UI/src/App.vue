@@ -1,9 +1,6 @@
 <template>
   <div id="app" class="container">
     <div class="bodyApp"></div>
-    <notifications position="bottom right" clean: true style="margin-bottom:
-    20px"/>
-    <vue-confirm-dialog></vue-confirm-dialog>
   </div>
 </template>
 

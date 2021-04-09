@@ -31,13 +31,18 @@ namespace QLNCKH.API.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        protected readonly IBaseBL<UserInfo> _baseBL;
         /// <summary>
-        /// Khởi tạo
+        /// Base Bussiness Layer
+        /// </summary>
+        protected readonly IBaseBL<UserInfo> _baseBL;
+        
+        /// <summary>
+        /// Controller tài khoản
         /// </summary>
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="roleManager"></param>
+        /// <param name="baseBL"></param>
         public AccountsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IBaseBL<UserInfo> baseBL)
         {
             _userManager = userManager;

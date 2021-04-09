@@ -9,13 +9,19 @@
             Quản lý tài khoản
             </summary>
         </member>
+        <member name="F:QLNCKH.API.Controllers.AccountsController._baseBL">
+            <summary>
+            Base Bussiness Layer
+            </summary>
+        </member>
         <member name="M:QLNCKH.API.Controllers.AccountsController.#ctor(Microsoft.AspNetCore.Identity.UserManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.UserInfo})">
             <summary>
-            Khởi tạo
+            Controller tài khoản
             </summary>
             <param name="userManager"></param>
             <param name="signInManager"></param>
             <param name="roleManager"></param>
+            <param name="baseBL"></param>
         </member>
         <member name="M:QLNCKH.API.Controllers.AccountsController.CreateAccount(QLNCKH.Common.Model.ParamRegisterDto)">
             <summary>
@@ -121,6 +127,13 @@
             <param name="topic">Đối tượng cần thêm mới</param>
             <returns></returns>
         </member>
+        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.GetTopicByUserID(System.String)">
+            <summary>
+            Lấy danh sách đề tài theo userID
+            </summary>
+            <param name="userID"></param>
+            <returns></returns>
+        </member>
         <member name="T:QLNCKH.API.Controllers.UserController">
             <summary>
             
@@ -137,6 +150,24 @@
             </summary>
             <param name="baseBL"></param>
             <param name="userBL"></param>
+        </member>
+        <member name="T:QLNCKH.API.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:QLNCKH.API.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
         </member>
         <member name="T:QLNCKH.API.Startup">
             <summary>

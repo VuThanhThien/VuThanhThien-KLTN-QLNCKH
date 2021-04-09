@@ -185,12 +185,6 @@ export default {
         return {};
       },
     },
-    editMode:{
-      type: Number,
-      default(){
-        return 0;
-      }
-    }
   },
   components: {},
   computed: {
@@ -354,7 +348,7 @@ export default {
           this.$refs.name.focus();
         }
       } else {
-        if (this.editMode == 1) {
+        if (this.selectedTopic.researchID == null) {
           this.selectedTopic.researchID =
             "00000000-0000-0000-0000-000000000000";
           this.postTopic();

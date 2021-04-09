@@ -1,5 +1,4 @@
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.light.css';
+
 import Notifications from 'vue-notification'
 import Vue from 'vue'
 import VueRouter from 'vue-router'

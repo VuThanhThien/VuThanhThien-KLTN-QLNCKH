@@ -41,5 +41,18 @@ namespace QLNCKH.API.Controllers
 
             return StatusCode((int)result.HTTPStatusCode, result.Data);
         }
+
+        /// <summary>
+        /// Lấy danh sách đề tài theo userID
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("ByUserID/{userID}")]
+        public IActionResult GetTopicByUserID(string userID)
+        {
+            var result = _researchTopicBL.GetTopicByUserID(userID);
+            return StatusCode((int)result.HTTPStatusCode, result.Data);
+        }
     }
 }

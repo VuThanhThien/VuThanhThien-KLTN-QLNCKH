@@ -1,6 +1,16 @@
 <template>
 <div>
   <div class="navBar"  v-if="loggedIn">
+
+    <div class="headerBtn">
+        <DxButton
+          :width="120"
+          text="Đề tài của tôi"
+          type="success"
+          styling-mode="contained"
+        />
+      </div>
+
     <div class="headerBtn">
       <router-link :to="{ name: 'ListTopic' }">
         <DxButton

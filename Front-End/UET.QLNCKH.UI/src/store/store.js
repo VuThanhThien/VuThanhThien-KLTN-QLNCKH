@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
     token: localStorage.getItem('token') || null,
     role: localStorage.getItem('role') || null,
     name: localStorage.getItem('name') || null,
+    name: localStorage.getItem('id') || null,
   },
   getters: {
     loggedIn(state) {
@@ -23,6 +24,9 @@ export const store = new Vuex.Store({
     },
     currentToken(state){
       return state.token
+    },
+    currentID(state){
+      return state.id
     }
   },
   mutations: {
@@ -30,12 +34,14 @@ export const store = new Vuex.Store({
     retrieveToken(state, data) {
       state.token = data.token,
       state.role = data.role,
-      state.name = data.name
+      state.name = data.name,
+      state.id = data.id
     },
     destroyToken(state) {
       state.token = null,
       state.role = null,
-      state.name = null
+      state.name = null,
+      state.id = null
     }
   },
   actions: {
@@ -87,9 +93,11 @@ export const store = new Vuex.Store({
             const token = response.data.token
             const role = response.data.role
             const name = response.data.name
+            const id = response.data.id
             localStorage.setItem('token', token)
             localStorage.setItem('role', role)
             localStorage.setItem('name', name)
+            localStorage.setItem('id', id)
             context.commit('retrieveToken', response.data)
             resolve(response)
             // console.log(response);

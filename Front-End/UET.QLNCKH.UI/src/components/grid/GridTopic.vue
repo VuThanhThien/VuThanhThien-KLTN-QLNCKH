@@ -1,6 +1,6 @@
 <template>
   <div class="GridTopic" id="gridTopic">
-    <div class="navBar" v-if="loggedIn">
+    <div class="navBar" v-if="loggedIn && currentRole == 'Admin'" >
       <div class="headerBtn">
         <DxButton
           :width="120"
@@ -10,7 +10,7 @@
           @click="btnAddOnClick"
         />
       </div>
-      <div class="headerBtn" v-if="currentRole == 'Admin'">
+      <div class="headerBtn" >
         <DxButton
           :width="120"
           text="Sửa"
@@ -23,9 +23,8 @@
         :isHide="isHideParent"
         @outIsHide="outIsHide"
         :selectedTopic="selectedTopic"
-        :editMode="editMode"
       />
-      <div class="headerBtn" v-if="currentRole == 'Admin'">
+      <div class="headerBtn" >
         <DxButton
           :width="120"
           text="Xóa"
@@ -35,14 +34,7 @@
         />
       </div>
 
-      <div class="headerBtn">
-        <DxButton
-          :width="120"
-          text="Đề tài của tôi"
-          type="success"
-          styling-mode="contained"
-        />
-      </div>
+      
     </div>
     <DxLoadPanel
       :position="position"
@@ -116,9 +108,6 @@
     <notifications position="bottom right" clean: true style="margin-bottom:
     20px"/>
     <vue-confirm-dialog></vue-confirm-dialog>
-    <p id="selected-employee" v-if="selectedTopic">
-      Selected topic : {{ selectedTopic.researchID }}
-    </p>
   </div>
 </template>
 <script>
@@ -174,13 +163,18 @@ export default {
     currentToken() {
       return this.$store.getters.currentToken;
     },
+    currentID() {
+      return this.$store.getters.currentID;
+    },
   },
   methods: {
     /**Hiển thị panel loading */
     showLoadPanel() {
       this.loadingVisible = true;
       this.getTopicList();
+      this.$router.go();
     },
+    /**Thời gian hiển thị loading panel */
     onShown() {
       setTimeout(() => {
         this.loadingVisible = false;
@@ -192,7 +186,7 @@ export default {
     btnAddOnClick() {
       // Mở form
       this.isHideParent = !this.isHideParent;
-      this.editMode = 1;
+      this.selectedTopic = {};
     },
 
     /**Sự kiện nút sửa
@@ -207,7 +201,6 @@ export default {
         this.isHideParent = true;
       } else {
         this.isHideParent = !this.isHideParent;
-        this.editMode = 2;
       }
     },
 
@@ -220,7 +213,10 @@ export default {
         });
       } else {
         this.$confirm({
-          message: `Bạn có chắc chắn muốn xóa đề tài này không?`,
+          message:
+            `Bạn có chắc chắn muốn xóa đề tài ` +
+            this.selectedTopic.researchName +
+            ` không?`,
           button: {
             no: "Hủy",
             yes: "Chắc chắn",
@@ -260,12 +256,6 @@ export default {
     /**Đóng form detail */
     outIsHide(e) {
       this.isHideParent = e;
-      this.showLoadPanel();
-    },
-
-    /**Đóng popup */
-    outIsHidePopup(e) {
-      this.isHidePopupParent = e;
       this.showLoadPanel();
     },
 
@@ -314,7 +304,6 @@ export default {
   },
   data() {
     return {
-      editMode: 0,
       allMode: "page",
       checkBoxesMode: "always",
       selectedTopic: {},
