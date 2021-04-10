@@ -63,7 +63,7 @@ namespace QLNCKH.API.Controllers
         /// <param name="accountDto">Thông tin TK</param>
         /// <returns></returns>
         [Authorize(Roles = "Admin")]
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> CreateAccount([FromBody] ParamRegisterDto accountDto)
         {
             var user = new ApplicationUser()
@@ -113,8 +113,7 @@ namespace QLNCKH.API.Controllers
             var response = new ResponseAccountDto()
             {
                 UserID = userInfo.UserID,
-                Email = user.Email,
-                Position = userInfo.Position
+                FullName = userInfo.FullName,
             };
             return Ok(response);
         }
@@ -146,14 +145,14 @@ namespace QLNCKH.API.Controllers
 
 
             // tạo một đối tượng userinfo -> query để lấy thông tin
-
-            return Ok(new
+            var response = new ResponseLoginDto()
             {
-                token = JWTHelper.GenAccessToken(user, userRoles),
-                role = userRoles.FirstOrDefault(),
-                name = user.FullName,
-                id = user.Id,
-            });
+                Token = JWTHelper.GenAccessToken(user, userRoles),
+                Role = userRoles.FirstOrDefault(),
+                FullName = user.FullName,
+                UserID = Guid.Parse( user.Id),
+            };
+            return Ok(response);
 
         }
 

@@ -154,6 +154,20 @@ const processArr = [
     "name": "Đã hết hạn"
   },
 ];
+const genders = [
+  {
+    "id": 1,
+    "name": "Nữ"
+  },
+  {
+    "id":2,
+    "name":"Nam"
+  },
+  {
+    "id" :3,
+    "name": "Khác"
+  }
+];
 export default {
   getDepartment() {
     return departments;
@@ -166,5 +180,8 @@ export default {
   },
   getProcess(){
     return processArr;
+  },
+  getGender(){
+    return genders;
   }
 };

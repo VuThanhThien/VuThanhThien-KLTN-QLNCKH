@@ -60,9 +60,9 @@ namespace QLNCKH.Common.Dictionary
         public string BusinessAddress { get; set; }
 
         /// <summary>
-        /// Yêu cầu của người dùng
+        /// thành tích
         /// </summary>
-        public string Request { get; set; }
+        public string Achievements { get; set; }
         public int Gender { get; set; }
     }
 }

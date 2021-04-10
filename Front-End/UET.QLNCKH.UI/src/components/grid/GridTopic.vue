@@ -1,6 +1,6 @@
 <template>
   <div class="GridTopic" id="gridTopic">
-    <div class="navBar" v-if="loggedIn && currentRole == 'Admin'" >
+    <div class="navBar" v-if="loggedIn && currentRole == 'Admin'">
       <div class="headerBtn">
         <DxButton
           :width="120"
@@ -10,7 +10,7 @@
           @click="btnAddOnClick"
         />
       </div>
-      <div class="headerBtn" >
+      <div class="headerBtn">
         <DxButton
           :width="120"
           text="Sửa"
@@ -24,7 +24,7 @@
         @outIsHide="outIsHide"
         :selectedTopic="selectedTopic"
       />
-      <div class="headerBtn" >
+      <div class="headerBtn">
         <DxButton
           :width="120"
           text="Xóa"
@@ -33,11 +33,9 @@
           @click="btnDeleteOnClick"
         />
       </div>
-
-      
     </div>
     <DxLoadPanel
-      :position="position"
+      :position="positionLoading"
       :visible="loadingVisible"
       :show-indicator="true"
       :show-pane="true"
@@ -51,7 +49,7 @@
       :data-source="topic"
       :show-borders="true"
       key-expr="researchID"
-      @selection-changed="selectUser"
+      @selection-changed="selectTopic"
     >
       <DxColumn :width="90" data-field="researchCode" caption="Mã đề tài" />
       <DxColumn data-field="researchName" caption="Tên đề tài" />
@@ -99,11 +97,11 @@
       <DxSelection mode="single" />
       <DxFilterRow :visible="true" />
       <DxExport :enabled="true" />
-      <DxSearchPanel
+      <DxSearchPanel :visible="true" />
+      <DxGroupPanel
         :visible="true"
-        empty-panel-text="Kéo cột muốn nhóm lại vào đây!"
+        empty-panel-text="Kéo cột muốn nhóm lại vào đây !"
       />
-      <DxGroupPanel :visible="true" />
     </DxDataGrid>
     <notifications position="bottom right" clean: true style="margin-bottom:
     20px"/>
@@ -172,7 +170,9 @@ export default {
     showLoadPanel() {
       this.loadingVisible = true;
       this.getTopicList();
-      this.$router.go();
+      setTimeout(() => {
+        this.$router.go();
+      }, 500);
     },
     /**Thời gian hiển thị loading panel */
     onShown() {
@@ -294,7 +294,7 @@ export default {
     },
 
     /**khi chọn một hàng thì lấy đề tài đã chọn sang */
-    selectUser(e) {
+    selectTopic(e) {
       e.component.byKey(e.currentSelectedRowKeys[0]).done((topic) => {
         if (topic) {
           this.selectedTopic = topic;
@@ -310,7 +310,7 @@ export default {
       topic: [],
       isHideParent: true,
       loadingVisible: false,
-      position: { of: "#gridTopic" },
+      positionLoading: { of: "#gridTopic" },
       statuses: service.getStatus(),
       processArr: service.getProcess(),
       isHidePopupParent: true,

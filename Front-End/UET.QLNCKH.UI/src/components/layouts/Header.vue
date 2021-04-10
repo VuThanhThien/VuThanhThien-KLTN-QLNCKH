@@ -7,9 +7,6 @@
       <li v-if="!loggedIn">
         <router-link :to="{ name: 'Login' }">Đăng nhập</router-link>
       </li>
-      <li v-if="!loggedIn">
-        <router-link :to="{ name: 'register' }">Đăng ký</router-link>
-      </li>
       <li v-if="loggedIn">
         <router-link :to="{ name: 'logout' }">Đăng xuất</router-link>
       </li>

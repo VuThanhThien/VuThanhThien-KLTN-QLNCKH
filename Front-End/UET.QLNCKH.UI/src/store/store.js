@@ -9,8 +9,8 @@ export const store = new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || null,
     role: localStorage.getItem('role') || null,
-    name: localStorage.getItem('name') || null,
-    id: localStorage.getItem('id') || null,
+    fullName: localStorage.getItem('fullName') || null,
+    userID: localStorage.getItem('userID') || null,
   },
   getters: {
     loggedIn(state) {
@@ -20,13 +20,13 @@ export const store = new Vuex.Store({
       return state.role
     },
     currentName(state) {
-      return state.name
+      return state.fullName
     },
     currentToken(state){
       return state.token
     },
     currentID(state){
-      return state.id
+      return state.userID
     }
   },
   mutations: {
@@ -34,14 +34,14 @@ export const store = new Vuex.Store({
     retrieveToken(state, data) {
       state.token = data.token,
       state.role = data.role,
-      state.name = data.name,
-      state.id = data.id
+      state.fullName = data.fullName,
+      state.userID = data.userID
     },
     destroyToken(state) {
       state.token = null,
       state.role = null,
-      state.name = null,
-      state.id = null
+      state.fullName = null,
+      state.userID = null
     }
   },
   actions: {
@@ -92,12 +92,12 @@ export const store = new Vuex.Store({
           .then(response => {
             const token = response.data.token
             const role = response.data.role
-            const name = response.data.name
-            const id = response.data.id
+            const fullName = response.data.fullName
+            const userID = response.data.userID
             localStorage.setItem('token', token)
             localStorage.setItem('role', role)
-            localStorage.setItem('name', name)
-            localStorage.setItem('id', id)
+            localStorage.setItem('fullName', fullName)
+            localStorage.setItem('userID', userID)
             context.commit('retrieveToken', response.data)
             resolve(response)
             // console.log(response);

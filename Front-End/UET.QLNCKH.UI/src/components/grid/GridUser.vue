@@ -16,12 +16,10 @@
           text="Sửa User"
           type="success"
           styling-mode="contained"
+          @click="btnEditOnClick"
         />
       </div>
-      <UserDetail
-        :isHide="isHideParent"
-        @outIsHide="outIsHide"
-      />
+      <UserDetail :isHide="isHideParent" @outIsHide="outIsHide" :selectedUser="selectedUser"/>
       <div class="headerBtn">
         <DxButton
           :width="120"
@@ -31,7 +29,16 @@
         />
       </div>
     </div>
-
+    <DxLoadPanel
+      :position="positionLoading"
+      :visible="loadingVisible"
+      :show-indicator="true"
+      :show-pane="true"
+      :shading="true"
+      :close-on-outside-click="false"
+      :on-shown="onShown"
+      shading-color="rgba(0,0,0,0.4)"
+    />
     <DxDataGrid
       id="dataGrid"
       :data-source="user"
@@ -46,9 +53,15 @@
         <DxRequiredRule />
       </DxColumn>
       <DxColumn data-field="gender" caption="Giới tính">
+        <DxLookup :data-source="genders" display-expr="name" value-expr="id" />
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn :calculate-cell-value="formatPosition" caption="Vị trí">
+      <DxColumn data-field="position" caption="Vị trí">
+        <DxLookup
+          :data-source="positions"
+          display-expr="name"
+          value-expr="id"
+        />
         <DxRequiredRule />
       </DxColumn>
       <DxColumn
@@ -56,26 +69,32 @@
         data-type="date"
         :width="100"
         caption="Ngày sinh"
+        format="dd/MM/yyyy"
       >
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn
-        :calculate-cell-value="formatDepartment"
-        :width="350"
-        caption="Phòng ban"
-      >
+      <DxColumn data-field="department" :width="350" caption="Phòng ban">
         <DxRequiredRule />
+        <DxLookup
+          :data-source="departments"
+          display-expr="name"
+          value-expr="id"
+        />
       </DxColumn>
       <DxColumn :width="100" data-field="userCode" caption="MNV" />
       <DxColumn data-field="businessAddress" caption="Nơi công tác">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="email" caption="Email" />
+      <DxColumn data-field="email" c aption="Email" />
       <DxColumn data-field="phoneNumber" caption="Số điện thoại" />
       <DxColumn data-field="address" :visible="false" caption="Địa chỉ" />
       <DxColumnFixing :enabled="true" />
       <DxFilterRow :visible="true" />
       <DxSearchPanel :visible="true" />
+      <DxGroupPanel
+        :visible="true"
+        empty-panel-text="Kéo cột muốn nhóm lại vào đây !"
+      />
       <DxSelection mode="single" />
       <DxSummary>
         <DxGroupItem summary-type="count" />
@@ -83,6 +102,9 @@
       <DxPaging :page-size="15" />
       <DxExport :enabled="true" />
     </DxDataGrid>
+    <notifications position="bottom right" clean: true style="margin-bottom:
+    20px"/>
+    <vue-confirm-dialog></vue-confirm-dialog>
     <p id="selected-employee" v-if="selectedUser">
       Selected user: {{ selectedUser.userID }}
     </p>
@@ -104,12 +126,14 @@ import {
   DxMasterDetail,
   DxExport,
   DxPaging,
+  DxLookup,
 } from "devextreme-vue/data-grid";
+import service from "../../../modules/data.js";
 import * as axios from "axios";
 import UserDetail from "../detail/ListUserDetail.vue";
-import service from "../../../modules/employees.service";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
+import { DxLoadPanel } from "devextreme-vue/load-panel";
 import { exportDataGrid } from "devextreme/excel_exporter";
 import DxButton from "devextreme-vue/button";
 export default {
@@ -130,13 +154,19 @@ export default {
     DxPaging,
     DxButton,
     UserDetail,
+    DxLookup,
+    DxLoadPanel
   },
   data() {
     return {
-      employees: service.getEmployees(),
-      selectedUser: undefined,
+      positionLoading: { of: "#dataGrid" },
+      genders: service.getGender(),
+      departments: service.getDepartment(),
+      positions: service.getPosition(),
+      selectedUser: {},
       user: [],
       isHideParent: true,
+      loadingVisible: false,
     };
   },
   computed: {
@@ -152,72 +182,105 @@ export default {
     },
   },
   methods: {
+
+    /**Hiển thị panel loading */
+    showLoadPanel() {
+      this.loadingVisible = true;
+      this.getAuthorList();
+      setTimeout(() => {
+        this.$router.go();
+      }, 500);
+    },
+    /**Thời gian hiển thị loading panel */
+    onShown() {
+      setTimeout(() => {
+        this.loadingVisible = false;
+      }, 500);
+    },
     btnAddOnClick() {
       // Mở form
       this.isHideParent = !this.isHideParent;
-    },
-    outIsHide(e) {
-      this.isHideParent = e;
-    },
-    /**Format phòng ban */
-    formatDepartment(rowData) {
-      if (rowData.department == 1) return "Ban Giám hiệu";
-      if (rowData.department == 2) return "Hội đồng Khoa học và Đào tạo";
-      if (rowData.department == 3) return "Khoa Công nghệ thông tin";
-      if (rowData.department == 4) return "Khoa Điện tử viễn thông";
-      if (rowData.department == 5)
-        return "Khoa Vật lý kỹ thuật & Công Nghệ Nano";
-      if (rowData.department == 6) return "Khoa Cơ học kỹ thuật & Tự động hoá";
-      if (rowData.department == 7) return "Khoa Công nghệ nông nghiệp";
-      if (rowData.department == 8) return "Viện Công nghệ Hàng không Vũ trụ";
-      if (rowData.department == 9)
-        return "Bộ môn Công nghệ Xây dựng – Giao thông";
-      if (rowData.department == 10)
-        return "Viện Tiên tiến về Kỹ thuật và Công nghệ";
-      if (rowData.department == 11)
-        return "Phòng thí nghiệm Trọng điểm Hệ thống tích hợp thông minh";
-      if (rowData.department == 12)
-        return "Phòng thí nghiệm Trọng điểm Công nghệ Micro & Nanô";
-      if (rowData.department == 13)
-        return "Trung tâm Nghiên cứu Điện tử – Viễn thông";
-      if (rowData.department == 14)
-        return "Trung tâm Công nghệ tích hợp liên ngành Giám sát hiện trường";
-      if (rowData.department == 15) return "Phòng Đào tạo";
-      if (rowData.department == 16) return "Phòng Tổ chức Cán bộ";
-      if (rowData.department == 17) return "Phòng Công tác Sinh viên";
-      if (rowData.department == 18) return "Phòng Hành chính – Quản trị";
-      if (rowData.department == 19) return "Phòng Kế hoạch Tài chính";
-      if (rowData.department == 20)
-        return "Phòng Khoa học công nghệ & Hợp tác phát triển";
-      if (rowData.department == 21) return "Phòng Thanh tra & Pháp chế";
-      if (rowData.department == 22) return "Trung tâm Đảm bảo chất lượng";
-      if (rowData.department == 23) return "Trung tâm Máy tính";
+      this.selectedUser = {}
     },
 
-    /**Format chức vụ */
-    formatPosition(rowData) {
-      if (rowData.position == 1) return "Hiệu trưởng";
-      if (rowData.position == 2) return "Phó Hiệu trưởng";
-      if (rowData.position == 3) return "Trưởng phòng";
-      if (rowData.position == 4) return "Phó Trưởng phòng";
-      if (rowData.position == 5) return "Chủ tịch Hội đồng nghiên cứu";
-      if (rowData.position == 6) return "Cán bộ";
+    /**Sự kiện nút sửa
+     * Createdby VTT 09/04/21
+     */
+    btnEditOnClick() {
+      if (this.selectedUser.userID == null) {
+        this.$notify({
+          title: "THÔNG BÁO",
+          text: "Vui lòng chọn người dùng muốn sửa",
+        });
+        this.isHideParent = true;
+      } else {
+        this.isHideParent = !this.isHideParent;
+      }
+    },
+
+    btnDeleteOnClick() {
+      if (this.selectedUser.userID == null) {
+        this.$notify({
+          title: "THÔNG BÁO",
+          text: "Vui lòng chọn đề tài muốn xóa",
+        });
+      } else {
+        this.$confirm({
+          message:
+            `Bạn có chắc chắn muốn xóa người dùng ` +
+            this.selectedUser.fullName +
+            ` không?`,
+          button: {
+            no: "Hủy",
+            yes: "Chắc chắn",
+          },
+          callback: (confirm) => {
+            if (confirm) {
+              // ... do something
+              const config = {
+                headers: { Authorization: `Bearer ${this.currentToken}` },
+              };
+              axios
+                .delete(
+                  "https://localhost:44323/api/ResearchTopic/" +
+                    this.selectedUser.userID,
+                  config
+                )
+                .then((response) => {
+                  if (response.data) {
+                    this.showLoadPanel();
+                    this.$notify({
+                      type: "success",
+                      title: "THÔNG BÁO",
+                      text:
+                        "Xóa thành công đề tài " +
+                        this.selectedTopic.researchName,
+                    });
+                  }
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
+            }
+          },
+        });
+      }
+    },
+
+    outIsHide(e) {
+      this.isHideParent = e;
+      this.showLoadPanel();
     },
     async getAuthorList() {
       const config = {
-        headers: { Authorization: `Bearer ${currentToken}` },
+        headers: { Authorization: `Bearer ${this.currentToken}` },
       };
       await axios
         .get("https://localhost:44323/api/User", config)
         .then((response) => {
           if (response.data) {
-            this.$notify({
-              type: "success",
-              title: "THÔNG BÁO",
-              text: "Cập nhật thành công ",
-            });
+            this.user = response.data;
           }
-          this.user = response.data;
         })
         .catch((e) => {
           if (e.response.status == 401) {
@@ -274,18 +337,12 @@ export default {
       })
       .then((response) => {
         if (response.data) {
-          this.$notify({
-            type: "success",
-            title: "THÔNG BÁO",
-            text: "Cập nhật thành công ",
-          });
           this.user = response.data;
         }
       })
       .catch((e) => {
         if (e.response.status == 401) {
           this.$notify({
-            // bad request
             type: "error",
             title: "THÔNG BÁO",
             text: "Unauthorized",

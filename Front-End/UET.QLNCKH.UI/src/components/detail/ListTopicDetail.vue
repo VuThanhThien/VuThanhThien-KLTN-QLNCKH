@@ -110,7 +110,6 @@
               <div class="block-1-topic">
                 <!-- Email  -->
                 <div class="fieldName">Ngày bắt đầu </div>
-                <!-- <input type="date" v-model="selectedTopic.createdDate" :formatter="format"/> -->
                 <input
                   type="date"
                   v-model="
@@ -126,7 +125,6 @@
               <div class="block-1-topic">
                 <!-- Số điện thoại  -->
                 <div class="fieldName">Ngày kết thúc </div>
-                <!-- <input type="date" v-model="selectedTopic.endDate" /> -->
                 <input
                   type="date"
                   v-model="moment(selectedTopic.endDate).format('YYYY-MM-DD')"
@@ -169,7 +167,6 @@
 
 <script>
 import * as axios from "axios";
-import service from "../../../modules/data.js";
 export default {
   name: "UserDetails",
   props: {
@@ -236,9 +233,6 @@ export default {
     },
   },
   methods: {
-    format(value, event) {
-      return moment(value).format("YYYY-MM-DD");
-    },
     /**Sự kiện hủy */
     cancel() {
       this.$emit("outIsHide", !this.isHide);
@@ -259,7 +253,7 @@ export default {
         )
         .then((response) => {
           if (response.data) {
-            this.topic = response.data;
+            // this.topic = response.data;
             this.cancel();
             this.$notify({
               type: "success",
@@ -305,7 +299,7 @@ export default {
         )
         .then((response) => {
           if (response.data) {
-            this.topic = response.data;
+            // this.topic = response.data;
             this.cancel();
             this.$notify({
               type: "success",
@@ -360,8 +354,6 @@ export default {
   },
   data() {
     return {
-      departments: service.getDepartment(),
-      positions: service.getPosition(),
       users: [],
     };
   },

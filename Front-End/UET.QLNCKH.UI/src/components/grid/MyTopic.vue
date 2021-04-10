@@ -91,9 +91,11 @@
       <DxExport :enabled="true" />
       <DxSearchPanel
         :visible="true"
+      />
+      <DxGroupPanel
+        :visible="true"
         empty-panel-text="Kéo cột muốn nhóm lại vào đây!"
       />
-      <DxGroupPanel :visible="true" />
     </DxDataGrid>
     <notifications position="bottom right" clean: true style="margin-bottom:
     20px"/>
@@ -177,6 +179,7 @@ export default {
       // Mở form
       this.isHideParent = !this.isHideParent;
       this.selectedTopic = {};
+      this.selectedTopic.userID = this.currentID;
     },
 
     /**Sự kiện nút sửa

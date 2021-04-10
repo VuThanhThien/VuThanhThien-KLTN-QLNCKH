@@ -35,7 +35,40 @@
           </div>
           <!-- Khối điền thông tin  -->
           <div class="block-right">
-            <h4>A. THÔNG TIN CHUNG</h4>
+            <div v-if="this.selectedUser.userID == null">
+              <h4>-- THÔNG TIN TÀI KHOẢN --</h4>
+              <hr />
+              <div class="block-2">
+                <div class="block-1">
+                  <div class="fieldName">Tên đăng nhập (<span>*</span>)</div>
+                  <input type="text" />
+                </div>
+                <div class="block-1">
+                  <!-- Email  -->
+                  <div class="fieldName">Email (<span>*</span>)</div>
+                  <input
+                    type="email"
+                    placeholder="example@domain.com"
+                    v-model="selectedUser.email"
+                  />
+                </div>
+              </div>
+              <div class="block-2">
+                <div class="block-1">
+                  <div class="fieldName">Mật khẩu (<span>*</span>)</div>
+                  <input type="password" />
+                </div>
+                <div class="block-1">
+                  <!-- Email  -->
+                  <div class="fieldName">
+                    Nhập lại mật khẩu (<span>*</span>)
+                  </div>
+                  <input type="password" />
+                </div>
+              </div>
+            </div>
+
+            <h4>-- THÔNG TIN CHUNG --</h4>
             <hr />
             <!-- block 2 là khối chưa 2 trường nhập  -->
             <div class="block-2">
@@ -43,16 +76,15 @@
               <div class="block-1">
                 <div class="fieldName">Mã số cán bộ (<span>*</span>)</div>
                 <!-- nhập mã nhân viên  -->
-                <input id="txtEmployeeCode" type="text" />
+                <input type="text" v-model="selectedUser.userCode" />
               </div>
               <!-- Nhập họ tên  -->
               <div class="block-1">
                 <div class="fieldName">Họ và tên (<span>*</span>)</div>
                 <input
                   id="txtFullName"
-                  fieldName="FullName"
-                  class="input-required"
                   type="text"
+                  v-model="selectedUser.fullName"
                 />
               </div>
             </div>
@@ -60,12 +92,22 @@
             <div class="block-2">
               <div class="block-1">
                 <div class="fieldName">Ngày sinh</div>
-                <input type="date" />
+                <input
+                  type="date"
+                  v-model="
+                    moment(selectedUser.dateOfBirth).format('YYYY-MM-DD')
+                  "
+                  v-on:input="
+                    selectedTopic.expiredDate = moment(
+                      $event.target.value
+                    ).toDate()
+                  "
+                />
               </div>
               <!-- Nhập giới tính  -->
               <div class="block-1">
                 <div class="fieldName">Giới tính</div>
-                <select name="gender" id="cbxGender">
+                <select name="gender" v-model="selectedUser.gender">
                   <option value="0" disabled>Chọn giới tính</option>
                   <option value="1">Nữ</option>
                   <option value="2">Nam</option>
@@ -77,12 +119,12 @@
               <div class="block-1">
                 <!-- Nhập cmtnd/ căn cước  -->
                 <div class="fieldName">Số CMTND/ CCCD (<span>*</span>)</div>
-                <input id="txtIdentityNumber" fieldName="text" type="text" />
+                <input type="text" v-model="selectedUser.identityCode" />
               </div>
               <!-- Ngầy cấp cmtnd/cc  -->
               <div class="block-1">
                 <div class="fieldName">Quê quán</div>
-                <input type="text" />
+                <input type="text" v-model="selectedUser.address" />
               </div>
             </div>
             <div class="block-2">
@@ -90,30 +132,31 @@
                 <!-- Nới cấp cmtnd/cc  -->
                 <div class="fieldName">Địa chỉ công tác</div>
                 <textarea
-                  style="margin: 0px; width: 453px; height: 107px; resize: none"
+                  style="margin: 0px; width: 453px; height: 70px; resize: none"
+                  v-model="selectedUser.businessAddress"
                 ></textarea>
               </div>
             </div>
             <div class="block-2">
               <div class="block-1">
-                <!-- Email  -->
-                <div class="fieldName">Email (<span>*</span>)</div>
-                <input type="email" placeholder="example@domain.com" />
-              </div>
-              <div class="block-1">
                 <!-- Số điện thoại  -->
                 <div class="fieldName">Số điện thoại (<span>*</span>)</div>
-                <input id="txtPhoneNumber" type="text" />
+                <input
+                  id="txtPhoneNumber"
+                  type="text"
+                  v-model="selectedUser.phoneNumber"
+                />
               </div>
             </div>
-            <br />
-            <h4>B. THÔNG TIN CÔNG VIỆC</h4>
-            <hr />
             <div class="block-2">
               <div class="block-1">
                 <!-- Vị trí công việc  -->
                 <div class="fieldName">Vị trí</div>
-                <select id="cbxPosition" class="m-control">
+                <select
+                  id="cbxPosition"
+                  class="m-control"
+                  v-model="selectedUser.position"
+                >
                   <option value="0" disabled>Chọn một vị trí</option>
 
                   <option
@@ -128,7 +171,7 @@
               <div class="block-1">
                 <!-- Phòng ban  -->
                 <div class="fieldName">Phòng ban</div>
-                <select id="cbnDepartment" class="m-control">
+                <select v-model="selectedUser.department">
                   <option value="0" disabled>Chọn một phòng ban</option>
 
                   <option
@@ -144,9 +187,10 @@
 
             <div class="block-2">
               <div class="block-1">
-                <div class="fieldName">Ghi chú</div>
+                <div class="fieldName">Thành tích</div>
                 <textarea
-                  style="margin: 0px; width: 453px; height: 107px; resize: none"
+                  style="margin: 0px; width: 453px; height: 70px; resize: none"
+                  v-model="selectedUser.achievements"
                 ></textarea>
               </div>
             </div>
@@ -176,6 +220,12 @@ export default {
         return true;
       },
     },
+    selectedUser: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
   components: {},
   methods: {
@@ -183,36 +233,113 @@ export default {
     cancel() {
       this.$emit("outIsHide", !this.isHide);
     },
-    validEmail(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+
+    /**Hàm insert */
+    resister() {
+      /**header token */
+      const config = {
+        headers: { Authorization: `Bearer ${this.currentToken}` },
+      };
+
+      const bodyParameters = this.selectedUser;
+      axios
+        .post(
+          "https://localhost:44323/api/Accounts/Register",
+          bodyParameters,
+          config
+        )
+        .then((response) => {
+          if (response.data) {
+            this.cancel();
+            this.$notify({
+              type: "success",
+              title: "THÔNG BÁO",
+              text: "Thêm mới thành công tài khoản người dùng",
+            });
+          }
+        })
+        .catch((e) => {
+          if (e.response.status == 403) {
+            this.$notify({
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Forbiden",
+            });
+          }
+          if (e.response.status == 500) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+            });
+          }
+          if (e.response.status == 401) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Vui lòng đăng nhập lại",
+            });
+          }
+        });
     },
 
-    // formatPrice(value) {
-    //   if (value) {
-    //     var salary = value.toString();
-    //     return salary.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-    //   }
-    // },
 
-    //   saveEmployee() {
-    //     if (this.employee.EmployeeId == null && this.checkForm()) {
-    //       axios({
-    //         method: "POST",
-    //         url: "http://api.manhnv.net/api/employees",
-    //         data: this.employee,
-    //       }).catch((e) => console.log(e));
-    //       console.log(this.employee);
-    //     }
-    //     if (this.employee.EmployeeId != null && this.checkForm()) {
-    //       axios({
-    //         method: "PUT",
-    //         url: "http://api.manhnv.net/api/employees",
-    //         data: this.employee,
-    //       }).catch((e) => console.log(e));
-    //     }
-    //     this.closeDialog();
-    //   },
+    /**Hàm sửa */
+    putTopic() {
+      const config = {
+        headers: { Authorization: `Bearer ${this.currentToken}` },
+      };
+
+      const bodyParameters = this.selectedUser;
+      axios
+        .put(
+          "https://localhost:44323/api/User/" +
+            this.selectedUser.userID,
+          bodyParameters,
+          config
+        )
+        .then((response) => {
+          if (response.data) {
+            this.cancel();
+            this.$notify({
+              type: "success",
+              title: "THÔNG BÁO",
+              text: "Cập nhật thành công đề tài "+ this.selectedTopic.researchName,
+            });
+          }
+        })
+        .catch((e) => {
+          if (e.response.status == 403) {
+            this.$notify({
+              // bad request
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Bạn không đủ quyền để chỉnh sửa, vui lòng liên hệ Admin!",
+            });
+          }
+
+          if (e.response.status == 500) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+            });
+          }
+          if (e.response.status == 401) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Vui lòng đăng nhập lại",
+            });
+          }
+        });
+    },
+
+    
   },
   data() {
     return {
@@ -225,6 +352,7 @@ export default {
 
 <style>
 .dialog {
+  padding: 10px;
   position: absolute;
   width: 700px;
   left: 33%;
@@ -284,7 +412,7 @@ hr {
 .dl-avatar {
   width: 160px;
   margin-left: 5%;
-  margin-right: 5%;
+  margin-right: 6%;
   height: 160px;
   background-position: center;
   background-repeat: no-repeat;
