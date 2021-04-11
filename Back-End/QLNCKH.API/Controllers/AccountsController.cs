@@ -106,6 +106,7 @@ namespace QLNCKH.API.Controllers
             userInfo.PhoneNumber = accountDto.PhoneNumber;
             userInfo.IdentityCode = accountDto.IdentityCode;
             userInfo.BusinessAddress = accountDto.BusinessAddress;
+            userInfo.Gender = accountDto.Gender;
             // gọi lên tầng BL để insert vào userinfo
             var insertResult = _baseBL.Insert(userInfo);
 

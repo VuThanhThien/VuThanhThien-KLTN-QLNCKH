@@ -68,7 +68,7 @@ namespace QLNCKH.Common.Dictionary
         /// <summary>
         /// Giới tính createdby VTT 09/04/21
         /// </summary>
-        public int Gender { get; set; }
+        public int? Gender { get; set; }
 
         public UserInfo(Guid userID)
         {

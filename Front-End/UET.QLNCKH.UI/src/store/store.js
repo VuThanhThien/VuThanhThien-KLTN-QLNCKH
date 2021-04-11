@@ -22,45 +22,28 @@ export const store = new Vuex.Store({
     currentName(state) {
       return state.fullName
     },
-    currentToken(state){
+    currentToken(state) {
       return state.token
     },
-    currentID(state){
+    currentID(state) {
       return state.userID
     }
   },
   mutations: {
-    
     retrieveToken(state, data) {
       state.token = data.token,
-      state.role = data.role,
-      state.fullName = data.fullName,
-      state.userID = data.userID
+        state.role = data.role,
+        state.fullName = data.fullName,
+        state.userID = data.userID
     },
     destroyToken(state) {
       state.token = null,
-      state.role = null,
-      state.fullName = null,
-      state.userID = null
+        state.role = null,
+        state.fullName = null,
+        state.userID = null
     }
   },
   actions: {
-    register(context, data) {
-      return new Promise((resolve, reject) => {
-        axios.post('/register', {
-          name: data.name,
-          email: data.email,
-          Password: data.Password,
-        })
-          .then(response => {
-            resolve(response)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-
     destroyToken(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
 
@@ -80,10 +63,7 @@ export const store = new Vuex.Store({
         })
       }
     },
-
-
     retrieveToken(context, credentials) {
-
       return new Promise((resolve, reject) => {
         axios.post('/Login', {
           UserName: credentials.UserName,
@@ -107,8 +87,8 @@ export const store = new Vuex.Store({
             console.log(error)
             reject(error)
           })
-        })
+      })
     },
-    
+
   }
 })

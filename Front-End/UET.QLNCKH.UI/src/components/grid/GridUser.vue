@@ -19,13 +19,19 @@
           @click="btnEditOnClick"
         />
       </div>
-      <UserDetail :isHide="isHideParent" @outIsHide="outIsHide" :selectedUser="selectedUser"/>
+      <UserDetail
+        :isHide="isHideParent"
+        @outIsHide="outIsHide"
+        :selectedUser="selectedUser"
+        :editMode="editMode"
+      />
       <div class="headerBtn">
         <DxButton
           :width="120"
           text="Xóa User"
           type="success"
           styling-mode="contained"
+          @click="btnDeleteOnClick"
         />
       </div>
     </div>
@@ -81,8 +87,8 @@
           value-expr="id"
         />
       </DxColumn>
-      <DxColumn :width="100" data-field="userCode" caption="MNV" />
-      <DxColumn data-field="businessAddress" caption="Nơi công tác">
+      <DxColumn :width="100" data-field="userCode" caption="Mã cán bộ" />
+      <DxColumn data-field="businessAddress" caption="Địa chỉ công tác">
         <DxRequiredRule />
       </DxColumn>
       <DxColumn data-field="email" c aption="Email" />
@@ -105,9 +111,6 @@
     <notifications position="bottom right" clean: true style="margin-bottom:
     20px"/>
     <vue-confirm-dialog></vue-confirm-dialog>
-    <p id="selected-employee" v-if="selectedUser">
-      Selected user: {{ selectedUser.userID }}
-    </p>
   </div>
 </template>
 
@@ -155,7 +158,7 @@ export default {
     DxButton,
     UserDetail,
     DxLookup,
-    DxLoadPanel
+    DxLoadPanel,
   },
   data() {
     return {
@@ -167,6 +170,7 @@ export default {
       user: [],
       isHideParent: true,
       loadingVisible: false,
+      editMode: 0,
     };
   },
   computed: {
@@ -182,7 +186,6 @@ export default {
     },
   },
   methods: {
-
     /**Hiển thị panel loading */
     showLoadPanel() {
       this.loadingVisible = true;
@@ -200,7 +203,7 @@ export default {
     btnAddOnClick() {
       // Mở form
       this.isHideParent = !this.isHideParent;
-      this.selectedUser = {}
+      (this.selectedUser = {}), (this.editMode = 1);
     },
 
     /**Sự kiện nút sửa
@@ -215,6 +218,7 @@ export default {
         this.isHideParent = true;
       } else {
         this.isHideParent = !this.isHideParent;
+        this.editMode = 2;
       }
     },
 
@@ -242,7 +246,7 @@ export default {
               };
               axios
                 .delete(
-                  "https://localhost:44323/api/ResearchTopic/" +
+                  "https://localhost:44323/api/User/" +
                     this.selectedUser.userID,
                   config
                 )
@@ -259,7 +263,11 @@ export default {
                   }
                 })
                 .catch((e) => {
-                  console.log(e);
+                  this.$notify({
+                    type: "error",
+                    title: "THÔNG BÁO",
+                    text: "Xóa thất bại",
+                  });
                 });
             }
           },

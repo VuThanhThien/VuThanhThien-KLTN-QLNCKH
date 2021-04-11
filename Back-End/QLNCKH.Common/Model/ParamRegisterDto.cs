@@ -18,7 +18,7 @@ namespace QLNCKH.Common.Model
         public string PhoneNumber { get; set; }
         public string IdentityCode { get; set; }
         public string BusinessAddress { get; set; }
-        public int Gender { get; set; }
+        public int? Gender { get; set; }
         public string Achievements { get; set; }
     }
 }

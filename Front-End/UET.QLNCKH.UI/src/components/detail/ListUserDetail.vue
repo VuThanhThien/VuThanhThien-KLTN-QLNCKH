@@ -41,7 +41,7 @@
               <div class="block-2">
                 <div class="block-1">
                   <div class="fieldName">Tên đăng nhập (<span>*</span>)</div>
-                  <input type="text" />
+                  <input type="text" v-model="selectedUser.userName" />
                 </div>
                 <div class="block-1">
                   <!-- Email  -->
@@ -56,14 +56,17 @@
               <div class="block-2">
                 <div class="block-1">
                   <div class="fieldName">Mật khẩu (<span>*</span>)</div>
-                  <input type="password" />
+                  <input type="password" v-model="selectedUser.password" />
                 </div>
                 <div class="block-1">
                   <!-- Email  -->
                   <div class="fieldName">
                     Nhập lại mật khẩu (<span>*</span>)
                   </div>
-                  <input type="password" />
+                  <input
+                    type="password"
+                    v-model="selectedUser.confirmPassword"
+                  />
                 </div>
               </div>
             </div>
@@ -98,7 +101,7 @@
                     moment(selectedUser.dateOfBirth).format('YYYY-MM-DD')
                   "
                   v-on:input="
-                    selectedTopic.expiredDate = moment(
+                    selectedUser.expiredDate = moment(
                       $event.target.value
                     ).toDate()
                   "
@@ -200,7 +203,7 @@
         <div class="dialog-footer">
           <div class="footer-content">
             <button id="btn-cancel" @click="cancel">Hủy</button>
-            <button id="btn-save">Lưu</button>
+            <button id="btn-save" @click="btnSaveOnclick">Lưu</button>
           </div>
         </div>
       </div>
@@ -226,8 +229,129 @@ export default {
         return {};
       },
     },
+    editMode: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
   },
   components: {},
+
+  computed: {
+    currentRole() {
+      return this.$store.getters.currentRole;
+    },
+    loggedIn() {
+      return this.$store.getters.loggedIn;
+    },
+    currentToken() {
+      return this.$store.getters.currentToken;
+    },
+    /**validate */
+    validateAccount() {
+      let checkAccVal = {
+        error: false,
+        msg: "",
+        typeError: "",
+      };
+      if (this.editMode != 1) {
+        checkAccVal = {
+          error: true,
+          msg: "Sai editMode",
+          typeError: "editMode",
+        };
+      }
+      if (
+        this.selectedUser.userName === "" ||
+        this.selectedUser.userName == null
+      ) {
+        checkAccVal = {
+          error: true,
+          msg: "Vui lòng nhập Username",
+          typeError: "username",
+        };
+      }
+      if (this.selectedUser.email === "" || this.selectedUser.email == null) {
+        checkAccVal = {
+          error: true,
+          msg: "Vui lòng nhập email",
+          typeError: "email",
+        };
+      }
+      if (
+        this.selectedUser.password == "" ||
+        this.selectedUser.password == null
+      ) {
+        checkAccVal = {
+          error: true,
+          msg: "Vui lòng nhập mật khẩu",
+          typeError: "password",
+        };
+      }
+      if (
+        this.selectedUser.confirmPassword == "" ||
+        this.selectedUser.confirmPassword == null
+      ) {
+        checkAccVal = {
+          error: true,
+          msg: "Vui lòng nhập xác nhận mật khẩu",
+          typeError: "cf-password",
+        };
+      }
+      if (
+        this.selectedUser.confirmPassword !== this.selectedUser.confirmPassword
+      ) {
+        checkAccVal = {
+          error: true,
+          msg: "Xác nhận mật khẩu sai ",
+          typeError: "cf-password",
+        };
+      }
+      return checkAccVal;
+    },
+
+    validateInfo() {
+      let checkInfoVal = {
+        error: false,
+        msg: "",
+        typeError: "",
+      };
+      if (
+        this.selectedUser.userCode == "" ||
+        this.selectedUser.userCode == null
+      ) {
+        checkInfoVal = {
+          error: true,
+          msg: "Vui lòng nhập mã cán bộ",
+          typeError: "userCode",
+        };
+      }
+
+      if (
+        this.selectedUser.fullName == "" ||
+        this.selectedUser.fullName == null
+      ) {
+        checkInfoVal = {
+          error: true,
+          msg: "Vui lòng nhập mã cán bộ",
+          typeError: "fullName",
+        };
+      }
+      if (
+        this.selectedUser.phoneNumber == "" ||
+        this.selectedUser.phoneNumber == null
+      ) {
+        checkInfoVal = {
+          error: true,
+          msg: "Vui lòng nhập số điện thoại",
+          typeError: "phoneNumber",
+        };
+      }
+      return checkInfoVal;
+    },
+  },
+
   methods: {
     /**Sự kiện hủy */
     cancel() {
@@ -235,7 +359,7 @@ export default {
     },
 
     /**Hàm insert */
-    resister() {
+    register() {
       /**header token */
       const config = {
         headers: { Authorization: `Bearer ${this.currentToken}` },
@@ -285,9 +409,8 @@ export default {
         });
     },
 
-
     /**Hàm sửa */
-    putTopic() {
+    putUser() {
       const config = {
         headers: { Authorization: `Bearer ${this.currentToken}` },
       };
@@ -295,8 +418,7 @@ export default {
       const bodyParameters = this.selectedUser;
       axios
         .put(
-          "https://localhost:44323/api/User/" +
-            this.selectedUser.userID,
+          "https://localhost:44323/api/User/" + this.selectedUser.userID,
           bodyParameters,
           config
         )
@@ -306,7 +428,7 @@ export default {
             this.$notify({
               type: "success",
               title: "THÔNG BÁO",
-              text: "Cập nhật thành công đề tài "+ this.selectedTopic.researchName,
+              text: "Cập nhật thành công đề tài " + this.selectedUser.fullName,
             });
           }
         })
@@ -339,7 +461,45 @@ export default {
         });
     },
 
-    
+    /**event btn save
+     * createdby VTTHien 11/04/21
+     */
+    btnSaveOnclick() {
+      //Nếu editmode là thêm mới account
+      if (this.editMode == 1) {
+        //Check validate tài khoản
+        if (this.validateAccount.error) {
+          this.$notify({
+            title: "THÔNG BÁO",
+            type: "warn",
+            text: this.validateAccount.msg,
+          });
+        }
+        //Check validate thông tin
+        else if (this.validateInfo.error) {
+          this.$notify({
+            title: "THÔNG BÁO",
+            type: "warn",
+            text: this.validateInfo.msg,
+          });
+        } else {
+          this.register();
+        }
+      }
+
+      //Nếu editmode là sửa
+      if (this.editMode == 2) {
+        if (this.validateInfo.error) {
+          this.$notify({
+            title: "THÔNG BÁO",
+            type: "warn",
+            text: this.validateInfo.msg,
+          });
+        } else {
+          this.putUser();
+        }
+      }
+    },
   },
   data() {
     return {
