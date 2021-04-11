@@ -191,7 +191,7 @@ export default {
       this.loadingVisible = true;
       this.getAuthorList();
       setTimeout(() => {
-        this.$router.go();
+        // this.$router.go();
       }, 500);
     },
     /**Thời gian hiển thị loading panel */
@@ -203,7 +203,8 @@ export default {
     btnAddOnClick() {
       // Mở form
       this.isHideParent = !this.isHideParent;
-      (this.selectedUser = {}), (this.editMode = 1);
+      this.selectedUser = {};
+      this.editMode = 1;
     },
 
     /**Sự kiện nút sửa

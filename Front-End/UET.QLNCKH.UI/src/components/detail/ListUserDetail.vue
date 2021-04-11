@@ -95,16 +95,10 @@
             <div class="block-2">
               <div class="block-1">
                 <div class="fieldName">Ngày sinh</div>
-                <input
+                <DxDateBox
+                  v-model="selectedUser.dateOfBirth"
                   type="date"
-                  v-model="
-                    moment(selectedUser.dateOfBirth).format('YYYY-MM-DD')
-                  "
-                  v-on:input="
-                    selectedUser.expiredDate = moment(
-                      $event.target.value
-                    ).toDate()
-                  "
+                  display-format="dd/MM/yyyy"
                 />
               </div>
               <!-- Nhập giới tính  -->
@@ -134,10 +128,10 @@
               <div class="block-1">
                 <!-- Nới cấp cmtnd/cc  -->
                 <div class="fieldName">Địa chỉ công tác</div>
-                <textarea
-                  style="margin: 0px; width: 453px; height: 70px; resize: none"
+                <DxTextArea
+                  :width= "450"
                   v-model="selectedUser.businessAddress"
-                ></textarea>
+                />
               </div>
             </div>
             <div class="block-2">
@@ -191,10 +185,10 @@
             <div class="block-2">
               <div class="block-1">
                 <div class="fieldName">Thành tích</div>
-                <textarea
-                  style="margin: 0px; width: 453px; height: 70px; resize: none"
+                <DxTextArea
+                  :width= "450"
                   v-model="selectedUser.achievements"
-                ></textarea>
+                />
               </div>
             </div>
           </div>
@@ -213,6 +207,8 @@
 
 <script>
 import * as axios from "axios";
+import DxDateBox from "devextreme-vue/date-box";
+import DxTextArea from "devextreme-vue/text-area";
 import service from "../../../modules/data.js";
 export default {
   name: "UserDetails",
@@ -236,7 +232,7 @@ export default {
       },
     },
   },
-  components: {},
+  components: { DxDateBox, DxTextArea },
 
   computed: {
     currentRole() {
@@ -510,7 +506,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.dx-datebox {
+  max-width: 85% !important;
+}
 .dialog {
   padding: 10px;
   position: absolute;
@@ -521,7 +520,7 @@ export default {
 }
 .dialog-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 3;
   top: 0;
   left: 0;
   width: 100%;
@@ -618,6 +617,9 @@ hr {
 }
 .fieldName {
   font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 2px;
+  margin-top: 5px;
 }
 input,
 select {
@@ -626,10 +628,13 @@ select {
   width: 200px;
   height: 30px;
   border-radius: 5px;
-  border: 0.5px solid rgb(156, 153, 153);
+  border: 0.5px solid rgb(204, 204, 204);
   padding: 5px;
 }
+input:hover, select:hover {
+  border: 0.5px solid rgb(183, 192, 245);
 
+}
 .dialog-footer {
   margin-top: 20px;
   width: 100%;
@@ -667,7 +672,6 @@ select {
 #btn-cancel {
   border: solid 1px #ffffff;
   width: 70px;
-  background-color: Transparent !important;
 }
 
 .currency-for-input {
@@ -681,5 +685,8 @@ select {
 
 .dialog-footer button:hover {
   background-color: azure;
+}
+option {
+  text-overflow: ellipsis;
 }
 </style>

@@ -10,7 +10,11 @@ import 'devextreme/dist/css/dx.light.css';
 import VueSession from 'vue-session';
 import moment from 'moment'
 import VueConfirmDialog from 'vue-confirm-dialog'
+import { Datetime } from 'vue-datetime'
+// You need a specific loader for CSS files
+import 'vue-datetime/dist/vue-datetime.css'
  
+Vue.use(Datetime) 
 Vue.use(VueConfirmDialog)
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 Vue.prototype.moment = moment

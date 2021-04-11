@@ -2,7 +2,7 @@
   <div id="app">
     <ul class="nav">
       <li><a>{{this.currentName}}</a></li>
-      <li><router-link :to="{ name: 'Home' }">Trang chủ</router-link></li>
+      <li v-if="loggedIn"><router-link :to="{ name: 'Home' }">Trang chủ</router-link></li>
       <li><router-link :to="{ name: 'about' }">Chi tiết</router-link></li>
       <li v-if="!loggedIn">
         <router-link :to="{ name: 'Login' }">Đăng nhập</router-link>

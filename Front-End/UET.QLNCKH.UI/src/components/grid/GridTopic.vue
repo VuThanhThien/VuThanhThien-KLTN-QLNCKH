@@ -171,7 +171,7 @@ export default {
       this.loadingVisible = true;
       this.getTopicList();
       setTimeout(() => {
-        this.$router.go();
+        // this.$router.go();
       }, 500);
     },
     /**Thời gian hiển thị loading panel */
@@ -294,13 +294,11 @@ export default {
     },
 
     /**khi chọn một hàng thì lấy đề tài đã chọn sang */
-    selectTopic(e) {
-      e.component.byKey(e.currentSelectedRowKeys[0]).done((topic) => {
-        if (topic) {
-          this.selectedTopic = topic;
-        }
-      });
-    },
+
+    selectTopic({ selectedRowsData }) {
+      const data = selectedRowsData[0];
+      this.selectedTopic = data;
+    }
   },
   data() {
     return {
@@ -344,7 +342,7 @@ export default {
             //Lỗi server
             type: "error",
             title: "THÔNG BÁO",
-            text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+            text: "Vui lòng liên hệ để được hỗ trợ!",
           });
         }
       });

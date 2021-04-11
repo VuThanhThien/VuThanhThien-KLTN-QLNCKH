@@ -35,7 +35,6 @@
                 <div class="fieldName">Mã đề tài (<span>*</span>)</div>
                 <!-- nhập mã nhân viên  -->
                 <input
-                  id="txtEmployeeCode"
                   type="text"
                   v-model="selectedTopic.researchCode"
                 />
@@ -54,18 +53,7 @@
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <div class="fieldName">Ngày nghiệm thu</div>
-                <!-- <input type="date" v-model="selectedTopic.expiredDate" /> -->
-                <input
-                  type="date"
-                  v-model="
-                    moment(selectedTopic.expiredDate).format('YYYY-MM-DD')
-                  "
-                  v-on:input="
-                    selectedTopic.expiredDate = moment(
-                      $event.target.value
-                    ).toDate()
-                  "
-                />
+                <DxDateBox v-model="selectedTopic.expiredDate" type="date" display-format="dd/MM/yyyy"/>
               </div>
               <!-- Nhập giới tính  -->
               <div class="block-1-topic">
@@ -76,7 +64,7 @@
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <!-- Nhập cmtnd/ căn cước  -->
-                <div class="fieldName">Kết quả nghiên cứu </div>
+                <div class="fieldName">Kết quả nghiên cứu</div>
                 <select v-model="selectedTopic.status">
                   <option value="0" disabled>Chọn một kết quả</option>
                   <option value="1">Hoàn thành nhiệm vụ</option>
@@ -100,38 +88,23 @@
               <div class="block-1-topic">
                 <!-- Nới cấp cmtnd/cc  -->
                 <div class="fieldName">Mô tả</div>
-                <textarea
-                  style="margin: 0px; width: 650px; height: 107px; resize: none"
+                <DxTextArea
+                  :height="100"
+                  :width= "650"
                   v-model="selectedTopic.description"
-                ></textarea>
+                />
               </div>
             </div>
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <!-- Email  -->
-                <div class="fieldName">Ngày bắt đầu </div>
-                <input
-                  type="date"
-                  v-model="
-                    moment(selectedTopic.createdDate).format('YYYY-MM-DD')
-                  "
-                  v-on:input="
-                    selectedTopic.createdDate = moment(
-                      $event.target.value
-                    ).toDate()
-                  "
-                />
+                <div class="fieldName">Ngày bắt đầu</div>
+                <DxDateBox v-model="selectedTopic.createdDate" type="date" display-format="dd/MM/yyyy"/>
               </div>
               <div class="block-1-topic">
                 <!-- Số điện thoại  -->
-                <div class="fieldName">Ngày kết thúc </div>
-                <input
-                  type="date"
-                  v-model="moment(selectedTopic.endDate).format('YYYY-MM-DD')"
-                  v-on:input="
-                    selectedTopic.endDate = moment($event.target.value).toDate()
-                  "
-                />
+                <div class="fieldName">Ngày kết thúc</div>
+                <DxDateBox v-model="selectedTopic.endDate" type="date" display-format="dd/MM/yyyy"/>
               </div>
             </div>
             <div class="block-2-topic">
@@ -161,12 +134,13 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
 import * as axios from "axios";
+import DxDateBox from "devextreme-vue/date-box";
+import DxTextArea from "devextreme-vue/text-area";
 export default {
   name: "UserDetails",
   props: {
@@ -183,7 +157,7 @@ export default {
       },
     },
   },
-  components: {},
+  components: { DxDateBox, DxTextArea },
   computed: {
     currentRole() {
       return this.$store.getters.currentRole;
@@ -258,7 +232,8 @@ export default {
             this.$notify({
               type: "success",
               title: "THÔNG BÁO",
-              text: "Thêm mới thành công đề tài "+ this.selectedTopic.researchName,
+              text:
+                "Thêm mới thành công đề tài " + this.selectedTopic.researchName,
             });
           }
         })
@@ -304,7 +279,8 @@ export default {
             this.$notify({
               type: "success",
               title: "THÔNG BÁO",
-              text: "Cập nhật thành công đề tài "+ this.selectedTopic.researchName,
+              text:
+                "Cập nhật thành công đề tài " + this.selectedTopic.researchName,
             });
           }
         })
@@ -376,7 +352,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+/* .dx-texteditor.dx-editor-outlined{
+  border: none  !important;
+} */
+.dx-datebox{
+  max-width: 90%  !important;
+}
+.dx-datebox.dx-auto-width .dx-texteditor-input, .dx-datebox:not(.dx-texteditor-empty).dx-auto-width .dx-texteditor-input {
+    padding-right: 26px;
+    width: 267px !important;
+}
 .dialog-topic {
   position: absolute;
   width: 700px;
@@ -387,7 +373,7 @@ export default {
 }
 .dialog-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 3;
   top: 0;
   left: 0;
   width: 100%;
@@ -432,6 +418,9 @@ export default {
 }
 .fieldName {
   font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 3px;
+  margin-top: 8px;
 }
 .block-1-topic input,
 .block-1-topic select {
@@ -440,10 +429,13 @@ export default {
   width: 300px;
   height: 30px;
   border-radius: 5px;
-  border: 0.5px solid rgb(156, 153, 153);
+  border: 0.5px solid rgb(204, 204, 204);
   padding: 5px;
 }
+input:hover, select:hover {
+  border: 0.5px solid rgb(183, 192, 245);
 
+}
 .dialog-footer {
   margin-top: 20px;
   width: 100%;
@@ -481,7 +473,6 @@ export default {
 #btn-cancel {
   border: solid 1px #ffffff;
   width: 70px;
-  background-color: Transparent !important;
 }
 
 .currency-for-input {
@@ -496,7 +487,7 @@ export default {
 .dialog-footer button:hover {
   background-color: azure;
 }
-textarea{
+textarea {
   border-radius: 3px;
   padding-left: 5px;
 }
