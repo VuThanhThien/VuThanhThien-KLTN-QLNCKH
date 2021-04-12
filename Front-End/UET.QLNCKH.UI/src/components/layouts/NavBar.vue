@@ -31,15 +31,16 @@
           />
         </router-link>
       </div>
-
-      <div class="headerBtn">
-        <DxButton
-          :width="120"
-          text="Thống kê"
-          type="success"
-          styling-mode="contained"
-        />
-      </div>
+      <router-link :to="{ name: 'ChartExpire' }">
+        <div class="headerBtn">
+          <DxButton
+            :width="120"
+            text="Thống kê"
+            type="success"
+            styling-mode="contained"
+          />
+        </div>
+      </router-link>
     </div>
   </div>
 </template>

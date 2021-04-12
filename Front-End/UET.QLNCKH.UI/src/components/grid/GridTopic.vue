@@ -54,17 +54,29 @@
       key-expr="researchID"
       @selection-changed="selectTopic"
     >
-      <DxColumn :width="90" data-field="researchCode" sort-order="asc" caption="Mã đề tài" />
-      <DxColumn data-field="researchName" caption="Tên đề tài" />
-      <DxColumn :width="280" data-field="description" caption="Mô tả" />
-      <DxColumn data-field="status" caption="Kết quả">
+      <DxColumn
+        :width="90"
+        data-field="researchCode"
+        sort-order="asc"
+        caption="Mã đề tài"
+      />
+      <DxColumn :width="280" data-field="researchName" caption="Tên đề tài" />
+      <DxColumn  data-field="description" caption="Mô tả" />
+      <DxColumn :width="180" data-field="status" caption="Kết quả">
         <DxLookup :data-source="statuses" display-expr="name" value-expr="id" />
       </DxColumn>
-      <DxColumn data-field="process" caption="Tiến trình nghiên cứu">
+      <DxColumn :width="180" data-field="process" caption="Tiến trình nghiên cứu">
         <DxLookup
           :data-source="processArr"
           display-expr="name"
           value-expr="id"
+        />
+      </DxColumn>
+      <DxColumn :width="200" data-field="userID" caption="Tác giả">
+        <DxLookup
+          :data-source="users"
+          display-expr="fullName"
+          value-expr="userID"
         />
       </DxColumn>
       <DxColumn
@@ -74,13 +86,13 @@
         caption="Ngày tạo"
         format="dd/MM/yyyy"
       />
-      <DxColumn
+      <!-- <DxColumn
         :width="150"
         data-field="endDate"
         data-type="date"
         caption="Ngày kết thúc"
         format="dd/MM/yyyy"
-      />
+      /> -->
       <DxColumn
         :width="150"
         data-field="expiredDate"
@@ -296,12 +308,27 @@ export default {
         });
     },
 
+    async getAuthorList() {
+      const config = {
+        headers: { Authorization: `Bearer ${this.currentToken}` },
+      };
+      await axios
+        .get("https://localhost:44323/api/User", config)
+        .then((response) => {
+          if (response.data) {
+            this.users = response.data;
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     /**khi chọn một hàng thì lấy đề tài đã chọn sang */
 
     selectTopic({ selectedRowsData }) {
       const data = selectedRowsData[0];
       this.selectedTopic = data;
-    }
+    },
   },
   data() {
     return {
@@ -315,10 +342,12 @@ export default {
       statuses: service.getStatus(),
       processArr: service.getProcess(),
       isHidePopupParent: true,
+      users: [],
     };
   },
 
   async created() {
+    //tất cả đề tài
     await axios
       .get("https://localhost:44323/api/ResearchTopic", {
         headers: {
@@ -328,21 +357,19 @@ export default {
       .then((response) => {
         if (response.data) {
           this.topic = response.data;
+          this.getAuthorList();
         }
       })
       .catch((e) => {
         if (e.response.status == 401) {
           this.$notify({
-            // bad request
             type: "error",
             title: "THÔNG BÁO",
-            text: "Unauthorized",
+            text: "Vui lòng đăng nhập lại",
           });
         }
-
         if (e.response.status == 500) {
           this.$notify({
-            //Lỗi server
             type: "error",
             title: "THÔNG BÁO",
             text: "Vui lòng liên hệ để được hỗ trợ!",

@@ -5,6 +5,7 @@ import Logout from '@/components/auth/Logout'
 import GridTopic from '@/components/grid/GridTopic.vue'
 import GridUser from '@/components/grid/GridUser.vue'
 import MyTopic from '@/components/grid/MyTopic.vue'
+import ChartExpire from '@/components/chart/ChartExpire.vue'
 const routes = [
   
   {
@@ -56,7 +57,15 @@ const routes = [
     path: '/logout',
     name: 'logout',
     component: Logout
-  }
+  },
+  {
+    path: '/ChartExpire',
+    name: 'ChartExpire',
+    component: ChartExpire,
+    meta: {
+      requiresAuth: true,
+    }
+  },
 ]
 
 export default routes
