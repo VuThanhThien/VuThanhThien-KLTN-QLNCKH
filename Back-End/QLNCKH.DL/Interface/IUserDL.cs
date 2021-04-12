@@ -7,6 +7,6 @@ namespace QLNCKH.DL.Interface
 {
     public interface IUserDL: IBaseDL<User>
     {
-
+        public IEnumerable<User> CheckDuplicatedUser(object param);
     }
 }

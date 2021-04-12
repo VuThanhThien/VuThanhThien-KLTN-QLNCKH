@@ -14,14 +14,15 @@
             Base Bussiness Layer
             </summary>
         </member>
-        <member name="M:QLNCKH.API.Controllers.AccountsController.#ctor(Microsoft.AspNetCore.Identity.UserManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.UserInfo})">
+        <member name="M:QLNCKH.API.Controllers.AccountsController.#ctor(Microsoft.AspNetCore.Identity.UserManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.UserInfo},QLNCKH.BL.Interface.IUserBL)">
             <summary>
-            Controller tài khoản
+            
             </summary>
             <param name="userManager"></param>
             <param name="signInManager"></param>
             <param name="roleManager"></param>
             <param name="baseBL"></param>
+            <param name="userBL"></param>
         </member>
         <member name="M:QLNCKH.API.Controllers.AccountsController.CreateAccount(QLNCKH.Common.Model.ParamRegisterDto)">
             <summary>

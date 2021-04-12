@@ -63,6 +63,15 @@ namespace QLNCKH.Common.Dictionary
         /// thành tích
         /// </summary>
         public string Achievements { get; set; }
+
+        /// <summary>
+        /// Giới tính
+        /// </summary>
         public int Gender { get; set; }
+
+        /// <summary>
+        /// Bằng cấp
+        /// </summary>
+        public string Degree { get; set; }
     }
 }

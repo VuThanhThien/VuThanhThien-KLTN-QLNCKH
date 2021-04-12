@@ -48,16 +48,23 @@
     <DxDataGrid
       id="dataGrid"
       :data-source="user"
+      :show-borders="true"
       key-expr="userID"
       :allow-column-resizing="true"
       :column-auto-width="true"
-      :allow-column-reordering="true"
+      :allow-column-reordering="false"
       @selection-changed="selectUser"
       @exporting="exportGrid"
     >
       <DxColumn data-field="fullName" caption="Họ và Tên">
         <DxRequiredRule />
       </DxColumn>
+      <DxColumn
+        :width="100"
+        data-field="userCode"
+        sort-order="asc"
+        caption="Mã cán bộ"
+      />
       <DxColumn data-field="gender" caption="Giới tính">
         <DxLookup :data-source="genders" display-expr="name" value-expr="id" />
         <DxRequiredRule />
@@ -87,7 +94,6 @@
           value-expr="id"
         />
       </DxColumn>
-      <DxColumn :width="100" data-field="userCode" caption="Mã cán bộ" />
       <DxColumn data-field="businessAddress" caption="Địa chỉ công tác">
         <DxRequiredRule />
       </DxColumn>
@@ -189,7 +195,7 @@ export default {
     /**Hiển thị panel loading */
     showLoadPanel() {
       this.loadingVisible = true;
-      this.getAuthorList();
+      this.getUserList();
       setTimeout(() => {
         // this.$router.go();
       }, 500);
@@ -223,6 +229,7 @@ export default {
       }
     },
 
+    /**btn xóa */
     btnDeleteOnClick() {
       if (this.selectedUser.userID == null) {
         this.$notify({
@@ -232,12 +239,12 @@ export default {
       } else {
         this.$confirm({
           message:
-            `Bạn có chắc chắn muốn xóa người dùng ` +
+            `Xóa người dùng đồng nghĩa với xóa tài khoản này. Bạn có chắc chắn muốn xóa người dùng ` +
             this.selectedUser.fullName +
-            ` không?`,
+            ` không ?`,
           button: {
             no: "Hủy",
-            yes: "Chắc chắn",
+            yes: "Xóa",
           },
           callback: (confirm) => {
             if (confirm) {
@@ -258,17 +265,13 @@ export default {
                       type: "success",
                       title: "THÔNG BÁO",
                       text:
-                        "Xóa thành công đề tài " +
-                        this.selectedTopic.researchName,
+                        "Xóa thành công người dùng " +
+                        this.selectedUser.fullName,
                     });
                   }
                 })
                 .catch((e) => {
-                  this.$notify({
-                    type: "error",
-                    title: "THÔNG BÁO",
-                    text: "Xóa thất bại",
-                  });
+                  console.log(e);
                 });
             }
           },
@@ -276,11 +279,13 @@ export default {
       }
     },
 
+    /**event đóng form từ cha */
     outIsHide(e) {
       this.isHideParent = e;
       this.showLoadPanel();
     },
-    async getAuthorList() {
+    /**lấy danh sách user */
+    async getUserList() {
       const config = {
         headers: { Authorization: `Bearer ${this.currentToken}` },
       };
@@ -306,7 +311,7 @@ export default {
               //Lỗi server
               type: "error",
               title: "THÔNG BÁO",
-              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+              text: "Vui lòng liên hệ  để được hỗ trợ!",
             });
           }
         });

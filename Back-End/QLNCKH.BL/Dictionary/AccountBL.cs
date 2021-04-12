@@ -9,7 +9,7 @@ using System.Text;
 
 namespace QLNCKH.BL.Dictionary
 {
-    class AccountBL : BaseBL<Account>, IAccountBL
+    public class AccountBL : BaseBL<Account>, IAccountBL
     {
         public AccountBL(IBaseDL<Account> baseDL) : base(baseDL)
         {

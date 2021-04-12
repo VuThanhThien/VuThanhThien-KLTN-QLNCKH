@@ -31,29 +31,37 @@ namespace QLNCKH.API.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUserBL _userBL;
         /// <summary>
         /// Base Bussiness Layer
         /// </summary>
         protected readonly IBaseBL<UserInfo> _baseBL;
         
         /// <summary>
-        /// Controller tài khoản
+        /// 
         /// </summary>
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="roleManager"></param>
         /// <param name="baseBL"></param>
-        public AccountsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IBaseBL<UserInfo> baseBL)
+        /// <param name="userBL"></param>
+        public AccountsController
+            (
+            UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager, 
+            RoleManager<IdentityRole> roleManager, 
+            IBaseBL<UserInfo> baseBL,
+            IUserBL userBL
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _baseBL = baseBL;
+            _userBL = userBL;
         }
-
-       
-
         
+
 
         // POST api/<AccountsController>
         //TODO tạo mới account là tạo mới cả user
@@ -79,18 +87,33 @@ namespace QLNCKH.API.Controllers
                 return BadRequest("Xác thực mật khẩu không trùng khớp");
 
             // todo: nghiệp vụ check trùng
+            //Trùng tên đăng nhập
+            var checkUsername = await _userManager.FindByNameAsync(accountDto.UserName);
+            if (checkUsername != null) {
+                if (accountDto.UserName == checkUsername.UserName)
+                {
+                    return BadRequest("Trùng tên đăng nhập");
+                }
+            }
 
+            //var  checkDupUser = _userBL.CheckDuplicatedUser(accountDto.UserCode, accountDto.IdentityCode, accountDto.PhoneNumber);
+            //if(checkDupUser != null)
+            //{
+            //    //return BadRequest("Trùng usercode/phone/identity");
+            //    if( (int)checkDupUser.HTTPStatusCode == 200)
+            //        return BadRequest("Trùng mã nv hoặc sđt hoặc cmnd");
+            //}
 
             // tạo mới một đối tượng identity
             var isCreated = await _userManager.CreateAsync(user, accountDto.Password);
 
             if (!isCreated.Succeeded)
-                return BadRequest("Tạo mới thất bại");
+                return BadRequest("Tạo mới thất bại ");
 
             // nếu tạo mới thành công => thêm quyền "User" cho người dùng này
             var result = await _userManager.AddToRoleAsync(user, "User");
             if (!result.Succeeded)
-                return BadRequest("Tạo mới thất bại");
+                return BadRequest("Không thể gán quyền User cho người dùng này");
 
             user = await _userManager.FindByNameAsync(accountDto.UserName);
 
@@ -107,6 +130,7 @@ namespace QLNCKH.API.Controllers
             userInfo.IdentityCode = accountDto.IdentityCode;
             userInfo.BusinessAddress = accountDto.BusinessAddress;
             userInfo.Gender = accountDto.Gender;
+            userInfo.Degree = accountDto.Degree;
             // gọi lên tầng BL để insert vào userinfo
             var insertResult = _baseBL.Insert(userInfo);
 
@@ -115,6 +139,7 @@ namespace QLNCKH.API.Controllers
             {
                 UserID = userInfo.UserID,
                 FullName = userInfo.FullName,
+                Msg = "Đăng ký thành công"
             };
             return Ok(response);
         }

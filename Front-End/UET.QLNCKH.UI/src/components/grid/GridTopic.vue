@@ -48,10 +48,13 @@
       id="dataGrid"
       :data-source="topic"
       :show-borders="true"
+      :allow-column-resizing="true"
+      :column-auto-width="true"
+      :allow-column-reordering="false"
       key-expr="researchID"
       @selection-changed="selectTopic"
     >
-      <DxColumn :width="90" data-field="researchCode" caption="Mã đề tài" />
+      <DxColumn :width="90" data-field="researchCode" sort-order="asc" caption="Mã đề tài" />
       <DxColumn data-field="researchName" caption="Tên đề tài" />
       <DxColumn :width="280" data-field="description" caption="Mô tả" />
       <DxColumn data-field="status" caption="Kết quả">

@@ -1,6 +1,8 @@
-﻿using QLNCKH.Common.Dictionary;
+﻿using Dapper;
+using QLNCKH.Common.Dictionary;
 using QLNCKH.DL.Base;
 using QLNCKH.DL.Interface;
+using System.Collections.Generic;
 
 namespace QLNCKH.DL.Dictionary
 {
@@ -8,6 +10,17 @@ namespace QLNCKH.DL.Dictionary
     {
         public UserDL(IDbContext<User> dbContext) : base(dbContext)
         {
+        }
+
+        public IEnumerable<User> CheckDuplicatedUser(object param)
+        {
+            var procName = "Proc_CheckDuplicatedUser";
+
+            var parameters = new DynamicParameters(param);
+
+            var result = _dbContext.QueryStore(procName, parameters);
+
+            return result;
         }
     }
 }

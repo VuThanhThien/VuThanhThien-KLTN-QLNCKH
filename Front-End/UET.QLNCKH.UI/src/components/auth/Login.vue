@@ -18,6 +18,8 @@
       </div>
 
     </form>
+    <notifications position="bottom right" clean: true style="margin-bottom:
+    20px"/>
   </div>
 </template>
 
@@ -39,6 +41,15 @@ export default {
         .then(response => {
           this.$router.push({ name: 'Home' })
         })
+        .catch((e) => {
+          if (e.response.status == 400) {
+            this.$notify({
+              type: "error",
+              title: "THÔNG BÁO",
+              text: e.response.data,
+            });
+          }
+        });
     }
   }
 }

@@ -8,5 +8,7 @@ namespace QLNCKH.Common.Model
         public Guid UserID { get; set; }
         public string FullName { get; set; }
 
+        public string Msg { get; set; }
+
     }
 }

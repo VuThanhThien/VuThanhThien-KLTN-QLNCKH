@@ -139,9 +139,16 @@
                 <!-- Số điện thoại  -->
                 <div class="fieldName">Số điện thoại (<span>*</span>)</div>
                 <input
-                  id="txtPhoneNumber"
                   type="text"
                   v-model="selectedUser.phoneNumber"
+                />
+              </div>
+              <div class="block-1">
+                <!-- Số điện thoại  -->
+                <div class="fieldName">Học vị</div>
+                <input
+                  type="text"
+                  v-model="selectedUser.degree"
                 />
               </div>
             </div>
@@ -251,6 +258,7 @@ export default {
         msg: "",
         typeError: "",
       };
+      //edit mode thêm mới
       if (this.editMode != 1) {
         checkAccVal = {
           error: true,
@@ -258,8 +266,9 @@ export default {
           typeError: "editMode",
         };
       }
+      //username k được trống
       if (
-        this.selectedUser.userName === "" ||
+        this.selectedUser.userName == "" ||
         this.selectedUser.userName == null
       ) {
         checkAccVal = {
@@ -268,13 +277,15 @@ export default {
           typeError: "username",
         };
       }
-      if (this.selectedUser.email === "" || this.selectedUser.email == null) {
+      //email không được trống
+      if (this.selectedUser.email == "" || this.selectedUser.email == null) {
         checkAccVal = {
           error: true,
           msg: "Vui lòng nhập email",
           typeError: "email",
         };
       }
+      //pw không trống
       if (
         this.selectedUser.password == "" ||
         this.selectedUser.password == null
@@ -285,6 +296,7 @@ export default {
           typeError: "password",
         };
       }
+      //xác nhận pw k được trống
       if (
         this.selectedUser.confirmPassword == "" ||
         this.selectedUser.confirmPassword == null
@@ -295,24 +307,27 @@ export default {
           typeError: "cf-password",
         };
       }
+      //pw === xác nhận pw
       if (
-        this.selectedUser.confirmPassword !== this.selectedUser.confirmPassword
+        this.selectedUser.password != this.selectedUser.confirmPassword
       ) {
         checkAccVal = {
           error: true,
           msg: "Xác nhận mật khẩu sai ",
-          typeError: "cf-password",
+          typeError: "cf-password-wrong",
         };
       }
       return checkAccVal;
     },
 
+  /**validate thông tin chung */
     validateInfo() {
       let checkInfoVal = {
         error: false,
         msg: "",
         typeError: "",
       };
+      //code
       if (
         this.selectedUser.userCode == "" ||
         this.selectedUser.userCode == null
@@ -323,7 +338,7 @@ export default {
           typeError: "userCode",
         };
       }
-
+    //tên
       if (
         this.selectedUser.fullName == "" ||
         this.selectedUser.fullName == null
@@ -334,6 +349,7 @@ export default {
           typeError: "fullName",
         };
       }
+      //sđt
       if (
         this.selectedUser.phoneNumber == "" ||
         this.selectedUser.phoneNumber == null
@@ -355,13 +371,14 @@ export default {
     },
 
     /**Hàm insert */
-    register() {
+    async register() {
       /**header token */
       const config = {
         headers: { Authorization: `Bearer ${this.currentToken}` },
       };
 
       const bodyParameters = this.selectedUser;
+      await
       axios
         .post(
           "https://localhost:44323/api/Accounts/Register",
@@ -391,7 +408,7 @@ export default {
               //Lỗi server
               type: "error",
               title: "THÔNG BÁO",
-              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+              text: "Vui lòng liên hệ để được hỗ trợ!",
             });
           }
           if (e.response.status == 401) {
@@ -406,12 +423,13 @@ export default {
     },
 
     /**Hàm sửa */
-    putUser() {
+    async putUser() {
       const config = {
         headers: { Authorization: `Bearer ${this.currentToken}` },
       };
 
       const bodyParameters = this.selectedUser;
+      await
       axios
         .put(
           "https://localhost:44323/api/User/" + this.selectedUser.userID,
@@ -424,7 +442,7 @@ export default {
             this.$notify({
               type: "success",
               title: "THÔNG BÁO",
-              text: "Cập nhật thành công đề tài " + this.selectedUser.fullName,
+              text: "Cập nhật thành công thông tin cán bộ " + this.selectedUser.fullName,
             });
           }
         })

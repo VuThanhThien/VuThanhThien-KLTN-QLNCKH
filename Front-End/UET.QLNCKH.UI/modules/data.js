@@ -119,6 +119,14 @@ const positions = [
     "id": 6,
     "name": "Cán bộ"
   },
+  {
+    "id":7,
+    "name": "Chủ nhiệm khoa"
+  },
+  {
+    "id":8,
+    "name":"Phó chủ nhiệm khoa"
+  },
 ];
 
 const statuses = [

@@ -20,5 +20,6 @@ namespace QLNCKH.Common.Model
         public string BusinessAddress { get; set; }
         public int? Gender { get; set; }
         public string Achievements { get; set; }
+        public string Degree { get; set; }
     }
 }

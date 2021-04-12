@@ -70,6 +70,10 @@ namespace QLNCKH.Common.Dictionary
         /// </summary>
         public int? Gender { get; set; }
 
+        /// <summary>
+        /// Bằng cấp/ học vị
+        /// </summary>
+        public string Degree { get; set; }
         public UserInfo(Guid userID)
         {
             UserID = userID;
