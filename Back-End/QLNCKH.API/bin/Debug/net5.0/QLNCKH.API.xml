@@ -152,6 +152,14 @@
             <param name="baseBL"></param>
             <param name="userBL"></param>
         </member>
+        <member name="M:QLNCKH.API.Controllers.UserController.UpdateMyInfo(System.Guid,QLNCKH.Common.Dictionary.User)">
+            <summary>
+            Sửa thông tin bản thân
+            </summary>
+            <param name="id"></param>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
         <member name="T:QLNCKH.API.Program">
             <summary>
             

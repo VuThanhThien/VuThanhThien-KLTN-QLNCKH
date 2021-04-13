@@ -4,7 +4,6 @@
     :data-source="topic"
     title="World Population by Decade"
   >
-  <DxCommonSeriesSettings argument-field="status"/>
     <DxArgumentAxis :tick-interval="10">
       <DxLabel format="decimal" />
     </DxArgumentAxis>
