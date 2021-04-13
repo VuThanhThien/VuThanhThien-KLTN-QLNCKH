@@ -12,6 +12,11 @@ namespace QLNCKH.DL.Dictionary
         {
         }
 
+        /// <summary>
+        /// Check trùng user
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         public IEnumerable<User> CheckDuplicatedUser(object param)
         {
             var procName = "Proc_CheckDuplicatedUser";

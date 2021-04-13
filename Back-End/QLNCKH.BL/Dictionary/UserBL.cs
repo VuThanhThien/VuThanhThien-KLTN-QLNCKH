@@ -14,7 +14,14 @@ namespace QLNCKH.BL.Dictionary
         {
             _userDL = userDL;
         }
-
+        
+        /// <summary>
+        /// Check trùng mã/ cnmd/ sđt
+        /// </summary>
+        /// <param name="userCode"></param>
+        /// <param name="identityCode"></param>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
         public BaseResponse CheckDuplicatedUser(string userCode, string identityCode, string phoneNumber)
         {
             var param = new

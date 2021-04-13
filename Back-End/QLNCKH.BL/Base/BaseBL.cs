@@ -104,6 +104,11 @@ namespace QLNCKH.BL.Base
             }
         }
 
+        /// <summary>
+        /// Lấy thông tin theo mã
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public BaseResponse GetByCode(string code)
         {
             // lấy dữ liệu từ tầng DL về
