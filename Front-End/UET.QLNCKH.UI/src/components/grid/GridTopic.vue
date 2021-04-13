@@ -61,11 +61,15 @@
         caption="Mã đề tài"
       />
       <DxColumn :width="280" data-field="researchName" caption="Tên đề tài" />
-      <DxColumn  data-field="description" caption="Mô tả" />
+      <DxColumn data-field="description" caption="Mô tả" />
       <DxColumn :width="180" data-field="status" caption="Kết quả">
         <DxLookup :data-source="statuses" display-expr="name" value-expr="id" />
       </DxColumn>
-      <DxColumn :width="180" data-field="process" caption="Tiến trình nghiên cứu">
+      <DxColumn
+        :width="180"
+        data-field="process"
+        caption="Tiến trình nghiên cứu"
+      >
         <DxLookup
           :data-source="processArr"
           display-expr="name"
@@ -185,9 +189,10 @@ export default {
     showLoadPanel() {
       this.loadingVisible = true;
       this.getTopicList();
-      setTimeout(() => {
-        // this.$router.go();
-      }, 500);
+      // this.$router.push("MyTopic");
+      // setTimeout(() => {
+      //   this.$router.push("ListTopic");
+      // }, 100);
     },
     /**Thời gian hiển thị loading panel */
     onShown() {
@@ -268,6 +273,7 @@ export default {
         });
       }
     },
+    
     /**Đóng form detail */
     outIsHide(e) {
       this.isHideParent = e;
@@ -308,6 +314,7 @@ export default {
         });
     },
 
+    /**Lấy danh sách tác giả */
     async getAuthorList() {
       const config = {
         headers: { Authorization: `Bearer ${this.currentToken}` },
@@ -324,7 +331,6 @@ export default {
         });
     },
     /**khi chọn một hàng thì lấy đề tài đã chọn sang */
-
     selectTopic({ selectedRowsData }) {
       const data = selectedRowsData[0];
       this.selectedTopic = data;
@@ -367,6 +373,9 @@ export default {
             title: "THÔNG BÁO",
             text: "Vui lòng đăng nhập lại",
           });
+          setTimeout(() => {
+              this.$router.push('Login');
+            }, 1000);
         }
         if (e.response.status == 500) {
           this.$notify({

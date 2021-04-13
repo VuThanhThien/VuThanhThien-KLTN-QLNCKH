@@ -281,6 +281,9 @@ export default {
             title: "THÔNG BÁO",
             text: "Unauthorized",
           });
+          setTimeout(() => {
+              this.$router.push('Login');
+            }, 1000);
         }
 
         if (e.response.status == 500) {

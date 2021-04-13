@@ -273,6 +273,10 @@ export default {
               title: "THÔNG BÁO",
               text: "Vui lòng đăng nhập lại",
             });
+            
+            setTimeout(() => {
+              this.$router.push('Login');
+            }, 1000);
           }
         });
     },
