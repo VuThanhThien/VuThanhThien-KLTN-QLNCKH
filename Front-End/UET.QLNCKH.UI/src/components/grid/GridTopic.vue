@@ -44,6 +44,7 @@
       :on-shown="onShown"
       shading-color="rgba(0,0,0,0.4)"
     />
+    <h2 id="tableTitle">DANH SÁCH ĐỀ TÀI NGHIÊN CỨU KHOA HỌC UET</h2>
     <DxDataGrid
       id="dataGrid"
       :data-source="topic"
@@ -121,6 +122,9 @@
         :visible="true"
         empty-panel-text="Kéo cột muốn nhóm lại vào đây !"
       />
+      <DxSummary>
+        <DxGroupItem summary-type="count" :customize-text="customizeText" />
+      </DxSummary>
     </DxDataGrid>
     <notifications position="bottom right" clean: true style="margin-bottom:
     20px"/>
@@ -148,6 +152,7 @@ import {
   DxSearchPanel,
   DxGroupPanel,
   DxLookup,
+  DxSummary,
 } from "devextreme-vue/data-grid";
 
 export default {
@@ -169,6 +174,7 @@ export default {
     TopicDetail,
     DxLoadPanel,
     DxLookup,
+    DxSummary,
   },
   computed: {
     currentRole() {
@@ -185,6 +191,11 @@ export default {
     },
   },
   methods: {
+    /**custome text của groupitem */
+    customizeText(e) {
+      return "Tổng: " + e.value;
+    },
+
     /**Hiển thị panel loading */
     showLoadPanel() {
       this.loadingVisible = true;
@@ -194,12 +205,14 @@ export default {
       //   this.$router.push("ListTopic");
       // }, 100);
     },
+
     /**Thời gian hiển thị loading panel */
     onShown() {
       setTimeout(() => {
         this.loadingVisible = false;
       }, 500);
     },
+
     /**Sự kiện nút thêm mới
      * created by VTT 09/04/21
      */
@@ -273,7 +286,7 @@ export default {
         });
       }
     },
-    
+
     /**Đóng form detail */
     outIsHide(e) {
       this.isHideParent = e;
@@ -374,8 +387,8 @@ export default {
             text: "Vui lòng đăng nhập lại",
           });
           setTimeout(() => {
-              this.$router.push('Login');
-            }, 1000);
+            this.$router.push("Login");
+          }, 1000);
         }
         if (e.response.status == 500) {
           this.$notify({
@@ -389,6 +402,10 @@ export default {
 };
 </script>
 <style scoped>
+#tableTitle {
+  margin-top: 20px;
+  margin-left: 20px;
+}
 #gridTopic {
   height: 820px;
   overflow: auto;

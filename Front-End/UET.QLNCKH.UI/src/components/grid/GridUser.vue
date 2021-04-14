@@ -1,6 +1,6 @@
 <template>
   <div id="app-container">
-    <div class="navBar" v-if="currentRole == 'Admin'">
+    <div class="navBar" v-if="loggedIn && currentRole == 'Admin'">
       <div class="headerBtn">
         <DxButton
           :width="120"
@@ -45,6 +45,8 @@
       :on-shown="onShown"
       shading-color="rgba(0,0,0,0.4)"
     />
+
+    <h2 id="tableTitle">DANH SÁCH CÁN BỘ NGHIÊN CỨU KHOA HỌC</h2>
     <DxDataGrid
       id="dataGrid"
       :data-source="user"
@@ -97,7 +99,7 @@
       <DxColumn data-field="businessAddress" caption="Địa chỉ công tác">
         <DxRequiredRule />
       </DxColumn>
-      <DxColumn data-field="email" c aption="Email" />
+      <DxColumn data-field="email" caption="Email" />
       <DxColumn data-field="phoneNumber" caption="Số điện thoại" />
       <DxColumn data-field="address" :visible="false" caption="Địa chỉ" />
       <DxColumnFixing :enabled="true" />
@@ -109,7 +111,7 @@
       />
       <DxSelection mode="single" />
       <DxSummary>
-        <DxGroupItem summary-type="count" />
+        <DxGroupItem summary-type="count" :customize-text="customizeText" />
       </DxSummary>
       <DxPaging :page-size="15" />
       <DxExport :enabled="true" />
@@ -192,6 +194,11 @@ export default {
     },
   },
   methods: {
+
+    /**custome text group item */
+    customizeText(e) {
+      return "Tổng: " + e.value;
+    },
     /**Hiển thị panel loading */
     showLoadPanel() {
       this.loadingVisible = true;
@@ -206,6 +213,8 @@ export default {
         this.loadingVisible = false;
       }, 500);
     },
+
+    /**event btn add */
     btnAddOnClick() {
       // Mở form
       this.isHideParent = !this.isHideParent;
@@ -324,6 +333,7 @@ export default {
         }
       });
     },
+
     /**Xuất file */
     exportGrid(e) {
       const workbook = new Workbook();
@@ -335,7 +345,7 @@ export default {
         workbook.xlsx.writeBuffer().then(function (buffer) {
           saveAs(
             new Blob([buffer], { type: "application/octet-stream" }),
-            "DataGrid.xlsx"
+            "ListAuthor.xlsx"
           );
         });
       });
@@ -362,8 +372,8 @@ export default {
             text: "Unauthorized",
           });
           setTimeout(() => {
-              this.$router.push('Login');
-            }, 1000);
+            this.$router.push("Login");
+          }, 1000);
         }
 
         if (e.response.status == 500) {
@@ -380,6 +390,10 @@ export default {
 </script>
 
 <style>
+#tableTitle{
+  margin-top: 20px;
+  margin-left: 20px;
+}
 #dataGrid {
   padding: 15px;
 }

@@ -1,8 +1,14 @@
 <template>
   <div id="app">
     <ul class="nav">
-      <li><router-link :to="{ name: 'MyInfo' }">{{this.currentName}}</router-link></li>
-      <li v-if="loggedIn"><router-link :to="{ name: 'Home' }">Trang chủ</router-link></li>
+      <li title="Thông tin của tôi" >
+        <router-link id="myTopic" :to="{ name: 'MyInfo' }">
+          {{this.currentName}}
+        </router-link>
+      </li>
+      <li v-if="loggedIn">
+        <router-link :to="{ name: 'Home' }">Trang chủ</router-link>
+      </li>
       <li><router-link :to="{ name: 'about' }">Chi tiết</router-link></li>
       <li v-if="!loggedIn">
         <router-link :to="{ name: 'Login' }">Đăng nhập</router-link>
@@ -11,14 +17,14 @@
         <router-link :to="{ name: 'logout' }">Đăng xuất</router-link>
       </li>
     </ul>
-    <nav-bar/>
-    
+    <nav-bar />
+
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import NavBar from './NavBar.vue'
+import NavBar from "./NavBar.vue";
 
 export default {
   components: {
@@ -28,14 +34,12 @@ export default {
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
-    currentName(){
+    currentName() {
       return this.$store.getters.currentName;
-    }
+    },
   },
-  data(){
-    return{
-      
-    }
+  data() {
+    return {};
   },
 };
 </script>
@@ -54,7 +58,9 @@ export default {
   color: #2c3e50;
   font-size: 24px;
 }
-
+#myTopic:hover {
+  color: #60bd4f !important;
+}
 .flex-center {
   display: flex;
   justify-content: center;
