@@ -463,8 +463,11 @@ input:hover, select:hover {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  color: white;
 }
-
+.dialog-footer button:hover{
+  color: black;
+}
 #btn-save {
   width: 70px;
   border: solid 1px #ffffff;
