@@ -31,7 +31,7 @@
           />
         </router-link>
       </div>
-      <router-link :to="{ name: 'ChartExpire' }">
+      <router-link :to="{ name: 'ChartExpire' }" v-if="loggedIn && currentRole == 'Admin'">
         <div class="headerBtn">
           <DxButton
             :width="120"
@@ -55,6 +55,9 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    currentRole() {
+      return this.$store.getters.currentRole;
     },
   },
 };
