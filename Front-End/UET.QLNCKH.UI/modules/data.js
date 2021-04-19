@@ -155,12 +155,20 @@ const processArr = [
   },
   {
     "id": 2,
-    "name": "Đang xét chọn"
+    "name": "Đợi nghiệm thu"
   },
   {
     "id": 3,
     "name": "Đã hết hạn"
   },
+  {
+    "id":4,
+    "name" : "Đang nghiên cứu"
+  },
+  {
+    "id":5,
+    "name" : "Khởi tạo"
+  }
 ];
 const genders = [
   {

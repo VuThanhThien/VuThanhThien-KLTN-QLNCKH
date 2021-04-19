@@ -118,8 +118,8 @@ namespace QLNCKH.API
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "ToDo API",
-                    Description = "A simple example ASP.NET Core Web API",
+                    Title = "QLNCKH",
+                    Description = "API cho web quản lý đề tài nghiên cứu khoa học cho ĐH.",
                     TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
@@ -146,8 +146,15 @@ namespace QLNCKH.API
             services.AddScoped(typeof(IBaseBL<>), typeof(BaseBL<>));
             services.AddScoped<IResearchTopicBL, ResearchTopicBL>();
             services.AddScoped<IResearchTopicDL, ResearchTopicDL>();
+
             services.AddScoped<IUserBL, UserBL>();
             services.AddScoped<IUserDL, UserDL>();
+
+            services.AddScoped<IMemberTopicDL, MemberTopicDL>();
+            services.AddScoped<IMemberTopicBL, MemberTopicBL>();
+
+            services.AddScoped<ISpecialistTopicDL, SpecialistTopicDL>();
+            services.AddScoped<ISpecialistTopicBL, SpecialistTopicBL>();
         }
 
         /// <summary>
@@ -171,7 +178,7 @@ namespace QLNCKH.API
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "QLNCKH V1");
             });
 
             app.UseRouting();

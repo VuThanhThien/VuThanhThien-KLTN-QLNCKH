@@ -65,7 +65,7 @@ namespace QLNCKH.Common.Dictionary
         public string ModifiedBy { get; set; }
 
         /// <summary>
-        /// Kinh phí
+        /// Kinh phí thực sự
         /// </summary>
         public decimal? Expense { get; set; }
 
@@ -78,5 +78,66 @@ namespace QLNCKH.Common.Dictionary
         /// Ngày hết hạn
         /// </summary>
         public DateTime? ExpiredDate { get; set; }
+
+        /// <summary>
+        /// Tiền yêu cầu VNU tài trợ
+        /// </summary>
+        public decimal? SponsorMoney { get; set; }
+
+        /// <summary>
+        /// Mã chuyên ngành
+        /// </summary>
+        public string SpecializeCode { get; set; }
+
+        /// <summary>
+        /// Loại nghiên cứu
+        /// </summary>
+        public string TypeResearch { get; set; }
+
+        /// <summary>
+        /// Cơ sở vật chất
+        /// </summary>
+        public string Infrastructure { get; set; }
+
+        /// <summary>
+        /// Thuyết minh đề cương
+        /// </summary>
+        public string Present { get; set; }
+
+        /// <summary>
+        /// Số bài báo ISI
+        /// </summary>
+        public int ISI { get; set; }
+
+        /// <summary>
+        /// Số tạp chí quốc tế
+        /// </summary>
+        public int Journal { get; set; }
+
+        /// <summary>
+        /// Công bố phát minh sáng chế / Giải pháp hữu ích
+        /// </summary>
+        public int UsefullSolution { get; set; }
+
+        /// <summary>
+        /// Sản phẩm công nghệ chuyển giao
+        /// </summary>
+        public int TransferProduct { get; set; }
+
+        /// <summary>
+        /// Báo cáo tư vấn chính sách cho nhà nước
+        /// </summary>
+        public int ReportToState { get; set; }
+
+        /// <summary>
+        /// Sách chuyên khảo
+        /// </summary>
+        public int Monograph { get; set; }
+
+        /// <summary>
+        /// Công bố khác
+        /// </summary>
+        public int OtherResult { get; set; }
+
     }
 }

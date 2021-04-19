@@ -104,6 +104,18 @@
             <param name="id">Định danh thông tin cần xoá</param>
             <returns></returns>
         </member>
+        <member name="T:QLNCKH.API.Controllers.MemberTopicController">
+            <summary>
+            Thành viên tham gia nghiên cứu
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.MemberTopicController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.MemberTopic},QLNCKH.BL.Interface.IMemberTopicBL)">
+            <summary>
+            Kế thừa lại base
+            </summary>
+            <param name="baseBL"></param>
+            <param name="memberTopicBL"></param>
+        </member>
         <member name="T:QLNCKH.API.Controllers.ResearchTopicController">
             <summary>
             API Đề tài
@@ -134,6 +146,18 @@
             </summary>
             <param name="userID"></param>
             <returns></returns>
+        </member>
+        <member name="T:QLNCKH.API.Controllers.SpecialistTopicsController">
+            <summary>
+            Controller cán bộ đánh giá
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.SpecialistTopicsController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.SpecialistTopic},QLNCKH.BL.Interface.ISpecialistTopicBL)">
+            <summary>
+            
+            </summary>
+            <param name="baseBL"></param>
+            <param name="specialistTopicBL"></param>
         </member>
         <member name="T:QLNCKH.API.Controllers.UserController">
             <summary>

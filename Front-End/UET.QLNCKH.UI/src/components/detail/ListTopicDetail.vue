@@ -22,22 +22,20 @@
           </svg>
         </button>
         <!-- tiêu đề dialog  -->
-        <h3>THÔNG TIN ĐỀ TÀI</h3>
+        <h1 id="title">Đề tài : {{this.selectedTopic.researchName}}</h1>
         <!-- body dialog  -->
         <div class="dialog-content">
           <!-- khối avatar  -->
           <!-- Khối điền thông tin  -->
-          <div class="block-right">
+          <div class="block-left">
+            <h3 style="text-align: center">THÔNG TIN CHUNG</h3>
             <!-- block 2 là khối chưa 2 trường nhập  -->
             <div class="block-2-topic">
               <!-- block 1 là khối chứ 1 trường nhập  -->
               <div class="block-1-topic">
                 <div class="fieldName">Mã đề tài (<span>*</span>)</div>
                 <!-- nhập mã nhân viên  -->
-                <input
-                  type="text"
-                  v-model="selectedTopic.researchCode"
-                />
+                <input type="text" v-model="selectedTopic.researchCode" />
               </div>
               <!-- Nhập họ tên  -->
               <div class="block-1-topic">
@@ -53,7 +51,11 @@
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <div class="fieldName">Ngày nghiệm thu</div>
-                <DxDateBox v-model="selectedTopic.expiredDate" type="date" display-format="dd/MM/yyyy"/>
+                <DxDateBox
+                  v-model="selectedTopic.expiredDate"
+                  type="date"
+                  display-format="dd/MM/yyyy"
+                />
               </div>
               <!-- Nhập giới tính  -->
               <div class="block-1-topic">
@@ -61,36 +63,14 @@
                 <input type="number" v-model="selectedTopic.expense" />
               </div>
             </div>
-            <div class="block-2-topic">
-              <div class="block-1-topic">
-                <!-- Nhập cmtnd/ căn cước  -->
-                <div class="fieldName">Kết quả nghiên cứu</div>
-                <select v-model="selectedTopic.status">
-                  <option value="0" disabled>Chọn một kết quả</option>
-                  <option value="1">Hoàn thành nhiệm vụ</option>
-                  <option value="2">Chưa hoàn thành nhiệm vụ</option>
-                  <option value="3">Bị hủy</option>
-                  <option value="4">Chưa cập nhật</option>
-                </select>
-              </div>
-              <!-- Ngầy cấp cmtnd/cc  -->
-              <div class="block-1-topic">
-                <div class="fieldName">Trạng thái nghiên cứu</div>
-                <select v-model="selectedTopic.process">
-                  <option value="0" disabled>Chọn một trạng thái</option>
-                  <option value="1">Đợi xét chọn</option>
-                  <option value="2">Đang làm</option>
-                  <option value="3">Đã hết hạn</option>
-                </select>
-              </div>
-            </div>
+
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <!-- Nới cấp cmtnd/cc  -->
                 <div class="fieldName">Mô tả</div>
                 <DxTextArea
                   :height="100"
-                  :width= "650"
+                  :width="650"
                   v-model="selectedTopic.description"
                 />
               </div>
@@ -99,26 +79,64 @@
               <div class="block-1-topic">
                 <!-- Email  -->
                 <div class="fieldName">Ngày bắt đầu</div>
-                <DxDateBox v-model="selectedTopic.createdDate" type="date" display-format="dd/MM/yyyy"/>
+                <DxDateBox
+                  v-model="selectedTopic.createdDate"
+                  type="date"
+                  display-format="dd/MM/yyyy"
+                />
               </div>
               <div class="block-1-topic">
                 <!-- Số điện thoại  -->
                 <div class="fieldName">Ngày kết thúc</div>
-                <DxDateBox v-model="selectedTopic.endDate" type="date" display-format="dd/MM/yyyy"/>
+                <DxDateBox
+                  v-model="selectedTopic.endDate"
+                  type="date"
+                  display-format="dd/MM/yyyy"
+                />
               </div>
             </div>
             <div class="block-2-topic">
               <div class="block-1-topic">
-                <!-- Vị trí công việc  -->
-                <div class="fieldName">Tác giả (<span>*</span>)</div>
+                <div class="fieldName">Chủ nhiệm đề tài (<span>*</span>)</div>
                 <select v-model="selectedTopic.userID">
-                  <option value="0" disabled>Chọn tác giả</option>
+                  <option value="0" disabled>Chọn Chủ nhiệm đề tài</option>
                   <option
                     v-for="user in users"
                     :key="user.userID"
                     :value="user.userID"
                   >
                     {{ user.fullName }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="block-right">
+            <h3 style="text-align: center">THÔNG TIN CHI TIẾT QUY TRÌNH</h3>
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Kết quả nghiên cứu</div>
+                <select v-model="selectedTopic.status">
+                  <option value="0" disabled>Chọn một kết quả</option>
+                  <option
+                    v-for="status in statuses"
+                    :key="status.id"
+                    :value="status.id"
+                  >
+                    {{ status.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Trạng thái nghiên cứu</div>
+                <select v-model="selectedTopic.process">
+                  <option value="0" disabled>Chọn một trạng thái</option>
+                  <option
+                    v-for="process in processArr"
+                    :key="process.id"
+                    :value="process.id"
+                  >
+                    {{ process.name }}
                   </option>
                 </select>
               </div>
@@ -141,6 +159,7 @@
 import * as axios from "axios";
 import DxDateBox from "devextreme-vue/date-box";
 import DxTextArea from "devextreme-vue/text-area";
+import service from "../../../modules/data.js";
 export default {
   name: "UserDetails",
   props: {
@@ -198,7 +217,7 @@ export default {
       if (this.selectedTopic.userID == 0) {
         returnData = {
           error: true,
-          msg: "Vui lòng chọn tác giả",
+          msg: "Vui lòng chọn Chủ nhiệm đề tài",
           typeError: "user",
         };
       }
@@ -331,6 +350,8 @@ export default {
   data() {
     return {
       users: [],
+      processArr: service.getProcess(),
+      statuses: service.getStatus(),
     };
   },
 
@@ -356,18 +377,22 @@ export default {
 /* .dx-texteditor.dx-editor-outlined{
   border: none  !important;
 } */
-.dx-datebox{
-  max-width: 90%  !important;
+#title{
+  margin-top: 20px;
+  text-align: center;
 }
-.dx-datebox.dx-auto-width .dx-texteditor-input, .dx-datebox:not(.dx-texteditor-empty).dx-auto-width .dx-texteditor-input {
-    padding-right: 26px;
-    width: 267px !important;
+.dx-datebox {
+  max-width: 90% !important;
+}
+.dx-datebox.dx-auto-width .dx-texteditor-input,
+.dx-datebox:not(.dx-texteditor-empty).dx-auto-width .dx-texteditor-input {
+  padding-right: 26px;
+  width: 267px !important;
 }
 .dialog-topic {
   position: absolute;
-  width: 700px;
-  left: 33%;
-  top: 13%;
+  width: 100%;
+  height: 100vh;
   background-color: #fff;
   padding: 10px;
 }
@@ -398,8 +423,13 @@ export default {
   justify-content: space-between;
 }
 
-.block-right {
+.block-left {
   display: block;
+  margin: 30px 20px 30px 150px;
+}
+.block-right{
+  display: block;
+  margin: 30px 150px 30px 20px;
 }
 .block-2-topic {
   display: flex;
@@ -432,12 +462,13 @@ export default {
   border: 0.5px solid rgb(204, 204, 204);
   padding: 5px;
 }
-input:hover, select:hover {
+input:hover,
+select:hover {
   border: 0.5px solid rgb(183, 192, 245);
-
 }
 .dialog-footer {
-  margin-top: 20px;
+  position: absolute;
+  bottom: 10px;
   width: 100%;
   height: 43px;
   background-color: #e9ebee;
@@ -465,7 +496,7 @@ input:hover, select:hover {
   cursor: pointer;
   color: white;
 }
-.dialog-footer button:hover{
+.dialog-footer button:hover {
   color: black;
 }
 #btn-save {
