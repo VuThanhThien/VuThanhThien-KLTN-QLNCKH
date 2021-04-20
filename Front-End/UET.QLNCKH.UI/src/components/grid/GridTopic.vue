@@ -321,7 +321,7 @@ export default {
               //Lỗi server
               type: "error",
               title: "THÔNG BÁO",
-              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+              text: "Vui lòng liên hệ Admin để được hỗ trợ!",
             });
           }
         });

@@ -28,5 +28,13 @@ namespace QLNCKH.Common.Dictionary
         /// Số tháng làm việc
         /// </summary>
         public int Workmonth { get; set; }
+
+        public string UserCode { get; set; }
+        public string FullName { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string BussinessAdress { get; set; }
+        public int? Gender { get; set; }
+        public string Degree { get; set; }
+
     }
 }

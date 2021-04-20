@@ -222,7 +222,7 @@ export default {
               // bad request
               type: "error",
               title: "THÔNG BÁO",
-              text: "Unauthorized",
+              text: "Phiên hết hạn! Vui lòng đăng nhập lại!",
             });
           }
 
@@ -231,7 +231,7 @@ export default {
               //Lỗi server
               type: "error",
               title: "THÔNG BÁO",
-              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+              text: "Vui lòng liên hệ Admin để được hỗ trợ!",
             });
           }
         });
@@ -279,7 +279,7 @@ export default {
             // bad request
             type: "error",
             title: "THÔNG BÁO",
-            text: "Unauthorized",
+            text: "Phiên hết hạn! Vui lòng đăng nhập lại!",
           });
           setTimeout(() => {
               this.$router.push('Login');
@@ -291,7 +291,7 @@ export default {
             //Lỗi server
             type: "error",
             title: "THÔNG BÁO",
-            text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+            text: "Vui lòng liên hệ Admin để được hỗ trợ!",
           });
         }
       });

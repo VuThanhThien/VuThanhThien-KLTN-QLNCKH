@@ -1,4 +1,5 @@
-﻿using QLNCKH.Common.Dictionary;
+﻿using Dapper;
+using QLNCKH.Common.Dictionary;
 using QLNCKH.DL.Base;
 using QLNCKH.DL.Interface;
 using System;
@@ -12,6 +13,15 @@ namespace QLNCKH.DL.Dictionary
         public MemberTopicDL(IDbContext<MemberTopic> dbContext) : base(dbContext)
         {
         }
+        public int deleteMemberTopic(object param)
+        {
+            var procName = "Proc_DeleteMemberTopic";
 
+            var parameters = new DynamicParameters(param);
+
+            var result = _dbContext.ExcuteStore(procName, parameters);
+
+            return result;
+        }
     }
 }

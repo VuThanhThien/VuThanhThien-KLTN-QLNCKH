@@ -22,16 +22,15 @@
           </svg>
         </button>
         <!-- tiêu đề dialog  -->
-        <h1 id="title">Đề tài : {{this.selectedTopic.researchName}}</h1>
+        <h1 id="title">Đề tài : {{ this.selectedTopic.researchName }}</h1>
         <!-- body dialog  -->
         <div class="dialog-content">
           <!-- khối avatar  -->
           <!-- Khối điền thông tin  -->
           <div class="block-left">
             <h3 style="text-align: center">THÔNG TIN CHUNG</h3>
-            <!-- block 2 là khối chưa 2 trường nhập  -->
+            <!--  -->
             <div class="block-2-topic">
-              <!-- block 1 là khối chứ 1 trường nhập  -->
               <div class="block-1-topic">
                 <div class="fieldName">Mã đề tài (<span>*</span>)</div>
                 <input type="text" v-model="selectedTopic.researchCode" />
@@ -45,9 +44,8 @@
                 />
               </div>
             </div>
-            
+            <!--  -->
             <div class="block-2-topic">
-              
               <div class="block-1-topic">
                 <div class="fieldName">Kinh phí</div>
                 <input type="number" v-model="selectedTopic.expense" />
@@ -57,10 +55,9 @@
                 <input type="number" v-model="selectedTopic.sponsorMoney" />
               </div>
             </div>
-
+            <!--  -->
             <div class="block-2-topic">
               <div class="block-1-topic">
-                <!-- Nới cấp cmtnd/cc  -->
                 <div class="fieldName">Mô tả</div>
                 <DxTextArea
                   :height="100"
@@ -69,9 +66,9 @@
                 />
               </div>
             </div>
+            <!--  -->
             <div class="block-2-topic">
               <div class="block-1-topic">
-                <!-- Email  -->
                 <div class="fieldName">Ngày bắt đầu</div>
                 <DxDateBox
                   v-model="selectedTopic.createdDate"
@@ -80,7 +77,6 @@
                 />
               </div>
               <div class="block-1-topic">
-                <!-- Số điện thoại  -->
                 <div class="fieldName">Ngày kết thúc</div>
                 <DxDateBox
                   v-model="selectedTopic.endDate"
@@ -89,6 +85,7 @@
                 />
               </div>
             </div>
+            <!--  -->
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <div class="fieldName">Chủ nhiệm đề tài (<span>*</span>)</div>
@@ -112,24 +109,21 @@
                 />
               </div>
             </div>
+            <!--  -->
             <div class="block-2-topic">
-              <!-- block 1 là khối chứ 1 trường nhập  -->
               <div class="block-1-topic">
                 <div class="fieldName">Mã chuyên ngành</div>
                 <input type="text" v-model="selectedTopic.specializeCode" />
               </div>
               <div class="block-1-topic">
                 <div class="fieldName">Loại đề tài</div>
-                <input
-                  type="text"
-                  v-model="selectedTopic.typeResearch"
-                />
+                <input type="text" v-model="selectedTopic.typeResearch" />
               </div>
             </div>
           </div>
           <div class="block-right">
             <h3 style="text-align: center">THÔNG TIN CHI TIẾT QUY TRÌNH</h3>
-
+            <!--  -->
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <div class="fieldName">Kết quả nghiên cứu</div>
@@ -158,70 +152,79 @@
                 </select>
               </div>
             </div>
-
+            <!--  -->
             <div class="block-2-topic">
               <div class="block-1-topic">
-                <div class="fieldName">Cơ sở vật chất</div>
-                <input type="text" v-model="selectedTopic.infrastructure" />
-              </div>
-              <div class="block-1-topic">
                 <div class="fieldName">Thuyết minh đề tài</div>
-                <input
-                  type="text"
-                  v-model="selectedTopic.present"
-                />
+                <input type="text" v-model="selectedTopic.present" />
               </div>
             </div>
 
             <div class="block-2-topic">
               <div class="block-1-topic">
-                <div class="fieldName">Bài báo ISI /Scopus </div>
+                <div class="fieldName">
+                  Cơ sở vật chất, trang thiết bị phục vụ cho đề tài: 
+                </div>
+                <DxTextArea
+                  :height="100"
+                  :width="650"
+                  v-model="selectedTopic.infrastructure"
+                />
+              </div>
+            </div>
+
+            <!--  -->
+            <h3 style="text-align: center; margin-top: 20px">
+              DỰ KIẾN CÔNG BỐ
+            </h3>
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Bài báo ISI /Scopus</div>
                 <input type="number" v-model="selectedTopic.isi" />
               </div>
               <div class="block-1-topic">
-                <div class="fieldName">Tạp chí quốc tế có uy tín (Q1,Q2) </div>
-                <input
-                  type="number"
-                  v-model="selectedTopic.journal"
-                />
+                <div class="fieldName">Tạp chí quốc tế có uy tín (Q1,Q2)</div>
+                <input type="number" v-model="selectedTopic.journal" />
               </div>
             </div>
-
+            <!--  -->
             <div class="block-2-topic">
               <div class="block-1-topic">
-                <div class="fieldName">Công bố phát minh sáng chế/ Giải pháp hữu ích</div>
+                <div class="fieldName">
+                  Công bố phát minh sáng chế/ Giải pháp hữu ích
+                </div>
                 <input type="number" v-model="selectedTopic.usefullSolution" />
               </div>
               <div class="block-1-topic">
                 <div class="fieldName">Sản phẩm công nghệ chuyển giao</div>
-                <input
-                  type="number"
-                  v-model="selectedTopic.transferProduct"
-                />
+                <input type="number" v-model="selectedTopic.transferProduct" />
               </div>
             </div>
-
+            <!--  -->
             <div class="block-2-topic">
               <div class="block-1-topic">
-                <div class="fieldName">Báo cáo tư vấn chính sách cho nhà nước</div>
+                <div class="fieldName">
+                  Báo cáo tư vấn chính sách cho nhà nước
+                </div>
                 <input type="number" v-model="selectedTopic.reportToState" />
               </div>
               <div class="block-1-topic">
                 <div class="fieldName">Sách chuyên khảo</div>
-                <input
-                  type="number"
-                  v-model="selectedTopic.monograph"
-                />
+                <input type="number" v-model="selectedTopic.monograph" />
               </div>
             </div>
-
+            <!--  -->
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <div class="fieldName">Khác</div>
                 <input type="number" v-model="selectedTopic.otherResult" />
               </div>
+              <!-- Dẫn chứng  -->
+              <div class="block-1-topic">
+                <div class="fieldName">Dẫn chứng</div>
+                <input type="text" v-model="selectedTopic.otherResult" />
+              </div>
             </div>
-
           </div>
         </div>
         <!-- footer dialog  -->
@@ -343,7 +346,7 @@ export default {
               // bad request
               type: "error",
               title: "THÔNG BÁO",
-              text: "Unauthorized",
+              text: "Phiên hết hạn! Vui lòng đăng nhập lại!",
             });
           }
 
@@ -352,7 +355,7 @@ export default {
               //Lỗi server
               type: "error",
               title: "THÔNG BÁO",
-              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+              text: "Vui lòng liên hệ Admin để được hỗ trợ!",
             });
           }
 
@@ -394,7 +397,6 @@ export default {
           }
         })
         .catch((e) => {
-
           if (e.response.status == 400) {
             this.$notify({
               //Lỗi server
@@ -418,7 +420,7 @@ export default {
               //Lỗi server
               type: "error",
               title: "THÔNG BÁO",
-              text: "Vui lòng liên hệ MISA để được hỗ trợ!",
+              text: "Vui lòng liên hệ Admin để được hỗ trợ!",
             });
           }
         });
@@ -474,10 +476,7 @@ export default {
 </script>
 
 <style scoped>
-/* .dx-texteditor.dx-editor-outlined{
-  border: none  !important;
-} */
-#title{
+#title {
   margin-top: 20px;
   text-align: center;
 }
@@ -527,7 +526,7 @@ export default {
   display: block;
   margin: 30px 20px 30px 150px;
 }
-.block-right{
+.block-right {
   display: block;
   margin: 30px 150px 30px 20px;
 }

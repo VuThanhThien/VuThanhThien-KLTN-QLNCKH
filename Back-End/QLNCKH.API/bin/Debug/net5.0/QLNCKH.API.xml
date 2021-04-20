@@ -75,7 +75,7 @@
             <param name="id">Định danh đối tượng cần lấy</param>
             <returns>Đối tượng có id trùng với id truyền lên</returns>
         </member>
-        <member name="M:QLNCKH.API.Controllers.BaseController`1.GetBySKU(System.String)">
+        <member name="M:QLNCKH.API.Controllers.BaseController`1.GetByCode(System.String)">
             <summary>
             Lấy thông tin theo code
             </summary>
