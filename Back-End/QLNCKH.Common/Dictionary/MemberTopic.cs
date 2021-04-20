@@ -35,6 +35,7 @@ namespace QLNCKH.Common.Dictionary
         public string BussinessAdress { get; set; }
         public int? Gender { get; set; }
         public string Degree { get; set; }
+        public string ResearchName { get; set; }
 
     }
 }

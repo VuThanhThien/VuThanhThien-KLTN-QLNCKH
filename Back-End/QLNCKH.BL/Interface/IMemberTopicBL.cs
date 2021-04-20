@@ -9,5 +9,6 @@ namespace QLNCKH.BL.Interface
     public interface IMemberTopicBL : IBaseBL<MemberTopic>
     {
         BaseResponse deleteMemberTopic(string UserID, string ResearchTopicID);
+        BaseResponse GetMemberTopicByID(Guid id);
     }
 }

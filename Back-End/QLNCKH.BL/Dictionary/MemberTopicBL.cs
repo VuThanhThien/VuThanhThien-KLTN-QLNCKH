@@ -6,6 +6,7 @@ using QLNCKH.Common.Dictionary;
 using QLNCKH.Common.Enum;
 using QLNCKH.DL.Dictionary;
 using QLNCKH.DL.Interface;
+using System;
 
 namespace QLNCKH.BL.Dictionary
 {
@@ -46,6 +47,32 @@ namespace QLNCKH.BL.Dictionary
                 {
                     HTTPStatusCode = HTTPStatusCode.Bad_Request,
                     Data = "Xóa thất bại"
+                };
+                return response;
+            }
+        }
+
+        public BaseResponse GetMemberTopicByID(Guid id)
+        {
+            var result = _memberTopicDL.GetMemberTopicByID(id);
+            // danh sách rỗng => trả vè lỗi 400
+            if (result == null)
+            {
+                // khởi tạo dữ liệu trả về
+                var response = new BaseResponse()
+                {
+                    HTTPStatusCode = HTTPStatusCode.Bad_Request,
+                    Data = "Not Found"
+                };
+                return response;
+            }
+            else
+            {
+                // khởi tạo dữ liệu trả về => trả về mã 200
+                var response = new BaseResponse()
+                {
+                    HTTPStatusCode = HTTPStatusCode.Ok,
+                    Data = result
                 };
                 return response;
             }

@@ -29,6 +29,11 @@ namespace QLNCKH.API.Controllers
             _memberTopicBL = memberTopicBL;
         }
 
+        /// <summary>
+        /// API xóa thành viên. DÙng cái này không dùng cái dưới
+        /// </summary>
+        /// <param name="paramMemberTopicDto"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteMemberTopic")]
         public  IActionResult DeleteMemberTopic([FromBody] ParamMemberTopicDto paramMemberTopicDto)
@@ -37,6 +42,19 @@ namespace QLNCKH.API.Controllers
             string ResearchTopicID = paramMemberTopicDto.ResearchTopicID.ToString();
             var result = _memberTopicBL.deleteMemberTopic( UserID,  ResearchTopicID);
 
+            return StatusCode((int)result.HTTPStatusCode, result.Data);
+        }
+
+        /// <summary>
+        /// API get thành viên theo id đề tài
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("{id}")]
+        public override IActionResult GetByID( Guid id)
+        {
+            var result = _memberTopicBL.GetMemberTopicByID(id);
             return StatusCode((int)result.HTTPStatusCode, result.Data);
         }
     }

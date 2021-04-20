@@ -120,6 +120,43 @@
                 <input type="text" v-model="selectedTopic.typeResearch" />
               </div>
             </div>
+            <h3 style="text-align: center; margin-top: 20px">
+              Thành viên nghiên cứu
+            </h3>
+            <div
+              v-for="member in members"
+              :key="member.userID"
+              :value="member.userID"
+            >
+              <div class="block-2-topic">
+                <div class="block-1-topic">
+                  <div class="fieldName">Vai trò nghiên cứu:</div>
+                  <input type="text" v-model="member.researchRole" />
+                </div>
+                <div class="block-1-topic">
+                  <!-- <input type="text" v-model="member.fullName" /> -->
+                  <div class="fieldName">Họ và tên :</div>
+                  <select v-model="member.userID">
+                    <option value="0" disabled>Chọn Chủ nhiệm đề tài</option>
+                    <option
+                      v-for="user in users"
+                      :key="user.userID"
+                      :value="user.userID"
+                    >
+                      {{ user.fullName }}
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <DxButton
+                    style="margin-top: 40px"
+                    text="X"
+                    type="danger"
+                    styling-mode="outlined"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div class="block-right">
             <h3 style="text-align: center">THÔNG TIN CHI TIẾT QUY TRÌNH</h3>
@@ -163,7 +200,7 @@
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <div class="fieldName">
-                  Cơ sở vật chất, trang thiết bị phục vụ cho đề tài: 
+                  Cơ sở vật chất, trang thiết bị phục vụ cho đề tài:
                 </div>
                 <DxTextArea
                   :height="100"
@@ -244,6 +281,7 @@ import * as axios from "axios";
 import DxDateBox from "devextreme-vue/date-box";
 import DxTextArea from "devextreme-vue/text-area";
 import service from "../../../modules/data.js";
+import DxButton from "devextreme-vue/button";
 export default {
   name: "UserDetails",
   props: {
@@ -259,8 +297,14 @@ export default {
         return {};
       },
     },
+    members: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
   },
-  components: { DxDateBox, DxTextArea },
+  components: { DxDateBox, DxTextArea, DxButton },
   computed: {
     currentRole() {
       return this.$store.getters.currentRole;

@@ -23,6 +23,7 @@
         :isHide="isHideParent"
         @outIsHide="outIsHide"
         :selectedTopic="selectedTopic"
+        :members="members"
       />
       <div class="headerBtn">
         <DxButton
@@ -91,13 +92,6 @@
         caption="Ngày tạo"
         format="dd/MM/yyyy"
       />
-      <!-- <DxColumn
-        :width="150"
-        data-field="endDate"
-        data-type="date"
-        caption="Ngày kết thúc"
-        format="dd/MM/yyyy"
-      /> -->
       <DxColumn
         :width="150"
         data-field="expiredDate"
@@ -343,6 +337,26 @@ export default {
           console.log(e);
         });
     },
+
+    async getMemberList() {
+      const config = {
+        headers: { Authorization: `Bearer ${this.currentToken}` },
+      };
+      await axios
+        .get(
+          "https://localhost:44323/api/MemberTopic/" +
+            this.selectedTopic.researchID,
+          config
+        )
+        .then((response) => {
+          if (response.data) {
+            this.members = response.data;
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     /**khi chọn một hàng thì lấy đề tài đã chọn sang */
     selectTopic({ selectedRowsData }) {
       const data = selectedRowsData[0];
@@ -362,9 +376,21 @@ export default {
       processArr: service.getProcess(),
       isHidePopupParent: true,
       users: [],
+      members: [],
     };
   },
-
+  // updated(){
+  //   this.getMemberList();
+  // },
+  watch: {
+    selectedTopic: {
+      handler: function (value) {
+        if (value) {
+          this.getMemberList();
+        }
+      },
+    },
+  },
   async created() {
     //tất cả đề tài
     await axios

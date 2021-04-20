@@ -23,5 +23,20 @@ namespace QLNCKH.DL.Dictionary
 
             return result;
         }
+
+        public IEnumerable<MemberTopic> GetMemberTopicByID(Guid id)
+        {
+            var storeName = "Proc_GetMemberTopicByID";
+
+
+            var parameters = new
+            {
+                id = id.ToString()
+            };
+
+            var result = _dbContext.QueryStore(storeName, parameters);
+
+            return result;
+        }
     }
 }

@@ -116,6 +116,20 @@
             <param name="baseBL"></param>
             <param name="memberTopicBL"></param>
         </member>
+        <member name="M:QLNCKH.API.Controllers.MemberTopicController.DeleteMemberTopic(QLNCKH.Common.Model.ParamMemberTopicDto)">
+            <summary>
+            API xóa thành viên. DÙng cái này không dùng cái dưới
+            </summary>
+            <param name="paramMemberTopicDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.MemberTopicController.GetByID(System.Guid)">
+            <summary>
+            API get thành viên theo id đề tài
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:QLNCKH.API.Controllers.ResearchTopicController">
             <summary>
             API Đề tài
