@@ -34,10 +34,8 @@
               <!-- block 1 là khối chứ 1 trường nhập  -->
               <div class="block-1-topic">
                 <div class="fieldName">Mã đề tài (<span>*</span>)</div>
-                <!-- nhập mã nhân viên  -->
                 <input type="text" v-model="selectedTopic.researchCode" />
               </div>
-              <!-- Nhập họ tên  -->
               <div class="block-1-topic">
                 <div class="fieldName">Tên đề tài (<span>*</span>)</div>
                 <input
@@ -47,20 +45,16 @@
                 />
               </div>
             </div>
-            <!-- Nhập ngày sinh  -->
+            
             <div class="block-2-topic">
-              <div class="block-1-topic">
-                <div class="fieldName">Ngày nghiệm thu</div>
-                <DxDateBox
-                  v-model="selectedTopic.expiredDate"
-                  type="date"
-                  display-format="dd/MM/yyyy"
-                />
-              </div>
-              <!-- Nhập giới tính  -->
+              
               <div class="block-1-topic">
                 <div class="fieldName">Kinh phí</div>
                 <input type="number" v-model="selectedTopic.expense" />
+              </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Kinh phí yêu cầu VNU tài trợ</div>
+                <input type="number" v-model="selectedTopic.sponsorMoney" />
               </div>
             </div>
 
@@ -109,10 +103,33 @@
                   </option>
                 </select>
               </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Ngày nghiệm thu</div>
+                <DxDateBox
+                  v-model="selectedTopic.expiredDate"
+                  type="date"
+                  display-format="dd/MM/yyyy"
+                />
+              </div>
+            </div>
+            <div class="block-2-topic">
+              <!-- block 1 là khối chứ 1 trường nhập  -->
+              <div class="block-1-topic">
+                <div class="fieldName">Mã chuyên ngành</div>
+                <input type="text" v-model="selectedTopic.specializeCode" />
+              </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Loại đề tài</div>
+                <input
+                  type="text"
+                  v-model="selectedTopic.typeResearch"
+                />
+              </div>
             </div>
           </div>
           <div class="block-right">
             <h3 style="text-align: center">THÔNG TIN CHI TIẾT QUY TRÌNH</h3>
+
             <div class="block-2-topic">
               <div class="block-1-topic">
                 <div class="fieldName">Kết quả nghiên cứu</div>
@@ -141,6 +158,70 @@
                 </select>
               </div>
             </div>
+
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Cơ sở vật chất</div>
+                <input type="text" v-model="selectedTopic.infrastructure" />
+              </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Thuyết minh đề tài</div>
+                <input
+                  type="text"
+                  v-model="selectedTopic.present"
+                />
+              </div>
+            </div>
+
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Bài báo ISI /Scopus </div>
+                <input type="number" v-model="selectedTopic.isi" />
+              </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Tạp chí quốc tế có uy tín (Q1,Q2) </div>
+                <input
+                  type="number"
+                  v-model="selectedTopic.journal"
+                />
+              </div>
+            </div>
+
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Công bố phát minh sáng chế/ Giải pháp hữu ích</div>
+                <input type="number" v-model="selectedTopic.usefullSolution" />
+              </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Sản phẩm công nghệ chuyển giao</div>
+                <input
+                  type="number"
+                  v-model="selectedTopic.transferProduct"
+                />
+              </div>
+            </div>
+
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Báo cáo tư vấn chính sách cho nhà nước</div>
+                <input type="number" v-model="selectedTopic.reportToState" />
+              </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Sách chuyên khảo</div>
+                <input
+                  type="number"
+                  v-model="selectedTopic.monograph"
+                />
+              </div>
+            </div>
+
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Khác</div>
+                <input type="number" v-model="selectedTopic.otherResult" />
+              </div>
+            </div>
+
           </div>
         </div>
         <!-- footer dialog  -->
@@ -274,6 +355,15 @@ export default {
               text: "Vui lòng liên hệ MISA để được hỗ trợ!",
             });
           }
+
+          if (e.response.status == 400) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: e.response.data,
+            });
+          }
         });
     },
 
@@ -304,6 +394,16 @@ export default {
           }
         })
         .catch((e) => {
+
+          if (e.response.status == 400) {
+            this.$notify({
+              //Lỗi server
+              type: "error",
+              title: "THÔNG BÁO",
+              text: e.response.data,
+            });
+          }
+
           if (e.response.status == 403) {
             this.$notify({
               // bad request

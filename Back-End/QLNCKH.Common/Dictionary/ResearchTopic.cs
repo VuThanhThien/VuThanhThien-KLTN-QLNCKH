@@ -29,12 +29,12 @@ namespace QLNCKH.Common.Dictionary
         /// <summary>
         /// Trạng thái(  1- hoàn thành nhiệm vụ, 2- không hoàn thành nhiệm vụ, 3- bị hủy)
         /// </summary>
-        public int Status { get; set; }
+        public int? Status { get; set; }
 
         /// <summary>
         /// Quá trình làm (1- đợi xét chọn, 2- đang làm, 3- đã hết hạn)
         /// </summary>
-        public int Process { get; set; }
+        public int? Process { get; set; }
 
         /// <summary>
         /// ID tác giả
@@ -107,37 +107,37 @@ namespace QLNCKH.Common.Dictionary
         /// <summary>
         /// Số bài báo ISI
         /// </summary>
-        public int ISI { get; set; }
+        public int? ISI { get; set; }
 
         /// <summary>
         /// Số tạp chí quốc tế
         /// </summary>
-        public int Journal { get; set; }
+        public int? Journal { get; set; }
 
         /// <summary>
         /// Công bố phát minh sáng chế / Giải pháp hữu ích
         /// </summary>
-        public int UsefullSolution { get; set; }
+        public int? UsefullSolution { get; set; }
 
         /// <summary>
         /// Sản phẩm công nghệ chuyển giao
         /// </summary>
-        public int TransferProduct { get; set; }
+        public int? TransferProduct { get; set; }
 
         /// <summary>
         /// Báo cáo tư vấn chính sách cho nhà nước
         /// </summary>
-        public int ReportToState { get; set; }
+        public int? ReportToState { get; set; }
 
         /// <summary>
         /// Sách chuyên khảo
         /// </summary>
-        public int Monograph { get; set; }
+        public int? Monograph { get; set; }
 
         /// <summary>
         /// Công bố khác
         /// </summary>
-        public int OtherResult { get; set; }
+        public int? OtherResult { get; set; }
 
     }
 }

@@ -67,7 +67,7 @@ export default {
 .navBar {
   display: flex;
   list-style: none;
-  padding: 15px 0;
+  padding: 10px 0;
   margin: 0;
   justify-content: flex-end;
   background: #f5f8fa;
