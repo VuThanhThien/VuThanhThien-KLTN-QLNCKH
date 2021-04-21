@@ -24,6 +24,7 @@
         @outIsHide="outIsHide"
         :selectedTopic="selectedTopic"
         :members="members"
+        :canEdit="canEdit"
       />
     </div>
     <DxLoadPanel
@@ -41,7 +42,7 @@
       :data-source="topic"
       :show-borders="true"
       key-expr="researchID"
-      @selection-changed="selectUser"
+      @selection-changed="selectTopic"
     >
       <DxColumn :width="90" data-field="researchCode" caption="Mã đề tài" />
       <DxColumn data-field="researchName" caption="Tên đề tài" />
@@ -244,8 +245,8 @@ export default {
       };
       await axios
         .get(
-          "https://localhost:44323/api/MemberTopic/" +
-            this.selectedTopic.researchID,
+          "https://localhost:44323/api/ResearchTopic/" +
+            this.selectedTopic.researchID + "/members",
           config
         )
         .then((response) => {
@@ -259,16 +260,22 @@ export default {
     },
 
     /**khi chọn một hàng thì lấy đề tài đã chọn sang */
-    selectUser(e) {
-      e.component.byKey(e.currentSelectedRowKeys[0]).done((topic) => {
-        if (topic) {
-          this.selectedTopic = topic;
-        }
-      });
+    selectTopic({ selectedRowsData }) {
+      const data = selectedRowsData[0];
+      this.selectedTopic = data;
+      if (
+        (this.selectedTopic.process == 5 && this.currentRole == "User") ||
+        this.currentRole == "Admin"
+      ) {
+        this.canEdit = true;
+      } else {
+        this.canEdit = false;
+      }
     },
   },
   data() {
     return {
+      canEdit: false,
       allMode: "page",
       checkBoxesMode: "always",
       selectedTopic: {},

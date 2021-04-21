@@ -24,7 +24,7 @@
         @outIsHide="outIsHide"
         :selectedTopic="selectedTopic"
         :members="members"
-        :editMode ="editMode"
+        :canEdit="canEdit"
       />
       <div class="headerBtn">
         <DxButton
@@ -230,7 +230,6 @@ export default {
         this.isHideParent = true;
       } else {
         this.isHideParent = !this.isHideParent;
-        this.editMode = 1;
       }
     },
 
@@ -348,7 +347,8 @@ export default {
       await axios
         .get(
           "https://localhost:44323/api/ResearchTopic/" +
-            this.selectedTopic.researchID + "/members",
+            this.selectedTopic.researchID +
+            "/members",
           config
         )
         .then((response) => {
@@ -364,10 +364,19 @@ export default {
     selectTopic({ selectedRowsData }) {
       const data = selectedRowsData[0];
       this.selectedTopic = data;
+      if (
+        (this.selectedTopic.process == 5 && this.currentRole == "User") ||
+        this.currentRole == "Admin"
+      ) {
+        this.canEdit = true;
+      } else {
+        this.canEdit = false;
+      }
     },
   },
   data() {
     return {
+      canEdit: false,
       allMode: "page",
       checkBoxesMode: "always",
       selectedTopic: {},
@@ -380,7 +389,6 @@ export default {
       isHidePopupParent: true,
       users: [],
       members: [],
-      editMode : 0,
     };
   },
   watch: {
@@ -388,8 +396,7 @@ export default {
       handler: function (value) {
         if (value) {
           this.getMemberList();
-        }
-        else{
+        } else {
           this.members = [];
         }
       },

@@ -29,7 +29,6 @@ namespace QLNCKH.API.Controllers
         }
 
 
-        // GET: api/<BasesController>
         /// <summary>
         /// Lấy tất cả danh sách đối tượng
         /// </summary>
@@ -44,7 +43,6 @@ namespace QLNCKH.API.Controllers
         }
 
 
-        // GET api/<BasesController>/5
         /// <summary>
         /// Lấy thông tin theo định danh
         /// </summary>

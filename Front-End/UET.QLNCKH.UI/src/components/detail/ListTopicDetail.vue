@@ -327,7 +327,7 @@ import {
 import CustomStore from "devextreme/data/custom_store";
 import "whatwg-fetch";
 
-const URL = "https://localhost:44323/api/MemberTopic";
+// const URL = "https://localhost:44323/api/MemberTopic";
 export default {
   name: "UserDetails",
   props: {
@@ -343,10 +343,10 @@ export default {
         return {};
       },
     },
-    editMode: {
-      type: Number,
+    canEdit: {
+      type: Boolean,
       default() {
-        return 0;
+        return false;
       },
     },
     members: {
@@ -477,10 +477,7 @@ export default {
 
     /**Hàm sửa */
     putTopic() {
-      if (this.selectedTopic.process != 5 && this.currentRole == "User") {
-        alert("Đề tài đã hết hạn chỉnh sửa");
-        this.cancel();
-      } else {
+      if (this.canEdit == true) {
         const config = {
           headers: { Authorization: `Bearer ${this.currentToken}` },
         };
@@ -534,6 +531,9 @@ export default {
               });
             }
           });
+      } else {
+        alert("Đề tài đã hết hạn chỉnh sửa");
+        this.cancel();
       }
     },
 
