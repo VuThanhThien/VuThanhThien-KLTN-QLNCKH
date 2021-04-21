@@ -13,20 +13,25 @@ namespace QLNCKH.DL.Dictionary
         public MemberTopicDL(IDbContext<MemberTopic> dbContext) : base(dbContext)
         {
         }
-        public int deleteMemberTopic(object param)
+
+        public IEnumerable<MemberTopic> GetMemberTopicByMemberID(Guid memberId)
         {
-            var procName = "Proc_DeleteMemberTopic";
+            var storeName = "Proc_GetMemberTopicByMemberID";
 
-            var parameters = new DynamicParameters(param);
 
-            var result = _dbContext.ExcuteStore(procName, parameters);
+            var parameters = new
+            {
+                userID = memberId.ToString()
+            };
+
+            var result = _dbContext.QueryStore(storeName, parameters);
 
             return result;
         }
 
-        public IEnumerable<MemberTopic> GetMemberTopicByID(Guid id)
+        public IEnumerable<MemberTopic> GetMemberTopicByTopicID(Guid id)
         {
-            var storeName = "Proc_GetMemberTopicByID";
+            var storeName = "Proc_GetMemberTopicByTopicID";
 
 
             var parameters = new

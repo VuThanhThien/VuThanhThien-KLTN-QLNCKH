@@ -10,6 +10,11 @@ namespace QLNCKH.Common.Dictionary
     public class MemberTopic
     {
         /// <summary>
+        /// member-topic ID
+        /// </summary>
+        public Guid MTID { get; set; }
+
+        /// <summary>
         /// ID thành viên
         /// </summary>
         public Guid UserID { get; set; }

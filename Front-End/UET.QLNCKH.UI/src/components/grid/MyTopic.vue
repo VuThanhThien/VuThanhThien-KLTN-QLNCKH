@@ -1,6 +1,6 @@
 <template>
   <div class="GridTopic" id="gridTopic">
-    <div class="navBar" v-if="loggedIn" >
+    <div class="navBar" v-if="loggedIn">
       <div class="headerBtn">
         <DxButton
           :width="120"
@@ -10,7 +10,7 @@
           @click="btnAddOnClick"
         />
       </div>
-      <div class="headerBtn" >
+      <div class="headerBtn">
         <DxButton
           :width="120"
           text="Sửa"
@@ -23,8 +23,8 @@
         :isHide="isHideParent"
         @outIsHide="outIsHide"
         :selectedTopic="selectedTopic"
+        :members="members"
       />
-  
     </div>
     <DxLoadPanel
       :position="position"
@@ -89,9 +89,7 @@
       <DxSelection mode="single" />
       <DxFilterRow :visible="true" />
       <DxExport :enabled="true" />
-      <DxSearchPanel
-        :visible="true"
-      />
+      <DxSearchPanel :visible="true" />
       <DxGroupPanel
         :visible="true"
         empty-panel-text="Kéo cột muốn nhóm lại vào đây!"
@@ -206,11 +204,15 @@ export default {
     /**Lấy danh sách đề tài */
     async getTopicList() {
       await axios
-        .get("https://localhost:44323/api/ResearchTopic/ByUserID/" + this.currentID, {
-          headers: {
-            Authorization: `Bearer ${this.currentToken}`,
-          },
-        })
+        .get(
+          "https://localhost:44323/api/ResearchTopic/ByUserID/" +
+            this.currentID,
+          {
+            headers: {
+              Authorization: `Bearer ${this.currentToken}`,
+            },
+          }
+        )
         .then((response) => {
           if (response.data) {
             this.topic = response.data;
@@ -219,7 +221,6 @@ export default {
         .catch((e) => {
           if (e.response.status == 401) {
             this.$notify({
-              // bad request
               type: "error",
               title: "THÔNG BÁO",
               text: "Phiên hết hạn! Vui lòng đăng nhập lại!",
@@ -234,6 +235,26 @@ export default {
               text: "Vui lòng liên hệ Admin để được hỗ trợ!",
             });
           }
+        });
+    },
+
+    async getMemberList() {
+      const config = {
+        headers: { Authorization: `Bearer ${this.currentToken}` },
+      };
+      await axios
+        .get(
+          "https://localhost:44323/api/MemberTopic/" +
+            this.selectedTopic.researchID,
+          config
+        )
+        .then((response) => {
+          if (response.data) {
+            this.members = response.data;
+          }
+        })
+        .catch((e) => {
+          console.log(e);
         });
     },
 
@@ -258,16 +279,28 @@ export default {
       statuses: service.getStatus(),
       processArr: service.getProcess(),
       isHidePopupParent: true,
+      members: [],
     };
   },
-
+  watch: {
+    selectedTopic: {
+      handler: function (value) {
+        if (value) {
+          this.getMemberList();
+        }
+      },
+    },
+  },
   async created() {
     await axios
-      .get("https://localhost:44323/api/ResearchTopic/ByUserID/" + this.currentID, {
-        headers: {
-          Authorization: `Bearer ${this.currentToken}`,
-        },
-      })
+      .get(
+        "https://localhost:44323/api/ResearchTopic/ByUserID/" + this.currentID,
+        {
+          headers: {
+            Authorization: `Bearer ${this.currentToken}`,
+          },
+        }
+      )
       .then((response) => {
         if (response.data) {
           this.topic = response.data;
@@ -282,8 +315,8 @@ export default {
             text: "Phiên hết hạn! Vui lòng đăng nhập lại!",
           });
           setTimeout(() => {
-              this.$router.push('Login');
-            }, 1000);
+            this.$router.push("Login");
+          }, 1000);
         }
 
         if (e.response.status == 500) {

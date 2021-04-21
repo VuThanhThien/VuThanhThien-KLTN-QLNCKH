@@ -116,14 +116,7 @@
             <param name="baseBL"></param>
             <param name="memberTopicBL"></param>
         </member>
-        <member name="M:QLNCKH.API.Controllers.MemberTopicController.DeleteMemberTopic(QLNCKH.Common.Model.ParamMemberTopicDto)">
-            <summary>
-            API xóa thành viên. DÙng cái này không dùng cái dưới
-            </summary>
-            <param name="paramMemberTopicDto"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QLNCKH.API.Controllers.MemberTopicController.GetByID(System.Guid)">
+        <member name="M:QLNCKH.API.Controllers.MemberTopicController.GetByTopicID(System.Guid)">
             <summary>
             API get thành viên theo id đề tài
             </summary>
@@ -140,12 +133,13 @@
             Biến productBL gọi lên tầng Bussiness xử lý nghiệp vụ hàng hoá
             </summary>
         </member>
-        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.ResearchTopic},QLNCKH.BL.Interface.IResearchTopicBL)">
+        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.ResearchTopic},QLNCKH.BL.Interface.IResearchTopicBL,QLNCKH.BL.Interface.IMemberTopicBL)">
             <summary>
             Controller đề tài kế thừa từ Base
             </summary>
             <param name="baseBL"></param>
             <param name="researchTopicBL"></param>
+            <param name="memberTopicBL"></param>
         </member>
         <member name="M:QLNCKH.API.Controllers.ResearchTopicController.Post(QLNCKH.Common.Dictionary.ResearchTopic)">
             <summary>
@@ -161,17 +155,12 @@
             <param name="userID"></param>
             <returns></returns>
         </member>
-        <member name="T:QLNCKH.API.Controllers.SpecialistTopicsController">
+        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.GetAllMemberOfThisTopic(System.Guid)">
             <summary>
-            Controller cán bộ đánh giá
+            Lấy tất cả thành viên của topic này
             </summary>
-        </member>
-        <member name="M:QLNCKH.API.Controllers.SpecialistTopicsController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.SpecialistTopic},QLNCKH.BL.Interface.ISpecialistTopicBL)">
-            <summary>
-            
-            </summary>
-            <param name="baseBL"></param>
-            <param name="specialistTopicBL"></param>
+            <returns></returns>
+            created by vtthien 08.03.2021
         </member>
         <member name="T:QLNCKH.API.Controllers.UserController">
             <summary>

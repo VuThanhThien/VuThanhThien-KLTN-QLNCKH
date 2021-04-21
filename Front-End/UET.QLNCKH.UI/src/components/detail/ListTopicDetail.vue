@@ -121,9 +121,10 @@
               </div>
             </div>
             <h3 style="text-align: center; margin-top: 20px">
-              Thành viên nghiên cứu
+              Thành viên nghiên cứu :
+              <!-- {{ selectedTopic.numberResearcher }} -->
             </h3>
-            <div
+            <!-- <div
               v-for="member in members"
               :key="member.userID"
               :value="member.userID"
@@ -134,10 +135,9 @@
                   <input type="text" v-model="member.researchRole" />
                 </div>
                 <div class="block-1-topic">
-                  <!-- <input type="text" v-model="member.fullName" /> -->
                   <div class="fieldName">Họ và tên :</div>
                   <select v-model="member.userID">
-                    <option value="0" disabled>Chọn Chủ nhiệm đề tài</option>
+                    <option value="0" disabled>Chọn tên thành viên</option>
                     <option
                       v-for="user in users"
                       :key="user.userID"
@@ -147,15 +147,50 @@
                     </option>
                   </select>
                 </div>
-                <div>
-                  <DxButton
-                    style="margin-top: 40px"
-                    text="X"
-                    type="danger"
-                    styling-mode="outlined"
-                  />
+              </div>
+              <div class="block-2-topic">
+                <div class="block-1-topic">
+                  <div class="fieldName">Mã thành viên :</div>
+                  <input type="text" v-model="member.userCode" />
+                </div>
+                <div class="block-1-topic">
+                  <div class="fieldName">Số tháng làm việc :</div>
+                  <input type="text" v-model="member.workmonth" />
                 </div>
               </div>
+            </div> -->
+            <div class="block-2-topic">
+              <DxDataGrid
+                id="grid"
+                :show-borders="true"
+                :data-source="members"
+                :repaint-changes-only="true"
+              >
+                <DxEditing
+                  :refresh-mode="refreshMode"
+                  :allow-adding="true"
+                  :allow-updating="true"
+                  :allow-deleting="true"
+                  mode="cell"
+                />
+                <DxColumn data-field="userID" caption="Họ và tên">
+                  <DxLookup
+                    :data-source="users"
+                    value-expr="userID"
+                    display-expr="fullName"
+                  />
+                </DxColumn>
+                <DxColumn
+                  data-field="researchRole"
+                  caption="Vai trò nghiên cứu"
+                />
+                <DxColumn data-field="workmonth" caption="Số tháng làm việc" />
+                <DxColumn
+                  data-field="userCode"
+                  caption="Mã nhân viên"
+                  data-type="text"
+                />
+              </DxDataGrid>
             </div>
           </div>
           <div class="block-right">
@@ -282,6 +317,17 @@ import DxDateBox from "devextreme-vue/date-box";
 import DxTextArea from "devextreme-vue/text-area";
 import service from "../../../modules/data.js";
 import DxButton from "devextreme-vue/button";
+import {
+  DxDataGrid,
+  DxColumn,
+  DxEditing,
+  DxLookup,
+  DxTotalItem,
+} from "devextreme-vue/data-grid";
+import CustomStore from "devextreme/data/custom_store";
+import "whatwg-fetch";
+
+const URL = "https://localhost:44323/api/MemberTopic";
 export default {
   name: "UserDetails",
   props: {
@@ -297,6 +343,12 @@ export default {
         return {};
       },
     },
+    editMode: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
     members: {
       type: Array,
       default() {
@@ -304,7 +356,16 @@ export default {
       },
     },
   },
-  components: { DxDateBox, DxTextArea, DxButton },
+  components: {
+    DxDateBox,
+    DxTextArea,
+    DxButton,
+    DxDataGrid,
+    DxColumn,
+    DxEditing,
+    DxLookup,
+    DxTotalItem,
+  },
   computed: {
     currentRole() {
       return this.$store.getters.currentRole;
@@ -416,58 +477,64 @@ export default {
 
     /**Hàm sửa */
     putTopic() {
-      const config = {
-        headers: { Authorization: `Bearer ${this.currentToken}` },
-      };
+      if (this.selectedTopic.process != 5 && this.currentRole == "User") {
+        alert("Đề tài đã hết hạn chỉnh sửa");
+        this.cancel();
+      } else {
+        const config = {
+          headers: { Authorization: `Bearer ${this.currentToken}` },
+        };
+        const bodyParameters = this.selectedTopic;
+        axios
+          .put(
+            "https://localhost:44323/api/ResearchTopic/" +
+              this.selectedTopic.researchID,
+            bodyParameters,
+            config
+          )
+          .then((response) => {
+            if (response.data) {
+              // this.topic = response.data;
+              this.cancel();
+              this.$notify({
+                type: "success",
+                title: "THÔNG BÁO",
+                text:
+                  "Cập nhật thành công đề tài " +
+                  this.selectedTopic.researchName,
+              });
+            }
+          })
+          .catch((e) => {
+            if (e.response.status == 400) {
+              this.$notify({
+                //Lỗi server
+                type: "error",
+                title: "THÔNG BÁO",
+                text: e.response.data,
+              });
+            }
 
-      const bodyParameters = this.selectedTopic;
-      axios
-        .put(
-          "https://localhost:44323/api/ResearchTopic/" +
-            this.selectedTopic.researchID,
-          bodyParameters,
-          config
-        )
-        .then((response) => {
-          if (response.data) {
-            // this.topic = response.data;
-            this.cancel();
-            this.$notify({
-              type: "success",
-              title: "THÔNG BÁO",
-              text:
-                "Cập nhật thành công đề tài " + this.selectedTopic.researchName,
-            });
-          }
-        })
-        .catch((e) => {
-          if (e.response.status == 400) {
-            this.$notify({
-              //Lỗi server
-              type: "error",
-              title: "THÔNG BÁO",
-              text: e.response.data,
-            });
-          }
+            if (e.response.status == 403) {
+              this.$notify({
+                // bad request
+                type: "error",
+                title: "THÔNG BÁO",
+                text:
+                  "Bạn không đủ quyền để chỉnh sửa, vui lòng liên hệ Admin!",
+              });
+            }
 
-          if (e.response.status == 403) {
-            this.$notify({
-              // bad request
-              type: "error",
-              title: "THÔNG BÁO",
-              text: "Bạn không đủ quyền để chỉnh sửa, vui lòng liên hệ Admin!",
-            });
-          }
-
-          if (e.response.status == 500) {
-            this.$notify({
-              //Lỗi server
-              type: "error",
-              title: "THÔNG BÁO",
-              text: "Vui lòng liên hệ Admin để được hỗ trợ!",
-            });
-          }
-        });
+            if (e.response.status == 500) {
+              this.$notify({
+                //Lỗi server
+                type: "error",
+                title: "THÔNG BÁO",
+                text: "Vui lòng liên hệ Admin để được hỗ trợ!",
+              });
+            }
+          });
+      }
     },
 
     /**Sự kiện nút lưu */
@@ -498,6 +565,7 @@ export default {
       users: [],
       processArr: service.getProcess(),
       statuses: service.getStatus(),
+      refreshMode: "reshape",
     };
   },
 
@@ -564,6 +632,8 @@ export default {
 .dialog-content {
   display: flex;
   justify-content: space-between;
+  height: 845px;
+  overflow-y: scroll;
 }
 
 .block-left {
@@ -610,8 +680,8 @@ select:hover {
   border: 0.5px solid rgb(183, 192, 245);
 }
 .dialog-footer {
-  position: absolute;
-  bottom: 10px;
+  position: fixed;
+  bottom: 0;
   width: 100%;
   height: 43px;
   background-color: #e9ebee;

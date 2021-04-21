@@ -153,8 +153,6 @@ namespace QLNCKH.API
             services.AddScoped<IMemberTopicDL, MemberTopicDL>();
             services.AddScoped<IMemberTopicBL, MemberTopicBL>();
 
-            services.AddScoped<ISpecialistTopicDL, SpecialistTopicDL>();
-            services.AddScoped<ISpecialistTopicBL, SpecialistTopicBL>();
         }
 
         /// <summary>

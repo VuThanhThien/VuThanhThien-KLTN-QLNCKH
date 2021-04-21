@@ -18,20 +18,23 @@ namespace QLNCKH.BL.Dictionary
             _memberTopicDL = memberTopicDL;
         }
 
-        public BaseResponse deleteMemberTopic(string UserID, string ResearchTopicID)
+        public BaseResponse GetMemberTopicByMemberID(Guid memberId)
         {
-            var param = new
-            {
-                UserID = UserID,
-                ResearchTopicID = ResearchTopicID
-            };
-
-            var result = _memberTopicDL.deleteMemberTopic(param);
-
-            if (result > 0)
+            var result = _memberTopicDL.GetMemberTopicByMemberID(memberId);
+            // danh sách rỗng => trả vè lỗi 400
+            if (result == null)
             {
                 // khởi tạo dữ liệu trả về
-                // thành công ==> trả về mã 200
+                var response = new BaseResponse()
+                {
+                    HTTPStatusCode = HTTPStatusCode.Bad_Request,
+                    Data = "Not Found"
+                };
+                return response;
+            }
+            else
+            {
+                // khởi tạo dữ liệu trả về => trả về mã 200
                 var response = new BaseResponse()
                 {
                     HTTPStatusCode = HTTPStatusCode.Ok,
@@ -39,22 +42,11 @@ namespace QLNCKH.BL.Dictionary
                 };
                 return response;
             }
-            else
-            {
-                // khởi tạo dữ liệu trả về
-                // Lỗi thao tác dữ liệu trong db ==> trả về 400
-                var response = new BaseResponse()
-                {
-                    HTTPStatusCode = HTTPStatusCode.Bad_Request,
-                    Data = "Xóa thất bại"
-                };
-                return response;
-            }
         }
 
-        public BaseResponse GetMemberTopicByID(Guid id)
+        public BaseResponse GetMemberTopicByTopicID(Guid id)
         {
-            var result = _memberTopicDL.GetMemberTopicByID(id);
+            var result = _memberTopicDL.GetMemberTopicByTopicID(id);
             // danh sách rỗng => trả vè lỗi 400
             if (result == null)
             {

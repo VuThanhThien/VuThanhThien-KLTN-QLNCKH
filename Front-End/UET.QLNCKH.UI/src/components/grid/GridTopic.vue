@@ -24,6 +24,7 @@
         @outIsHide="outIsHide"
         :selectedTopic="selectedTopic"
         :members="members"
+        :editMode ="editMode"
       />
       <div class="headerBtn">
         <DxButton
@@ -214,6 +215,7 @@ export default {
       // Mở form
       this.isHideParent = !this.isHideParent;
       this.selectedTopic = {};
+      this.members = [];
     },
 
     /**Sự kiện nút sửa
@@ -228,6 +230,7 @@ export default {
         this.isHideParent = true;
       } else {
         this.isHideParent = !this.isHideParent;
+        this.editMode = 1;
       }
     },
 
@@ -344,8 +347,8 @@ export default {
       };
       await axios
         .get(
-          "https://localhost:44323/api/MemberTopic/" +
-            this.selectedTopic.researchID,
+          "https://localhost:44323/api/ResearchTopic/" +
+            this.selectedTopic.researchID + "/members",
           config
         )
         .then((response) => {
@@ -377,16 +380,17 @@ export default {
       isHidePopupParent: true,
       users: [],
       members: [],
+      editMode : 0,
     };
   },
-  // updated(){
-  //   this.getMemberList();
-  // },
   watch: {
     selectedTopic: {
       handler: function (value) {
         if (value) {
           this.getMemberList();
+        }
+        else{
+          this.members = [];
         }
       },
     },

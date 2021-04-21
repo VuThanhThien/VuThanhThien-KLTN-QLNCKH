@@ -8,7 +8,18 @@ namespace QLNCKH.BL.Interface
 {
     public interface IMemberTopicBL : IBaseBL<MemberTopic>
     {
-        BaseResponse deleteMemberTopic(string UserID, string ResearchTopicID);
-        BaseResponse GetMemberTopicByID(Guid id);
+        /// <summary>
+        /// Từ topicId => lấy danh sách thành viên của topic này
+        /// </summary>
+        /// <param name="topicId"></param>
+        /// <returns></returns>
+        BaseResponse GetMemberTopicByTopicID(Guid topicId);
+
+        /// <summary>
+        /// Từ memberId => lấy danh sách topic mà member này là thành viên
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <returns></returns>
+        BaseResponse GetMemberTopicByMemberID(Guid memberId);
     }
 }

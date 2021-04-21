@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QLNCKH.Common.Dictionary
 {
-    public class ResearchTopic
+    public class ResearchTopicDto
     {
         /// <summary>
         /// ID đề tài
@@ -143,35 +143,9 @@ namespace QLNCKH.Common.Dictionary
         /// </summary>
         public int? NumberResearcher { get; set; } = 1;
 
-        public void MappingDto(ResearchTopicDto topicDto)
-        {
-            ResearchID = topicDto.ResearchID;
-            ResearchCode = topicDto.ResearchCode;
-            ResearchName = topicDto.ResearchName;
-            Description = topicDto.Description;
-            Status = topicDto.Status;
-            Process = topicDto.Process;
-            UserID = topicDto.UserID;
-            CreatedDate = topicDto.CreatedDate;
-            CreatedBy = topicDto.CreatedBy;
-            ModifiedDate = topicDto.ModifiedDate;
-            ModifiedBy = topicDto.ModifiedBy;
-            Expense = topicDto.Expense;
-            EndDate = topicDto.EndDate;
-            ExpiredDate = topicDto.ExpiredDate;
-            SponsorMoney = topicDto.SponsorMoney;
-            SpecializeCode = topicDto.SpecializeCode;
-            TypeResearch = topicDto.TypeResearch;
-            Infrastructure = topicDto.Infrastructure;
-            Present = topicDto.Present;
-            ISI = topicDto.ISI;
-            Journal = topicDto.Journal;
-            UsefullSolution = topicDto.UsefullSolution;
-            TransferProduct = topicDto.TransferProduct;
-            ReportToState = topicDto.ReportToState;
-            Monograph = topicDto.Monograph;
-            OtherResult = topicDto.OtherResult;
-            NumberResearcher = topicDto.NumberResearcher;
-        }
+        public List<MemberTopic> NewOrEditMembers { get; set; }
+        public List<MemberTopic> DeleteMembers { get; set; }
+
+
     }
 }

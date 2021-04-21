@@ -11,6 +11,7 @@ namespace QLNCKH.API.Controllers
     /// <typeparam name="T"></typeparam>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BaseController<T> : ControllerBase where T: class
     {
         /// <summary>
@@ -34,7 +35,7 @@ namespace QLNCKH.API.Controllers
         /// </summary>
         /// <returns></returns>
         /// created by vtthien 08.03.2021
-        [Authorize]
+        
         [HttpGet]
         public virtual IActionResult GetAll()
         {
@@ -49,7 +50,6 @@ namespace QLNCKH.API.Controllers
         /// </summary>
         /// <param name="id">Định danh đối tượng cần lấy</param>
         /// <returns>Đối tượng có id trùng với id truyền lên</returns>
-        [Authorize]
         [HttpGet("{id}")]
         public virtual IActionResult GetByID([FromRoute] Guid id)
         {
@@ -62,7 +62,6 @@ namespace QLNCKH.API.Controllers
         /// </summary>
         /// <param name="code">Mã đối tượng cần lấy</param>
         /// <returns>Đối tượng có sku trùng với sku nhập vào</returns>
-        [Authorize]
         [HttpGet("ByCode/{code}")]
         public virtual IActionResult GetByCode([FromRoute] string code)
         {
@@ -76,7 +75,6 @@ namespace QLNCKH.API.Controllers
         /// </summary>
         /// <param name="entity">Đối tượng cần thêm mới</param>
         /// <returns></returns>
-        [Authorize]
         [HttpPost]
         public virtual IActionResult Post([FromBody] T entity)
         {
@@ -91,7 +89,6 @@ namespace QLNCKH.API.Controllers
         /// <param name="id">Định danh đối tượng</param>
         /// <param name="entity">Đối tượng thay đổi</param>
         /// <returns></returns>
-        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public virtual IActionResult Put([FromRoute] Guid id, [FromBody] T entity)
         {

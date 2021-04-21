@@ -10,6 +10,7 @@ namespace QLNCKH.BL.Dictionary
     public class UserBL : BaseBL<User>, IUserBL
     {
         private readonly IUserDL _userDL;
+
         public UserBL(IBaseDL<User> baseDL, IUserDL userDL) : base(baseDL)
         {
             _userDL = userDL;
