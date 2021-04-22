@@ -124,41 +124,6 @@
               Thành viên nghiên cứu :
               <!-- {{ selectedTopic.numberResearcher }} -->
             </h3>
-            <!-- <div
-              v-for="member in members"
-              :key="member.userID"
-              :value="member.userID"
-            >
-              <div class="block-2-topic">
-                <div class="block-1-topic">
-                  <div class="fieldName">Vai trò nghiên cứu:</div>
-                  <input type="text" v-model="member.researchRole" />
-                </div>
-                <div class="block-1-topic">
-                  <div class="fieldName">Họ và tên :</div>
-                  <select v-model="member.userID">
-                    <option value="0" disabled>Chọn tên thành viên</option>
-                    <option
-                      v-for="user in users"
-                      :key="user.userID"
-                      :value="user.userID"
-                    >
-                      {{ user.fullName }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="block-2-topic">
-                <div class="block-1-topic">
-                  <div class="fieldName">Mã thành viên :</div>
-                  <input type="text" v-model="member.userCode" />
-                </div>
-                <div class="block-1-topic">
-                  <div class="fieldName">Số tháng làm việc :</div>
-                  <input type="text" v-model="member.workmonth" />
-                </div>
-              </div>
-            </div> -->
             <div class="block-2-topic">
               <DxDataGrid
                 id="grid"
@@ -227,8 +192,18 @@
             <!--  -->
             <div class="block-2-topic">
               <div class="block-1-topic">
-                <div class="fieldName">Thuyết minh đề tài</div>
-                <input type="text" v-model="selectedTopic.present" />
+                <div class="fieldName">Thuyết minh đề tài :</div>
+                <div style="display: flex">
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  class="inputfile"
+                  style="width: 80px; border: none"
+                  @change="onFileChange"
+                />
+                <label for="file">Đã nộp: {{ selectedTopic.present }}</label>
+                </div>
               </div>
             </div>
 
@@ -317,6 +292,7 @@ import DxDateBox from "devextreme-vue/date-box";
 import DxTextArea from "devextreme-vue/text-area";
 import service from "../../../modules/data.js";
 import DxButton from "devextreme-vue/button";
+import { DxFileUploader } from "devextreme-vue/file-uploader";
 import {
   DxDataGrid,
   DxColumn,
@@ -324,10 +300,8 @@ import {
   DxLookup,
   DxTotalItem,
 } from "devextreme-vue/data-grid";
-import CustomStore from "devextreme/data/custom_store";
 import "whatwg-fetch";
 
-// const URL = "https://localhost:44323/api/MemberTopic";
 export default {
   name: "UserDetails",
   props: {
@@ -365,6 +339,7 @@ export default {
     DxEditing,
     DxLookup,
     DxTotalItem,
+    DxFileUploader,
   },
   computed: {
     currentRole() {
@@ -415,6 +390,33 @@ export default {
     },
   },
   methods: {
+    //upload file
+    async onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      console.log(files[0]);
+      let formData = new FormData();
+      formData.append("file", files[0]);
+      axios
+        .post(
+          "https://localhost:44323/api/ResearchTopic/" +
+            this.selectedTopic.researchID +
+            "/import-file",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + this.currentToken,
+            },
+          }
+        )
+        .then(function () {
+          console.log("SUCCESS!!");
+        })
+        .catch(function () {
+          console.log("FAILURE!!");
+        });
+    },
     /**Sự kiện hủy */
     cancel() {
       this.$emit("outIsHide", !this.isHide);
@@ -562,6 +564,10 @@ export default {
   },
   data() {
     return {
+      files: "",
+      multiple: false,
+      accept: "*",
+      uploadMode: "instantly",
       users: [],
       processArr: service.getProcess(),
       statuses: service.getStatus(),
@@ -588,6 +594,10 @@ export default {
 </script>
 
 <style scoped>
+.inputfile + label {
+  font-size: small;
+  padding: 10px 0 0 10px;
+}
 #title {
   margin-top: 20px;
   text-align: center;

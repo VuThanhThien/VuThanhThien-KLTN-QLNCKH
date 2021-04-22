@@ -163,7 +163,6 @@ namespace QLNCKH.Common.Dictionary
             SpecializeCode = topicDto.SpecializeCode;
             TypeResearch = topicDto.TypeResearch;
             Infrastructure = topicDto.Infrastructure;
-            Present = topicDto.Present;
             ISI = topicDto.ISI;
             Journal = topicDto.Journal;
             UsefullSolution = topicDto.UsefullSolution;

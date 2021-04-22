@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -102,7 +103,8 @@ namespace QLNCKH.Common.Dictionary
         /// <summary>
         /// Thuyết minh đề cương
         /// </summary>
-        public string Present { get; set; }
+        public IFormFile Present { get; set; }
+        
 
         /// <summary>
         /// Số bài báo ISI
@@ -142,9 +144,6 @@ namespace QLNCKH.Common.Dictionary
         /// Số ng tham gia nghiên cứu
         /// </summary>
         public int? NumberResearcher { get; set; } = 1;
-
-        public List<MemberTopic> NewOrEditMembers { get; set; }
-        public List<MemberTopic> DeleteMembers { get; set; }
 
 
     }

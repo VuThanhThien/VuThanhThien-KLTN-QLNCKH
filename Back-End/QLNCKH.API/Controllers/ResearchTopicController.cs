@@ -1,9 +1,12 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QLNCKH.BL.Interface;
 using QLNCKH.Common.Dictionary;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace QLNCKH.API.Controllers
 {   
@@ -46,14 +49,6 @@ namespace QLNCKH.API.Controllers
             return StatusCode((int)result.HTTPStatusCode, result.Data);
         }
 
-        //[Authorize]
-        //[HttpPut("{id}")]
-        //public override IActionResult Put([FromRoute] Guid id, [FromBody] ResearchTopic topic)
-        //{
-        //    var result = _researchTopicBL.Insert(topic);
-
-        //    return StatusCode((int)result.HTTPStatusCode, result.Data);
-        //}
 
         /// <summary>
         /// Lấy danh sách đề tài theo userID
@@ -80,6 +75,34 @@ namespace QLNCKH.API.Controllers
             return StatusCode((int)result.HTTPStatusCode, result.Data);
         }
 
+        [HttpPost("{researchId}/import-file")]
+        public async Task<IActionResult> ImportFile(IFormFile file, CancellationToken cancellation, [FromRoute] Guid researchId)
+        {
+            try
+            {
+                var fileName = _researchTopicBL.GenFileName(file);
+
+                await _researchTopicBL.WriteFile(file, fileName);
+
+                var researchData = _researchTopicBL.GetByID(researchId).Data;
+
+                if (researchData.ToString() == "Not Found")
+                    return BadRequest();
+
+                var research = (ResearchTopic)researchData;
+
+                research.Present = fileName;
+
+                _researchTopicBL.Update(researchId, research);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+        }
 
     }
 }

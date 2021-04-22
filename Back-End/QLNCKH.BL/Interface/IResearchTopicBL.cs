@@ -1,5 +1,7 @@
-﻿using QLNCKH.Common;
+﻿using Microsoft.AspNetCore.Http;
+using QLNCKH.Common;
 using QLNCKH.Common.Dictionary;
+using System.Threading.Tasks;
 
 namespace QLNCKH.BL.Interface
 {
@@ -11,5 +13,7 @@ namespace QLNCKH.BL.Interface
         /// <param name="userID"></param>
         /// <returns></returns>
         BaseResponse GetTopicByUserID(string userID);
+        string GenFileName(IFormFile file);
+        Task<bool> WriteFile(IFormFile file, string fileName);
     }
 }

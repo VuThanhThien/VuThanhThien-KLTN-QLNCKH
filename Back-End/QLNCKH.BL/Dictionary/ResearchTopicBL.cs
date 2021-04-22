@@ -1,10 +1,13 @@
-﻿using QLNCKH.BL.Base;
+﻿using Microsoft.AspNetCore.Http;
+using QLNCKH.BL.Base;
 using QLNCKH.BL.Interface;
 using QLNCKH.Common;
 using QLNCKH.Common.Dictionary;
 using QLNCKH.Common.Enum;
 using QLNCKH.DL.Interface;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace QLNCKH.BL.Dictionary
 {
@@ -75,6 +78,44 @@ namespace QLNCKH.BL.Dictionary
                 };
                 return response;
             }
+        }
+
+        public string GenFileName(IFormFile file)
+        {
+            var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
+            var fileName = DateTime.Now.Ticks + extension;
+
+            return fileName;
+        }
+
+        public async Task<bool> WriteFile(IFormFile file, string fileName)
+        {
+            bool isSaveSuccess = false;
+            try
+            {
+                var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files");
+
+                if (!Directory.Exists(pathBuilt))
+                {
+                    Directory.CreateDirectory(pathBuilt);
+                }
+
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files",
+                   fileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                isSaveSuccess = true;
+            }
+            catch (Exception e)
+            {
+                //log error
+            }
+
+            return isSaveSuccess;
         }
     }
 }
