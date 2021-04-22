@@ -141,9 +141,9 @@ namespace QLNCKH.Common.Dictionary
         /// </summary>
         public int? OtherResult { get; set; }
         /// <summary>
-        /// Số ng tham gia nghiên cứu
+        /// Dẫn chứng
         /// </summary>
-        public int? NumberResearcher { get; set; } = 1;
+        public string Evidence { get; set; } 
 
 
     }

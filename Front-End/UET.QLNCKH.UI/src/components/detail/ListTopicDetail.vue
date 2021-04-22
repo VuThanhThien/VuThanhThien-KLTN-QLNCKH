@@ -194,15 +194,15 @@
               <div class="block-1-topic">
                 <div class="fieldName">Thuyết minh đề tài :</div>
                 <div style="display: flex">
-                <input
-                  type="file"
-                  name="file"
-                  id="file"
-                  class="inputfile"
-                  style="width: 80px; border: none"
-                  @change="onFileChange"
-                />
-                <label for="file">Đã nộp: {{ selectedTopic.present }}</label>
+                  <input
+                    type="file"
+                    name="file"
+                    id="file"
+                    class="inputfile"
+                    style="width: 80px; border: none"
+                    @change="onFileChange"
+                  />
+                  <label for="file">Đã nộp: {{ selectedTopic.present }}</label>
                 </div>
               </div>
             </div>
@@ -269,7 +269,7 @@
               <!-- Dẫn chứng  -->
               <div class="block-1-topic">
                 <div class="fieldName">Dẫn chứng</div>
-                <input type="text" v-model="selectedTopic.otherResult" />
+                <input type="text" v-model="selectedTopic.evidence" />
               </div>
             </div>
           </div>
@@ -394,10 +394,9 @@ export default {
     async onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-      console.log(files[0]);
       let formData = new FormData();
       formData.append("file", files[0]);
-      axios
+      await axios
         .post(
           "https://localhost:44323/api/ResearchTopic/" +
             this.selectedTopic.researchID +
@@ -410,11 +409,23 @@ export default {
             },
           }
         )
-        .then(function () {
-          console.log("SUCCESS!!");
+        .then((response) => {
+          if (response.status == 200) {
+            this.$notify({
+              type: "success",
+              title: "THÔNG BÁO",
+              text: "Tải lên thành công!!!",
+            });
+          }
         })
-        .catch(function () {
-          console.log("FAILURE!!");
+        .catch((e) => {
+          if (e.response.status == 400) {
+            this.$notify({
+              type: "error",
+              title: "THÔNG BÁO",
+              text: "Tải lên thất bại",
+            });
+          }
         });
     },
     /**Sự kiện hủy */
@@ -423,13 +434,13 @@ export default {
     },
 
     /**Hàm insert */
-    postTopic() {
+    async postTopic() {
       const config = {
         headers: { Authorization: `Bearer ${this.currentToken}` },
       };
 
       const bodyParameters = this.selectedTopic;
-      axios
+      await axios
         .post(
           "https://localhost:44323/api/ResearchTopic",
           bodyParameters,
@@ -478,13 +489,13 @@ export default {
     },
 
     /**Hàm sửa */
-    putTopic() {
+    async putTopic() {
       if (this.canEdit == true) {
         const config = {
           headers: { Authorization: `Bearer ${this.currentToken}` },
         };
         const bodyParameters = this.selectedTopic;
-        axios
+        await axios
           .put(
             "https://localhost:44323/api/ResearchTopic/" +
               this.selectedTopic.researchID,

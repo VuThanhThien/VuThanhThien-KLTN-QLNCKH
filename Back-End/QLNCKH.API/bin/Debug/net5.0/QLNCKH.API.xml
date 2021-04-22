@@ -162,6 +162,15 @@
             <returns></returns>
             created by vtthien 08.03.2021
         </member>
+        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.ImportFile(Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken,System.Guid)">
+            <summary>
+            API upload thuyết minh nghiên cứu
+            </summary>
+            <param name="file"></param>
+            <param name="cancellation"></param>
+            <param name="researchId"></param>
+            <returns></returns>
+        </member>
         <member name="T:QLNCKH.API.Controllers.UserController">
             <summary>
             

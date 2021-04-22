@@ -75,6 +75,13 @@ namespace QLNCKH.API.Controllers
             return StatusCode((int)result.HTTPStatusCode, result.Data);
         }
 
+        /// <summary>
+        /// API upload thuyết minh nghiên cứu
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="cancellation"></param>
+        /// <param name="researchId"></param>
+        /// <returns></returns>
         [HttpPost("{researchId}/import-file")]
         public async Task<IActionResult> ImportFile(IFormFile file, CancellationToken cancellation, [FromRoute] Guid researchId)
         {

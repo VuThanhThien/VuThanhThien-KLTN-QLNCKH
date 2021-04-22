@@ -141,7 +141,7 @@ namespace QLNCKH.Common.Dictionary
         /// <summary>
         /// Số ng tham gia nghiên cứu
         /// </summary>
-        public int? NumberResearcher { get; set; } = 1;
+        public string Evidence { get; set; } 
 
         public void MappingDto(ResearchTopicDto topicDto)
         {
@@ -170,7 +170,7 @@ namespace QLNCKH.Common.Dictionary
             ReportToState = topicDto.ReportToState;
             Monograph = topicDto.Monograph;
             OtherResult = topicDto.OtherResult;
-            NumberResearcher = topicDto.NumberResearcher;
+            Evidence = topicDto.Evidence;
         }
     }
 }
