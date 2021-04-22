@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <ul class="nav">
+      <li>
+        <img src="@/assets/Logo-UETEureka.png" class="logo-eureka" >
+      </li>
       <li title="Thông tin của tôi" >
         <router-link id="myTopic" :to="{ name: 'MyInfo' }">
           {{this.currentName}}
@@ -86,7 +89,12 @@ export default {
   text-decoration: none;
   text-transform: uppercase;
 }
-
+.logo-eureka{
+  position: absolute;
+  left: 20px;
+  height: 45px;
+  width: auto;
+}
 // Auth Pages
 
 label {
