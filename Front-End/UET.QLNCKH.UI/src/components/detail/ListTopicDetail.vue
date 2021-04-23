@@ -220,7 +220,7 @@
               </div>
             </div>
 
-            <!--  -->
+            <!--Dự kiến công bố  -->
             <h3 style="text-align: center; margin-top: 20px">
               DỰ KIẾN CÔNG BỐ
             </h3>
@@ -272,6 +272,34 @@
                 <input type="text" v-model="selectedTopic.evidence" />
               </div>
             </div>
+
+            <h3 style="text-align: center; margin-top: 20px">
+              Tổ chức chủ trì đề tài
+            </h3>
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Tên tổ chức chủ trì</div>
+                <input type="text" value="Đại học Công Nghệ" />
+              </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Người đại diện</div>
+                <input type="text" value="PGS. TS. Nguyễn Việt Hà" />
+              </div>
+            </div>
+            <div class="block-2-topic">
+              <div class="block-1-topic">
+                <div class="fieldName">Chức vụ</div>
+                <input type="text" value="Hiệu trưởng" />
+              </div>
+              <div class="block-1-topic">
+                <div class="fieldName">Địa chỉ</div>
+                <input
+                  type="text"
+                  value=" Nhà E3, 144 Xuân Thủy, Q. Cầu Giấy, Hà Nội"
+                />
+              </div>
+            </div>
+
           </div>
         </div>
         <!-- footer dialog  -->
@@ -390,7 +418,7 @@ export default {
     },
   },
   methods: {
-    //upload file
+    /**upload file*/
     async onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
@@ -699,6 +727,10 @@ export default {
 input:hover,
 select:hover {
   border: 0.5px solid rgb(183, 192, 245);
+}
+input:focus,select:focus{
+  border: 0.5px solid rgb(120, 230, 162) !important;
+  outline: none;
 }
 .dialog-footer {
   position: fixed;

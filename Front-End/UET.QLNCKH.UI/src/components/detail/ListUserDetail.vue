@@ -651,7 +651,10 @@ select {
 }
 input:hover, select:hover {
   border: 0.5px solid rgb(183, 192, 245);
-
+}
+input:focus,select:focus{
+  border: 0.5px solid rgb(120, 230, 162) !important;
+  outline: none;
 }
 .dialog-footer {
   margin-top: 20px;

@@ -184,6 +184,7 @@ const genders = [
     "name": "Khác"
   }
 ];
+const myRoteInName = ['MyTopic','MyInfo', 'about'];
 export default {
   getDepartment() {
     return departments;
@@ -199,5 +200,8 @@ export default {
   },
   getGender(){
     return genders;
+  },
+  getRoute(){
+    return myRoteInName;
   }
 };

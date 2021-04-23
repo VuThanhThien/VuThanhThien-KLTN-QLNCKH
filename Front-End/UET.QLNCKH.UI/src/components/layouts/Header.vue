@@ -2,13 +2,19 @@
   <div id="app">
     <ul class="nav">
       <li>
-        <img src="@/assets/Logo-UETEureka.png" class="logo-eureka" >
+        <img src="@/assets/Logo-UETEureka.png" class="logo-eureka" />
       </li>
-      <li title="Thông tin của tôi" >
+      <li title="Thông tin của tôi">
         <router-link id="myTopic" :to="{ name: 'MyInfo' }">
-          {{this.currentName}}
+          {{ this.currentName }}
         </router-link>
       </li>
+      <!-- <DxDropDownButton
+        :items="myRoteInName"
+        :drop-down-options="{ width: 230 }"
+        text="Download Trial"
+        @item-click="onItemClick"
+      /> -->
       <li v-if="loggedIn">
         <router-link :to="{ name: 'Home' }">Trang chủ</router-link>
       </li>
@@ -28,10 +34,12 @@
 
 <script>
 import NavBar from "./NavBar.vue";
-
+import DxDropDownButton from "devextreme-vue/drop-down-button";
+import service from "../../../modules/data.js";
 export default {
   components: {
     NavBar,
+    DxDropDownButton,
   },
   computed: {
     loggedIn() {
@@ -42,7 +50,14 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      myRoteInName: service.getRoute(),
+    };
+  },
+  methods: {
+    onItemClick(e) {
+      this.$router.push({ name: e.itemData });
+    },
   },
 };
 </script>
@@ -89,7 +104,7 @@ export default {
   text-decoration: none;
   text-transform: uppercase;
 }
-.logo-eureka{
+.logo-eureka {
   position: absolute;
   left: 20px;
   height: 45px;
