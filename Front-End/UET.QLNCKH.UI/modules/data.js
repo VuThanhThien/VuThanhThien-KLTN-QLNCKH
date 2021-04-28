@@ -151,11 +151,11 @@ const statuses = [
 const processArr = [
   {
     "id": 1,
-    "name": "Đợi xét chọn"
+    "name": "Không phê duyệt"
   },
   {
     "id": 2,
-    "name": "Đợi nghiệm thu"
+    "name": "Đang thực hiện"
   },
   {
     "id": 3,
@@ -163,11 +163,11 @@ const processArr = [
   },
   {
     "id":4,
-    "name" : "Đang nghiên cứu"
+    "name" : "Đã nghiệm thu"
   },
   {
     "id":5,
-    "name" : "Khởi tạo"
+    "name" : "Đề xuất"
   }
 ];
 const genders = [

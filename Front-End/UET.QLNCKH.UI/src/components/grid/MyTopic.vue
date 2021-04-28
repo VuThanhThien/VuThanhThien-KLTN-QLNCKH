@@ -47,10 +47,10 @@
       <DxColumn :width="90" data-field="researchCode" caption="Mã đề tài" />
       <DxColumn data-field="researchName" caption="Tên đề tài" />
       <DxColumn :width="280" data-field="description" caption="Mô tả" />
-      <DxColumn data-field="status" caption="Kết quả">
+      <DxColumn data-field="status" caption="Kết quả nghiên cứu">
         <DxLookup :data-source="statuses" display-expr="name" value-expr="id" />
       </DxColumn>
-      <DxColumn data-field="process" caption="Tiến trình nghiên cứu">
+      <DxColumn data-field="process" caption="Tình trạng đề tài">
         <DxLookup
           :data-source="processArr"
           display-expr="name"
@@ -61,14 +61,14 @@
         :width="150"
         data-field="createdDate"
         data-type="date"
-        caption="Ngày tạo"
+        caption="Ngày bắt đầu"
         format="dd/MM/yyyy"
       />
       <DxColumn
         :width="150"
         data-field="endDate"
         data-type="date"
-        caption="Ngày kết thúc"
+        caption="Ngày hết hạn"
         format="dd/MM/yyyy"
       />
       <DxColumn

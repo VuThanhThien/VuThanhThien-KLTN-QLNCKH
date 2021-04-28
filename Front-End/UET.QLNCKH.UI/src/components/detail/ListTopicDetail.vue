@@ -225,81 +225,109 @@
               DỰ KIẾN CÔNG BỐ
             </h3>
             <div class="block-2-topic">
-              <div class="block-1-topic">
+              <div class=".block-1-3-topic">
                 <div class="fieldName">Bài báo ISI /Scopus</div>
                 <input type="number" v-model="selectedTopic.isi" />
               </div>
-              <div class="block-1-topic">
-                <div class="fieldName">Tạp chí quốc tế có uy tín (Q1,Q2)</div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Số lượng công bố</div>
+                <input type="number" />
+              </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Dẫn chứng</div>
+                <input type="file" />
+              </div>
+            </div>
+
+            <div class="block-2-topic">
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Tạp chí quốc tế uy tín</div>
                 <input type="number" v-model="selectedTopic.journal" />
               </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Số lượng công bố</div>
+                <input type="number" />
+              </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Dẫn chứng</div>
+                <input type="file" />
+              </div>
             </div>
-            <!--  -->
+
             <div class="block-2-topic">
-              <div class="block-1-topic">
-                <div class="fieldName">
-                  Công bố phát minh sáng chế/ Giải pháp hữu ích
-                </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Phát minh sáng chế</div>
                 <input type="number" v-model="selectedTopic.usefullSolution" />
               </div>
-              <div class="block-1-topic">
-                <div class="fieldName">Sản phẩm công nghệ chuyển giao</div>
-                <input type="number" v-model="selectedTopic.transferProduct" />
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Số lượng công bố</div>
+                <input type="number" />
+              </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Dẫn chứng</div>
+                <input type="file" />
               </div>
             </div>
-            <!--  -->
+
             <div class="block-2-topic">
-              <div class="block-1-topic">
-                <div class="fieldName">
-                  Báo cáo tư vấn chính sách cho nhà nước
-                </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Công nghệ chuyển giao</div>
+                <input type="number" v-model="selectedTopic.transferProduct" />
+              </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Số lượng công bố</div>
+                <input type="number" />
+              </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Dẫn chứng</div>
+                <input type="file" />
+              </div>
+            </div>
+
+            <div class="block-2-topic">
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Tư vấn chính sách</div>
                 <input type="number" v-model="selectedTopic.reportToState" />
               </div>
-              <div class="block-1-topic">
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Số lượng công bố</div>
+                <input type="number" />
+              </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Dẫn chứng</div>
+                <input type="file" />
+              </div>
+            </div>
+
+            <div class="block-2-topic">
+              <div class=".block-1-3-topic">
                 <div class="fieldName">Sách chuyên khảo</div>
                 <input type="number" v-model="selectedTopic.monograph" />
               </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Số lượng công bố</div>
+                <input type="number" />
+              </div>
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Dẫn chứng</div>
+                <input type="file" />
+              </div>
             </div>
-            <!--  -->
+
             <div class="block-2-topic">
-              <div class="block-1-topic">
+              <div class=".block-1-3-topic">
                 <div class="fieldName">Khác</div>
                 <input type="number" v-model="selectedTopic.otherResult" />
               </div>
-              <!-- Dẫn chứng  -->
-              <div class="block-1-topic">
+              <div class=".block-1-3-topic">
+                <div class="fieldName">Số lượng công bố</div>
+                <input type="number" />
+              </div>
+              <div class=".block-1-3-topic">
                 <div class="fieldName">Dẫn chứng</div>
-                <input type="text" v-model="selectedTopic.evidence" />
+                <input type="file" />
               </div>
             </div>
-
-            <h3 style="text-align: center; margin-top: 20px">
-              Tổ chức chủ trì đề tài
-            </h3>
-            <div class="block-2-topic">
-              <div class="block-1-topic">
-                <div class="fieldName">Tên tổ chức chủ trì</div>
-                <input type="text" value="Đại học Công Nghệ" />
-              </div>
-              <div class="block-1-topic">
-                <div class="fieldName">Người đại diện</div>
-                <input type="text" value="PGS. TS. Nguyễn Việt Hà" />
-              </div>
-            </div>
-            <div class="block-2-topic">
-              <div class="block-1-topic">
-                <div class="fieldName">Chức vụ</div>
-                <input type="text" value="Hiệu trưởng" />
-              </div>
-              <div class="block-1-topic">
-                <div class="fieldName">Địa chỉ</div>
-                <input
-                  type="text"
-                  value=" Nhà E3, 144 Xuân Thủy, Q. Cầu Giấy, Hà Nội"
-                />
-              </div>
-            </div>
-
           </div>
         </div>
         <!-- footer dialog  -->
@@ -708,6 +736,12 @@ export default {
 .block-1-topic span {
   color: #ff0000;
 }
+.block-1-3-topic {
+  width: 150px;
+  height: calc(100% - 2px);
+  margin-left: 15px;
+  margin-top: 10px;
+}
 .fieldName {
   font-size: 13px;
   font-weight: bold;
@@ -715,7 +749,9 @@ export default {
   margin-top: 8px;
 }
 .block-1-topic input,
-.block-1-topic select {
+.block-1-topic select,
+.block-1-3-topic input,
+.block-1-3-topic select {
   padding-left: 20px;
   margin-top: 4px;
   width: 300px;
@@ -724,11 +760,12 @@ export default {
   border: 0.5px solid rgb(204, 204, 204);
   padding: 5px;
 }
-input:hover,
-select:hover {
+.block-1-topic input,
+.block-1-topic select {
   border: 0.5px solid rgb(183, 192, 245);
 }
-input:focus,select:focus{
+input:focus,
+select:focus {
   border: 0.5px solid rgb(120, 230, 162) !important;
   outline: none;
 }

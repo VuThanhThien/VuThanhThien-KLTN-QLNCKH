@@ -65,13 +65,13 @@
       />
       <DxColumn :width="280" data-field="researchName" caption="Tên đề tài" />
       <DxColumn data-field="description" caption="Mô tả" />
-      <DxColumn :width="180" data-field="status" caption="Kết quả">
+      <DxColumn :width="180" data-field="status" caption="Kết quả nghiên cứu">
         <DxLookup :data-source="statuses" display-expr="name" value-expr="id" />
       </DxColumn>
       <DxColumn
         :width="180"
         data-field="process"
-        caption="Tiến trình nghiên cứu"
+        caption="Tình trạng đề tài"
       >
         <DxLookup
           :data-source="processArr"
@@ -90,14 +90,14 @@
         :width="150"
         data-field="createdDate"
         data-type="date"
-        caption="Ngày tạo"
+        caption="Ngày bắt đầu"
         format="dd/MM/yyyy"
       />
       <DxColumn
         :width="150"
         data-field="expiredDate"
         data-type="date"
-        caption="Ngày nghiệm thu"
+        caption="Ngày hết hạn"
         format="dd/MM/yyyy"
       />
       <DxColumn
