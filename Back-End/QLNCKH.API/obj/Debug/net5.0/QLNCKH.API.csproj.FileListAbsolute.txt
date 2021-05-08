@@ -166,3 +166,7 @@ C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\
 C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\obj\Debug\net5.0\ref\QLNCKH.API.dll
 C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\obj\Debug\net5.0\QLNCKH.API.pdb
 C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\obj\Debug\net5.0\QLNCKH.API.genruntimeconfig.cache
+C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\bin\Debug\net5.0\MailKit.dll
+C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\bin\Debug\net5.0\MimeKit.dll
+C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\bin\Debug\net5.0\NETCore.MailKit.dll
+C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\bin\Debug\net5.0\BouncyCastle.Crypto.dll

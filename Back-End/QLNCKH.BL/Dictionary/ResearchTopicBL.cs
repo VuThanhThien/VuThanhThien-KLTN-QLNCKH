@@ -6,6 +6,7 @@ using QLNCKH.Common.Dictionary;
 using QLNCKH.Common.Enum;
 using QLNCKH.DL.Interface;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -116,6 +117,11 @@ namespace QLNCKH.BL.Dictionary
             }
 
             return isSaveSuccess;
+        }
+
+        public List<ResearchTopic> GetAllEmailOfExpreTopic(int perDay)
+        {
+            return _researchTopicDL.GetAllEmailOfExpreTopic(perDay);
         }
     }
 }

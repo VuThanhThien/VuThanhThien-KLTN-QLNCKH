@@ -3,6 +3,7 @@ using QLNCKH.Common.Dictionary;
 using QLNCKH.DL.Base;
 using QLNCKH.DL.Interface;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QLNCKH.DL.Dictionary
 {
@@ -10,6 +11,18 @@ namespace QLNCKH.DL.Dictionary
     {
         public ResearchTopicDL(IDbContext<ResearchTopic> dbContext) : base(dbContext)
         {
+        }
+
+        public List<ResearchTopic> GetAllEmailOfExpreTopic(int perDay)
+        {
+            var procName = "Proc_GetAllEmailOfExpreTopic";
+            var parameters = new
+            {
+                perDay = perDay
+            };
+            var result = _dbContext.QueryStore(procName, parameters).ToList();
+
+            return result;
         }
 
         /// <summary>

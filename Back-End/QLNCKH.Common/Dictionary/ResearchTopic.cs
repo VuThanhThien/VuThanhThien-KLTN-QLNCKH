@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace QLNCKH.Common.Dictionary
@@ -141,7 +142,13 @@ namespace QLNCKH.Common.Dictionary
         /// <summary>
         /// Số ng tham gia nghiên cứu
         /// </summary>
-        public string Evidence { get; set; } 
+        public string Evidence { get; set; }
+
+        [NotMapped]
+        public string Email { get; set; }
+
+        [NotMapped]
+        public string Fullname { get; set; }
 
         public void MappingDto(ResearchTopicDto topicDto)
         {

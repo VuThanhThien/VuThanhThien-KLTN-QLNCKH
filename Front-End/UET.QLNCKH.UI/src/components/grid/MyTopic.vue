@@ -37,6 +37,8 @@
       :on-shown="onShown"
       shading-color="rgba(0,0,0,0.4)"
     />
+    <h2 id="tableTitle">DANH SÁCH ĐỀ TÀI NGHIÊN CỨU KHOA HỌC CÁ NHÂN</h2>
+
     <DxDataGrid
       id="dataGrid"
       :data-source="topic"
@@ -95,6 +97,7 @@
         :visible="true"
         empty-panel-text="Kéo cột muốn nhóm lại vào đây!"
       />
+
     </DxDataGrid>
     <notifications position="bottom right" clean: true style="margin-bottom:
     20px"/>
@@ -339,6 +342,10 @@ export default {
 };
 </script>
 <style scoped>
+#tableTitle {
+  margin-top: 20px;
+  margin-left: 20px;
+}
 #gridTopic {
   height: 820px;
   overflow: auto;

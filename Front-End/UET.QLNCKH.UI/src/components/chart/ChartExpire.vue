@@ -17,6 +17,7 @@
       <DxLegend :visible="true" />
       <DxExport :enabled="true" />
     </DxChart>
+
     <br />
     <br />
     <br />
@@ -37,6 +38,12 @@
         <DxExport :enabled="true" />
       </DxChart>
     </div>
+    <ul>
+      <li>1: Hoàn thành nhiệm vụ</li>
+      <li>2: Chưa hoàn thành nhiệm vụ</li>
+      <li>3: Bị hủy</li>
+      <li>4: Chưa cập nhật</li>
+    </ul>
     <br />
     <br />
     <br />
@@ -56,6 +63,13 @@
         <DxExport :enabled="true" />
       </DxChart>
     </div>
+    <ul>
+      <li>1: Không phê duyệt</li>
+      <li>2: Đang thực hiện</li>
+      <li>3: Đã hết hạn</li>
+      <li>4: Đã nghiệm thu</li>
+      <li>5: Đề xuất</li>
+    </ul>
     <br />
     <br />
     <br />
@@ -178,5 +192,11 @@ export default {
   height: 440px;
   width: 1700px !important;
   padding-left: 200px;
+}
+ul {
+  margin-left: 230px;
+}
+li {
+  font-size: medium;
 }
 </style>

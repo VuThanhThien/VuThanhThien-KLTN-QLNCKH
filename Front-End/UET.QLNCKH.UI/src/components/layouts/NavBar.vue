@@ -22,7 +22,7 @@
         </router-link>
       </div>
       <div class="headerBtn">
-        <router-link :to="{ name: 'ListAuthor' }">
+        <router-link :to="{ name: 'ListAuthor' }" v-if="loggedIn && currentRole == 'Admin'">
           <DxButton
             :width="120"
             text="Tác giả"

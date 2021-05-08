@@ -11,7 +11,9 @@ using Microsoft.OpenApi.Models;
 using QLNCKH.BL.Base;
 using QLNCKH.BL.Dictionary;
 using QLNCKH.BL.Interface;
+using QLNCKH.BL.NotificationCenter;
 using QLNCKH.Common.IdentityApplication;
+using QLNCKH.Common.NotificationCenter;
 using QLNCKH.DL.Base;
 using QLNCKH.DL.DbContext;
 using QLNCKH.DL.Dictionary;
@@ -68,6 +70,7 @@ namespace QLNCKH.API
             .AddRoles<IdentityRole>()
             .AddDefaultTokenProviders()
             .AddRoleManager<RoleManager<IdentityRole>>();
+
 
             services.AddControllers();
 
@@ -152,6 +155,11 @@ namespace QLNCKH.API
 
             services.AddScoped<IMemberTopicDL, MemberTopicDL>();
             services.AddScoped<IMemberTopicBL, MemberTopicBL>();
+
+            var emailConfig = Configuration.GetSection("EmailConfiguration")
+                    .Get<EmailConfig>();
+            services.AddSingleton(emailConfig);
+            services.AddScoped<INotificationCenter, NotificationCenter>();
 
         }
 

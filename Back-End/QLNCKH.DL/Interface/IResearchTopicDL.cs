@@ -12,6 +12,13 @@ namespace QLNCKH.DL.Interface
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public IEnumerable<ResearchTopic> GetTopicByUserID(object param);
+        IEnumerable<ResearchTopic> GetTopicByUserID(object param);
+
+        /// <summary>
+        /// Hàm lấy thông tin những đề tài sắp hết hạn và chủ nhiệm đề tài đó
+        /// </summary>
+        /// <param name="perDay"></param>
+        /// <returns></returns>
+        List<ResearchTopic> GetAllEmailOfExpreTopic (int perDay);
     }
 }

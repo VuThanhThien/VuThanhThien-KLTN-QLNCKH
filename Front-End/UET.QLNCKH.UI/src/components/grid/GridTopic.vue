@@ -4,6 +4,14 @@
       <div class="headerBtn">
         <DxButton
           :width="120"
+          text="Mới nhất..."
+          type="success"
+          styling-mode="contained"
+        />
+      </div>
+      <div class="headerBtn">
+        <DxButton
+          :width="120"
           text="Thêm mới"
           type="success"
           styling-mode="contained"
