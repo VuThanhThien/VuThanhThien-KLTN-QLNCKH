@@ -231,7 +231,7 @@
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" />
+                <input type="number" v-model="selectedTopic.annouceISI"/>
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Dẫn chứng</div>
@@ -246,7 +246,7 @@
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" />
+                <input type="number" v-model="selectedTopic.annouceJournal"/>
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Dẫn chứng</div>
@@ -261,7 +261,7 @@
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" />
+                <input type="number" v-model="selectedTopic.annouceUsefullSolution"/>
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Dẫn chứng</div>
@@ -276,7 +276,7 @@
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" />
+                <input type="number" v-model="selectedTopic.annouceTransferProduct"/>
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Dẫn chứng</div>
@@ -291,7 +291,7 @@
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" />
+                <input type="number" v-model="selectedTopic.annouceReportToState"/>
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Dẫn chứng</div>
@@ -306,7 +306,7 @@
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" />
+                <input type="number" v-model="selectedTopic.annouceMonoGraph"/>
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Dẫn chứng</div>
@@ -321,7 +321,7 @@
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" />
+                <input type="number" v-model="selectedTopic.annouceOtherResult"/>
               </div>
               <div class=".block-1-3-topic">
                 <div class="fieldName">Dẫn chứng</div>

@@ -143,7 +143,20 @@ namespace QLNCKH.Common.Dictionary
         /// <summary>
         /// Dẫn chứng
         /// </summary>
-        public string Evidence { get; set; } 
+        public string EvidenceISI { get; set; }
+        public string EvidenceJournal { get; set; }
+        public string EvidenceUsefulSolution { get; set; }
+        public string EvidenceTransferProduct { get; set; }
+        public string EvidenceReportToState { get; set; }
+        public string EvidenceMonoGraph { get; set; }
+        public string EvidenceOther { get; set; }
+        public int AnnouceISI { get; set; }
+        public int AnnouceJournal { get; set; }
+        public int AnnouceUsefullSolution { get; set; }
+        public int AnnouceTransferProduct { get; set; }
+        public int AnnouceReportToState { get; set; }
+        public int AnnouceMonoGraph { get; set; }
+        public int AnnouceOtherResult { get; set; }
 
 
     }
