@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QLNCKH.BL.Interface;
 using QLNCKH.BL.NotificationCenter;
+using QLNCKH.Common;
 using QLNCKH.Common.NotificationCenter;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace QLNCKH.API.Controllers
@@ -22,6 +22,11 @@ namespace QLNCKH.API.Controllers
             _notificationCenter = notificationCenter;
         }
 
+        /// <summary>
+        /// API gửi email cho những đề tài còn {perday} ngày nữa là hết hạn
+        /// </summary>
+        /// <param name="perDay"></param>
+        /// <returns></returns>
         [HttpPost("research-expire")]
         public virtual IActionResult ResearchExpire(int perDay)
         {
@@ -30,20 +35,15 @@ namespace QLNCKH.API.Controllers
             
             if (result != null && result.Count > 0)
             {
-                
-                foreach(var topic in result)
+                var file = Utility.ReadTemplateSendEmailExpire();
+                foreach (var topic in result)
                 {
+                    var content = Utility.FormSendEmailExpire(file, new string[] { topic.Fullname, topic.ResearchName, topic.ExpiredDate?.ToString("dd/MM/yyyy") });
                     var message = new EmailMessage(
                                 new string[] { topic.Email },
                                 "[UET-QLNCKH] THÔNG BÁO NGHIỆM THU ĐỀ TÀI",
-                                "Phòng hoa học Công nghệ & Hợp tác Phát triển thống báo, đề tài"
-                                + topic.ResearchName + "của chủ nhiệm "
-                                + topic.Fullname
-                                + " sắp hết hạn vào ngày "
-                                + topic.ExpiredDate+". " 
-                                +"Vui lòng chuẩn bị để nghiệm thu. Thông tin chi tiết vui lòng liên hệ Phòng KHCN&HTPT.",
+                                content,
                                 null);
-
                     Task.Run(() => _notificationCenter.SendEmailAsync(message));
                 }
 

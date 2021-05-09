@@ -104,6 +104,13 @@
             <param name="id">Định danh thông tin cần xoá</param>
             <returns></returns>
         </member>
+        <member name="M:QLNCKH.API.Controllers.CronJobController.ResearchExpire(System.Int32)">
+            <summary>
+            API gửi email cho những đề tài còn {perday} ngày nữa là hết hạn
+            </summary>
+            <param name="perDay"></param>
+            <returns></returns>
+        </member>
         <member name="T:QLNCKH.API.Controllers.MemberTopicController">
             <summary>
             Thành viên tham gia nghiên cứu
@@ -121,6 +128,24 @@
             API get thành viên theo id đề tài
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:QLNCKH.API.Controllers.NotificationCenterController">
+            <summary>
+            Controller quản lý gửi email
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.NotificationCenterController.#ctor(QLNCKH.BL.NotificationCenter.INotificationCenter)">
+            <summary>
+            
+            </summary>
+            <param name="notificationCenter"></param>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.NotificationCenterController.SendEmail(QLNCKH.Common.Model.ParamSendEmail)">
+            <summary>
+            Gửi mail ngay lập tức
+            </summary>
+            <param name="param"></param>
             <returns></returns>
         </member>
         <member name="T:QLNCKH.API.Controllers.ResearchTopicController">
