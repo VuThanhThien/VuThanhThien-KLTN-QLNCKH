@@ -184,7 +184,71 @@ const genders = [
     "name": "Khác"
   }
 ];
-const myRoteInName = ['MyTopic','MyInfo', 'about'];
+
+const options =[
+  {
+    "id" : 3,
+    "name" : "Đề tài của tôi",
+    "route":"MyTopic"
+  },
+  {
+    "id" : 2,
+    "name" : "Đề tài mới",
+    "route":"NewTopic"
+  },
+  {
+    "id" : 1,
+    "name" : "Tất cả đề tài",
+    "route":"ListTopic"
+  },
+  {
+    "id" : 5,
+    "name" : "Tất cả tác giả",
+    "route":"ListAuthor"
+  },
+  {
+    "id" : 6,
+    "name" : "Thống kê",
+    "route":"ChartExpire"
+  },
+  {
+    "id" : 4,
+    "name" : "Đề tài sắp nghiệm thu",
+    "route":"Expiring"
+  },
+  {
+    "id" : 7,
+    "name" : "Thiết lập gửi Mail tự động"
+  },
+  {
+    "id" : 8,
+    "name" : "Gửi Email",
+    "route":"Email"
+  },
+  {
+    "id": 9,
+    "name": "Thông tin của tôi",
+    "route":"MyInfo"
+  }
+];
+const optionsForUser =[
+  {
+    "id" : 3,
+    "name" : "Đề tài của tôi",
+    "route":"MyTopic"
+  },
+  {
+    "id" : 1,
+    "name" : "Tất cả đề tài",
+    "route":"ListTopic"
+  },
+  {
+    "id": 2,
+    "name": "Thông tin của tôi",
+    "route":"MyInfo"
+  }
+]
+const myRouteInName = ['MyTopic','MyInfo', 'about'];
 export default {
   getDepartment() {
     return departments;
@@ -202,6 +266,12 @@ export default {
     return genders;
   },
   getRoute(){
-    return myRoteInName;
+    return myRouteInName;
+  },
+  getOption(){
+    return options;
+  },
+  getOptionsForUser(){
+    return optionsForUser;
   }
 };

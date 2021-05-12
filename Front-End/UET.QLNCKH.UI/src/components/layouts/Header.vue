@@ -9,12 +9,6 @@
           {{ this.currentName }}
         </router-link>
       </li>
-      <!-- <DxDropDownButton
-        :items="myRoteInName"
-        :drop-down-options="{ width: 230 }"
-        text="Download Trial"
-        @item-click="onItemClick"
-      /> -->
       <li v-if="loggedIn">
         <router-link :to="{ name: 'Home' }">Trang chủ</router-link>
       </li>

@@ -5,6 +5,7 @@ import Logout from '@/components/auth/Logout'
 import GridTopic from '@/components/grid/GridTopic.vue'
 import GridUser from '@/components/grid/GridUser.vue'
 import MyTopic from '@/components/grid/MyTopic.vue'
+import Email from '@/components/detail/Email.vue'
 import MyInfo from '@/components/grid/MyInfo.vue'
 import ChartExpire from '@/components/chart/ChartExpire.vue'
 const routes = [
@@ -13,6 +14,14 @@ const routes = [
     path: '/ListTopic',
     name: 'ListTopic',
     component: GridTopic,
+    meta: {
+      requiresAuth: false,
+    }
+  },
+  {
+    path: '/Email',
+    name: 'Email',
+    component: Email,
     meta: {
       requiresAuth: false,
     }

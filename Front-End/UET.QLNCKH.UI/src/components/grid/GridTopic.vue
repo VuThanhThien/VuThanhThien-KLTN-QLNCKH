@@ -4,14 +4,6 @@
       <div class="headerBtn">
         <DxButton
           :width="120"
-          text="Mới nhất..."
-          type="success"
-          styling-mode="contained"
-        />
-      </div>
-      <div class="headerBtn">
-        <DxButton
-          :width="120"
           text="Thêm mới"
           type="success"
           styling-mode="contained"
@@ -76,11 +68,7 @@
       <DxColumn :width="180" data-field="status" caption="Kết quả nghiên cứu">
         <DxLookup :data-source="statuses" display-expr="name" value-expr="id" />
       </DxColumn>
-      <DxColumn
-        :width="180"
-        data-field="process"
-        caption="Tình trạng đề tài"
-      >
+      <DxColumn :width="180" data-field="process" caption="Tình trạng đề tài">
         <DxLookup
           :data-source="processArr"
           display-expr="name"
@@ -137,7 +125,6 @@
 <script>
 import * as axios from "axios";
 import TopicDetail from "../detail/ListTopicDetail.vue";
-import { DxSelectBox } from "devextreme-vue/select-box";
 import DxButton from "devextreme-vue/button";
 import { DxLoadPanel } from "devextreme-vue/load-panel";
 import service from "../../../modules/data.js";
@@ -160,7 +147,6 @@ import {
 
 export default {
   components: {
-    DxSelectBox,
     DxDataGrid,
     DxColumn,
     DxPaging,

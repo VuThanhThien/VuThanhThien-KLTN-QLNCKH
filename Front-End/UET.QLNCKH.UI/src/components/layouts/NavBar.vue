@@ -1,56 +1,35 @@
 <template>
   <div>
     <div class="navBar" v-if="loggedIn">
-      <router-link :to="{ name: 'MyTopic' }">
-        <div class="headerBtn">
-          <DxButton
-            :width="120"
-            text="Đề tài của tôi"
-            type="success"
-            styling-mode="contained"
-          />
-        </div>
-      </router-link>
-      <div class="headerBtn">
-        <router-link :to="{ name: 'ListTopic' }">
-          <DxButton
-            :width="120"
-            text="Đề tài"
-            type="success"
-            styling-mode="contained"
-          />
-        </router-link>
+      <div v-if="loggedIn && currentRole == 'Admin'" class="headerBtn">
+        <DxSelectBox
+          placeholder="Chọn tác vụ"
+          :data-source="option"
+          display-expr="name"
+          value-expr="id"
+          @value-changed="onValueChanged"  
+        />
       </div>
-      <div class="headerBtn">
-        <router-link :to="{ name: 'ListAuthor' }" v-if="loggedIn && currentRole == 'Admin'">
-          <DxButton
-            :width="120"
-            text="Tác giả"
-            type="success"
-            styling-mode="contained"
-          />
-        </router-link>
+      <div v-if="loggedIn && currentRole == 'User'" class="headerBtn">
+        <DxSelectBox
+          placeholder="Chọn tác vụ"
+          :data-source="optionsForUser"
+          display-expr="name"
+          value-expr="id"
+          @value-changed="onValueChanged"  
+        />
       </div>
-      <router-link :to="{ name: 'ChartExpire' }" v-if="loggedIn && currentRole == 'Admin'">
-        <div class="headerBtn">
-          <DxButton
-            :width="120"
-            text="Thống kê"
-            type="success"
-            styling-mode="contained"
-          />
-        </div>
-      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 import DxButton from "devextreme-vue/button";
-
+import { DxSelectBox } from "devextreme-vue/select-box";
+import service from "../../../modules/data.js";
 export default {
   components: {
-    DxButton,
+    DxButton,DxSelectBox
   },
   computed: {
     loggedIn() {
@@ -60,6 +39,18 @@ export default {
       return this.$store.getters.currentRole;
     },
   },
+  data(){
+    return{
+      option: service.getOption(),
+      optionsForUser: service.getOptionsForUser(),
+    };
+  },
+  methods:{
+    onValueChanged(e) {
+            const item = this.option.filter(i => i.id === e.value)[0];
+            this.$router.push({ name: item.route });
+        }
+  }
 };
 </script>
 
