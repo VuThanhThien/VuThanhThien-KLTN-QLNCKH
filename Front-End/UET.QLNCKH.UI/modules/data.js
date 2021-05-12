@@ -218,7 +218,8 @@ const options =[
   },
   {
     "id" : 7,
-    "name" : "Thiết lập gửi Mail tự động"
+    "name" : "Thiết lập gửi Mail tự động",
+    "route":"SetCronJob"
   },
   {
     "id" : 8,

@@ -28,7 +28,9 @@
       </div>
 
       <div class="form-control">
-        <button type="submit" class="btn-submit" @click="sendEmail">Xác nhận</button>
+        <button class="btn-submit" @click="sendEmail">
+          Xác nhận
+        </button>
       </div>
     </form>
     <notifications position="bottom right" clean: true style="margin-bottom:
@@ -72,15 +74,16 @@ export default {
           bodyParameters,
           config
         )
-        .catch((e) => {
-          if (e.response.status == 200) {
+        .then((response) => {
+          if (response.status == 200) {
             this.$notify({
               type: "success",
               title: "THÔNG BÁO",
-              text: "Bạn đã gửi mail thành công",
+              text: "Bạn đã gửi email thành công",
             });
           }
-
+        })
+        .catch((e) => {
           if (e.response.status == 400) {
             this.$notify({
               type: "error",
