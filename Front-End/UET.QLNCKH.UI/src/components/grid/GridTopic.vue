@@ -64,7 +64,7 @@
         caption="Mã đề tài"
       />
       <DxColumn :width="280" data-field="researchName" caption="Tên đề tài" />
-      <DxColumn data-field="description" caption="Mô tả" />
+      <DxColumn :width="460" data-field="description" caption="Mô tả" />
       <DxColumn :width="180" data-field="status" caption="Kết quả nghiên cứu">
         <DxLookup :data-source="statuses" display-expr="name" value-expr="id" />
       </DxColumn>
@@ -335,24 +335,28 @@ export default {
     },
 
     async getMemberList() {
-      const config = {
-        headers: { Authorization: `Bearer ${this.currentToken}` },
-      };
-      await axios
-        .get(
-          "https://localhost:44323/api/ResearchTopic/" +
-            this.selectedTopic.researchID +
-            "/members",
-          config
-        )
-        .then((response) => {
-          if (response.data) {
-            this.members = response.data;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (
+        this.selectedTopic.researchID != null 
+      ) {
+        const config = {
+          headers: { Authorization: `Bearer ${this.currentToken}` },
+        };
+        await axios
+          .get(
+            "https://localhost:44323/api/ResearchTopic/" +
+              this.selectedTopic.researchID +
+              "/members",
+            config
+          )
+          .then((response) => {
+            if (response.data) {
+              this.members = response.data;
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else return;
     },
     /**khi chọn một hàng thì lấy đề tài đã chọn sang */
     selectTopic({ selectedRowsData }) {

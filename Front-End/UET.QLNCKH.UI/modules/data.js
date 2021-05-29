@@ -191,11 +191,11 @@ const options =[
     "name" : "Đề tài của tôi",
     "route":"MyTopic"
   },
-  {
-    "id" : 2,
-    "name" : "Đề tài mới",
-    "route":"NewTopic"
-  },
+  // {
+  //   "id" : 2,
+  //   "name" : "Đề tài mới",
+  //   "route":"NewTopic"
+  // },
   {
     "id" : 1,
     "name" : "Tất cả đề tài",
@@ -211,11 +211,11 @@ const options =[
     "name" : "Thống kê",
     "route":"ChartExpire"
   },
-  {
-    "id" : 4,
-    "name" : "Đề tài sắp nghiệm thu",
-    "route":"Expiring"
-  },
+  // {
+  //   "id" : 4,
+  //   "name" : "Đề tài sắp nghiệm thu",
+  //   "route":"Expiring"
+  // },
   {
     "id" : 7,
     "name" : "Thiết lập gửi Mail tự động",
@@ -244,7 +244,7 @@ const optionsForUser =[
     "route":"ListTopic"
   },
   {
-    "id": 2,
+    "id": 9,
     "name": "Thông tin của tôi",
     "route":"MyInfo"
   }

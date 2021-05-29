@@ -15,7 +15,7 @@ namespace QLNCKH.BL.Interface
         /// <returns></returns>
         BaseResponse GetTopicByUserID(string userID);
         string GenFileName(IFormFile file);
-        Task<bool> WriteFile(IFormFile file, string fileName);
+        Task<bool> WriteFile(IFormFile file, string fileName, string folderName);
 
         /// <summary>
         /// Hàm lấy thông tin những đề tài sắp hết hạn và chủ nhiệm đề tài đó

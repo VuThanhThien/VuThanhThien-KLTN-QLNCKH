@@ -190,19 +190,23 @@
               </div>
             </div>
             <!--  -->
-            <div class="block-2-topic">
+            <div
+              v-if="this.selectedTopic.researchID != null"
+              class="block-2-topic"
+            >
               <div class="block-1-topic">
                 <div class="fieldName">Thuyết minh đề tài :</div>
                 <div style="display: flex">
                   <input
                     type="file"
-                    name="file"
-                    id="file"
+                    id="present"
+                    ref="present"
                     class="inputfile"
                     style="width: 80px; border: none"
-                    @change="onFileChange"
                   />
-                  <label for="file">Đã nộp: {{ selectedTopic.present }}</label>
+                  <label v-if="this.selectedTopic.present != null" for="file"
+                    >Đã nộp: {{ selectedTopic.present }}</label
+                  >
                 </div>
               </div>
             </div>
@@ -225,107 +229,126 @@
               DỰ KIẾN CÔNG BỐ
             </h3>
             <div class="block-2-topic">
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Bài báo ISI /Scopus</div>
                 <input type="number" v-model="selectedTopic.isi" />
               </div>
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" v-model="selectedTopic.annouceISI"/>
+                <input type="number" v-model="selectedTopic.annouceISI" />
               </div>
-              <div class=".block-1-3-topic">
-                <div class="fieldName">Dẫn chứng</div>
-                <input type="file" />
+              <div class="block-1-3-topic">
+                <div class="fieldName" v-if="this.selectedTopic.evidenceISI == null">Dẫn chứng </div>
+                <div class="fieldName" v-if="this.selectedTopic.evidenceISI != null">{{ selectedTopic.evidenceISI }}</div>
+                <input type="file" ref="inpISI" class="inputfile" />
               </div>
             </div>
 
             <div class="block-2-topic">
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Tạp chí quốc tế uy tín</div>
                 <input type="number" v-model="selectedTopic.journal" />
               </div>
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" v-model="selectedTopic.annouceJournal"/>
+                <input type="number" v-model="selectedTopic.annouceJournal" />
               </div>
-              <div class=".block-1-3-topic">
-                <div class="fieldName">Dẫn chứng</div>
-                <input type="file" />
+              <div class="block-1-3-topic">
+                <div class="fieldName" v-if="this.selectedTopic.evidenceJournal == null">Dẫn chứng </div>
+                <div class="fieldName" v-if="this.selectedTopic.evidenceJournal != null">{{ selectedTopic.evidenceJournal }}</div>
+                <input type="file" ref="inpMage" />
               </div>
             </div>
 
             <div class="block-2-topic">
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Phát minh sáng chế</div>
                 <input type="number" v-model="selectedTopic.usefullSolution" />
               </div>
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" v-model="selectedTopic.annouceUsefullSolution"/>
+                <input
+                  type="number"
+                  v-model="selectedTopic.annouceUsefullSolution"
+                />
               </div>
-              <div class=".block-1-3-topic">
-                <div class="fieldName">Dẫn chứng</div>
-                <input type="file" />
+              <div class="block-1-3-topic">
+                <div class="fieldName" v-if="this.selectedTopic.evidenceUsefulSolution == null">Dẫn chứng </div>
+                <div class="fieldName" v-if="this.selectedTopic.evidenceUsefulSolution != null">{{ selectedTopic.evidenceUsefulSolution }}</div>
+                <input type="file" ref="inpSolution" />
               </div>
             </div>
 
             <div class="block-2-topic">
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Công nghệ chuyển giao</div>
                 <input type="number" v-model="selectedTopic.transferProduct" />
               </div>
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" v-model="selectedTopic.annouceTransferProduct"/>
+                <input
+                  type="number"
+                  v-model="selectedTopic.annouceTransferProduct"
+                />
               </div>
-              <div class=".block-1-3-topic">
-                <div class="fieldName">Dẫn chứng</div>
-                <input type="file" />
+              <div class="block-1-3-topic">
+                <div class="fieldName" v-if="this.selectedTopic.evidenceTransferProduct == null">Dẫn chứng </div>
+                <div class="fieldName" v-if="this.selectedTopic.evidenceTransferProduct != null">{{ selectedTopic.evidenceTransferProduct }}</div>
+                <input type="file" ref="inpProduct" />
               </div>
             </div>
 
             <div class="block-2-topic">
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Tư vấn chính sách</div>
                 <input type="number" v-model="selectedTopic.reportToState" />
               </div>
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" v-model="selectedTopic.annouceReportToState"/>
+                <input
+                  type="number"
+                  v-model="selectedTopic.annouceReportToState"
+                />
               </div>
-              <div class=".block-1-3-topic">
-                <div class="fieldName">Dẫn chứng</div>
-                <input type="file" />
+              <div class="block-1-3-topic">
+                <div class="fieldName" v-if="this.selectedTopic.evidenceReportToState == null">Dẫn chứng </div>
+                <div class="fieldName" v-if="this.selectedTopic.evidenceReportToState != null">{{ selectedTopic.evidenceReportToState }}</div>
+                <input type="file" ref="inpReport" />
               </div>
             </div>
 
             <div class="block-2-topic">
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Sách chuyên khảo</div>
                 <input type="number" v-model="selectedTopic.monograph" />
               </div>
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" v-model="selectedTopic.annouceMonoGraph"/>
+                <input type="number" v-model="selectedTopic.annouceMonoGraph" />
               </div>
-              <div class=".block-1-3-topic">
-                <div class="fieldName">Dẫn chứng</div>
-                <input type="file" />
+              <div class="block-1-3-topic">
+                <div class="fieldName" v-if="this.selectedTopic.evidenceMonoGraph == null">Dẫn chứng </div>
+                <div class="fieldName" v-if="this.selectedTopic.evidenceMonoGraph != null">{{ selectedTopic.evidenceMonoGraph }}</div>
+                <input type="file" ref="inpMono" />
               </div>
             </div>
 
             <div class="block-2-topic">
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Khác</div>
                 <input type="number" v-model="selectedTopic.otherResult" />
               </div>
-              <div class=".block-1-3-topic">
+              <div class="block-1-3-topic">
                 <div class="fieldName">Số lượng công bố</div>
-                <input type="number" v-model="selectedTopic.annouceOtherResult"/>
+                <input
+                  type="number"
+                  v-model="selectedTopic.annouceOtherResult"
+                />
               </div>
-              <div class=".block-1-3-topic">
-                <div class="fieldName">Dẫn chứng</div>
-                <input type="file" />
+              <div class="block-1-3-topic">
+                <div class="fieldName" v-if="this.selectedTopic.evidenceOther == null">Dẫn chứng </div>
+                <div class="fieldName" v-if="this.selectedTopic.evidenceOther != null">{{ selectedTopic.evidenceOther }}</div>
+                <input type="file" ref="inpOther" />
               </div>
             </div>
           </div>
@@ -386,6 +409,13 @@ export default {
       },
     },
   },
+
+  data: function () {
+    return {
+      listFile: [],
+    };
+  },
+
   components: {
     DxDateBox,
     DxTextArea,
@@ -446,44 +476,6 @@ export default {
     },
   },
   methods: {
-    /**upload file*/
-    async onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      let formData = new FormData();
-      formData.append("file", files[0]);
-      await axios
-        .post(
-          "https://localhost:44323/api/ResearchTopic/" +
-            this.selectedTopic.researchID +
-            "/import-file",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: "Bearer " + this.currentToken,
-            },
-          }
-        )
-        .then((response) => {
-          if (response.status == 200) {
-            this.$notify({
-              type: "success",
-              title: "THÔNG BÁO",
-              text: "Tải lên thành công!!!",
-            });
-          }
-        })
-        .catch((e) => {
-          if (e.response.status == 400) {
-            this.$notify({
-              type: "error",
-              title: "THÔNG BÁO",
-              text: "Tải lên thất bại",
-            });
-          }
-        });
-    },
     /**Sự kiện hủy */
     cancel() {
       this.$emit("outIsHide", !this.isHide);
@@ -608,6 +600,33 @@ export default {
 
     /**Sự kiện nút lưu */
     btnSaveOnClick() {
+      //append file và upload
+      let formData = new FormData();
+      formData.append("file", this.$refs["present"].files[0]);
+      formData.append("file1", this.$refs["inpISI"].files[0]);
+      formData.append("file2", this.$refs["inpMage"].files[0]);
+      formData.append("file3", this.$refs["inpSolution"].files[0]);
+      formData.append("file4", this.$refs["inpProduct"].files[0]);
+      formData.append("file5", this.$refs["inpReport"].files[0]);
+      formData.append("file6", this.$refs["inpMono"].files[0]);
+      formData.append("file7", this.$refs["inpOther"].files[0]);
+      axios
+        .post(
+          "https://localhost:44323/api/ResearchTopic/" +
+            this.selectedTopic.researchID +
+            "/import-file",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + this.currentToken,
+            },
+          }
+        )
+        .catch((e) => {
+          console.log(e);
+        });
+
       if (this.validateTopic.error) {
         this.$notify({
           title: "THÔNG BÁO",
@@ -631,7 +650,9 @@ export default {
   },
   data() {
     return {
-      files: "",
+      formData: FormData,
+      files: FileList,
+      listFile: Array[FileList],
       multiple: false,
       accept: "*",
       uploadMode: "instantly",
@@ -661,7 +682,8 @@ export default {
 </script>
 
 <style scoped>
-.inputfile + label {
+.inputfile,
+label {
   font-size: small;
   padding: 10px 0 0 10px;
 }
@@ -749,9 +771,7 @@ export default {
   margin-top: 8px;
 }
 .block-1-topic input,
-.block-1-topic select,
-.block-1-3-topic input,
-.block-1-3-topic select {
+.block-1-topic select {
   padding-left: 20px;
   margin-top: 4px;
   width: 300px;
@@ -759,6 +779,19 @@ export default {
   border-radius: 5px;
   border: 0.5px solid rgb(204, 204, 204);
   padding: 5px;
+}
+
+.block-1-3-topic input,
+.block-1-3-topic select {
+  margin-top: 4px;
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+  border: 0.5px solid rgb(204, 204, 204);
+  padding: 5px;
+}
+.block-1-3-topic input[type="file"] {
+  width: 80px;
 }
 .block-1-topic input,
 .block-1-topic select {

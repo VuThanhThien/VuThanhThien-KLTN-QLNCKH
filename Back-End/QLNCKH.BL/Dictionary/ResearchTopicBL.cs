@@ -84,25 +84,25 @@ namespace QLNCKH.BL.Dictionary
         public string GenFileName(IFormFile file)
         {
             var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-            var fileName = DateTime.Now.Ticks + extension;
+
+            var fileName = file.FileName.Substring(0, 2) + DateTime.Now.ToString("yyyyMMddhhmm") + extension;
 
             return fileName;
         }
 
-        public async Task<bool> WriteFile(IFormFile file, string fileName)
+        public async Task<bool> WriteFile(IFormFile file, string fileName, string folderName)
         {
             bool isSaveSuccess = false;
             try
             {
-                var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files");
+                var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\" + folderName);
 
                 if (!Directory.Exists(pathBuilt))
                 {
                     Directory.CreateDirectory(pathBuilt);
                 }
 
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files",
-                   fileName);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\" + folderName, fileName);
 
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
