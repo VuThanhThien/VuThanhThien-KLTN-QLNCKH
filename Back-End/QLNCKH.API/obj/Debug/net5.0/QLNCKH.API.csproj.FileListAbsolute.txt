@@ -170,3 +170,4 @@ C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\
 C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\bin\Debug\net5.0\MimeKit.dll
 C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\bin\Debug\net5.0\NETCore.MailKit.dll
 C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\Admin\Desktop\UET.QLNCKH.VTT\Project\VuThanhThien-KLTN-QLNCKH\Back-End\QLNCKH.API\bin\Debug\net5.0\SlackBotMessages.dll

@@ -4,6 +4,7 @@ using QLNCKH.BL.Interface;
 using QLNCKH.Common;
 using QLNCKH.Common.Dictionary;
 using QLNCKH.Common.Enum;
+using QLNCKH.Common.NotificationCenter;
 using QLNCKH.DL.Interface;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,12 @@ namespace QLNCKH.BL.Dictionary
     public class ResearchTopicBL : BaseBL<ResearchTopic> , IResearchTopicBL
     {
         private readonly IResearchTopicDL _researchTopicDL;
-        public ResearchTopicBL(IBaseDL<ResearchTopic> baseDL, IResearchTopicDL researchTopicDL) : base(baseDL)
+        private readonly ISlackNotification _slack;
+
+        public ResearchTopicBL(IBaseDL<ResearchTopic> baseDL, IResearchTopicDL researchTopicDL, ISlackNotification slack) : base(baseDL)
         {
             _researchTopicDL = researchTopicDL;
+            _slack = slack;
         }
 
         /// <summary>
@@ -43,9 +47,40 @@ namespace QLNCKH.BL.Dictionary
             }
             var result = base.Insert(topic);
             result.Data = topic;
+            var attach = new List<SlackAttach>()
+            {
+                new SlackAttach("Chủ nhiệm: ", topic.Fullname, true),
+                new SlackAttach("Email: ", topic.Email, true),
+                new SlackAttach("Mã đề tài: ", topic.ResearchCode, true),
+                new SlackAttach("Mã loại đề tài: ", topic.SpecializeCode, true),
+                new SlackAttach("Tên đề tài: ", topic.ResearchName),
+            };
+
+            _ = Task.Run(() => _slack.SendSlackNotification(content: "Thêm một đề tài nghiên cứu được đăng ký!", slackAttachs: attach));
             return result;
         }
 
+        public override BaseResponse Update(Guid id, ResearchTopic topic)
+        {
+            if (!topic.Status.HasValue)
+            {
+                topic.Status = 0;
+            }
+            if (!topic.Process.HasValue)
+            {
+                topic.Status = 0;
+            }
+
+            var attach = new List<SlackAttach>()
+            {
+                new SlackAttach("Tên đề tài : ", topic.ResearchName, true),
+                new SlackAttach("Kết quả : ", ConvertStatus(topic.Status.Value), true),
+                new SlackAttach("Trạng thái đề tài: ", ConvertProcess(topic.Process.Value), true),
+            };
+
+            _ = Task.Run(() => _slack.SendSlackNotification(content: "Cập nhật đề tài thành công!", slackAttachs: attach));
+            return base.Update(id, topic);
+        }
         /// <summary>
         /// Lấy đề tài theo người dùng
         /// </summary>
@@ -80,7 +115,11 @@ namespace QLNCKH.BL.Dictionary
                 return response;
             }
         }
-
+        /// <summary>
+        /// Tạo tên file mới
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public string GenFileName(IFormFile file)
         {
             var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
@@ -113,7 +152,7 @@ namespace QLNCKH.BL.Dictionary
             }
             catch (Exception e)
             {
-                //log error
+                Console.WriteLine(e);
             }
 
             return isSaveSuccess;
@@ -122,6 +161,42 @@ namespace QLNCKH.BL.Dictionary
         public List<ResearchTopic> GetAllEmailOfExpreTopic(int perDay)
         {
             return _researchTopicDL.GetAllEmailOfExpreTopic(perDay);
+        }
+
+        private string ConvertStatus(int status)
+        {
+            switch (status)
+            {
+                case 1:
+                    return "Hoàn thành nhiệm vụ";
+                case 2:
+                    return "Không hoàn thành nhiệm vụ";
+                case 3:
+                    return "Bị hủy";
+                case 4:
+                    return "Chưa cập nhật";
+                default:
+                    return "";
+            }
+        }
+
+        private string ConvertProcess(int process)
+        {
+            switch (process)
+            {
+                case 1:
+                    return "Không phê duyệt";
+                case 2:
+                    return "Đang thực hiện";
+                case 3:
+                    return "Đã hết hạn";
+                case 4:
+                    return "Đã nghiệm thu";
+                case 5:
+                    return "Bị hủy";
+                default:
+                    return "";
+            }
         }
     }
 }

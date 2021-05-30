@@ -13,6 +13,7 @@
     </PackageReference>
     <PackageReference Include="NETCore.MailKit" Version="2.0.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
+    <PackageReference Include="SlackBotMessages" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

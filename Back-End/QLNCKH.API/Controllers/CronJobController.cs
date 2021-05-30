@@ -9,13 +9,20 @@ using System.Threading.Tasks;
 
 namespace QLNCKH.API.Controllers
 {
+    /// <summary>
+    /// Chạy nền
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CronJobController : ControllerBase
     {
         private readonly IResearchTopicBL _researchTopicBL;
         private readonly INotificationCenter _notificationCenter;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="researchTopicBL"></param>
+        /// <param name="notificationCenter"></param>
         public CronJobController(IResearchTopicBL researchTopicBL, INotificationCenter notificationCenter)
         {
             _researchTopicBL = researchTopicBL;

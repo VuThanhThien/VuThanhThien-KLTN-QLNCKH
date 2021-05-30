@@ -11,10 +11,10 @@
         </member>
         <member name="F:QLNCKH.API.Controllers.AccountsController._baseBL">
             <summary>
-            Base Bussiness Layer
+            
             </summary>
         </member>
-        <member name="M:QLNCKH.API.Controllers.AccountsController.#ctor(Microsoft.AspNetCore.Identity.UserManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.UserInfo},QLNCKH.BL.Interface.IUserBL)">
+        <member name="M:QLNCKH.API.Controllers.AccountsController.#ctor(Microsoft.AspNetCore.Identity.UserManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.UserInfo},QLNCKH.BL.Interface.IUserBL,QLNCKH.Common.NotificationCenter.ISlackNotification)">
             <summary>
             
             </summary>
@@ -23,6 +23,7 @@
             <param name="roleManager"></param>
             <param name="baseBL"></param>
             <param name="userBL"></param>
+            <param name="slack"></param>
         </member>
         <member name="M:QLNCKH.API.Controllers.AccountsController.CreateAccount(QLNCKH.Common.Model.ParamRegisterDto)">
             <summary>
@@ -104,6 +105,18 @@
             <param name="id">Định danh thông tin cần xoá</param>
             <returns></returns>
         </member>
+        <member name="T:QLNCKH.API.Controllers.CronJobController">
+            <summary>
+            Chạy nền
+            </summary>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.CronJobController.#ctor(QLNCKH.BL.Interface.IResearchTopicBL,QLNCKH.BL.NotificationCenter.INotificationCenter)">
+            <summary>
+            
+            </summary>
+            <param name="researchTopicBL"></param>
+            <param name="notificationCenter"></param>
+        </member>
         <member name="M:QLNCKH.API.Controllers.CronJobController.ResearchExpire(System.Int32)">
             <summary>
             API gửi email cho những đề tài còn {perday} ngày nữa là hết hạn
@@ -158,19 +171,28 @@
             Biến productBL gọi lên tầng Bussiness xử lý nghiệp vụ hàng hoá
             </summary>
         </member>
-        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.ResearchTopic},QLNCKH.BL.Interface.IResearchTopicBL,QLNCKH.BL.Interface.IMemberTopicBL)">
+        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.ResearchTopic},QLNCKH.BL.Interface.IResearchTopicBL,QLNCKH.BL.Interface.IMemberTopicBL,QLNCKH.Common.NotificationCenter.ISlackNotification)">
             <summary>
-            Controller đề tài kế thừa từ Base
+            
             </summary>
             <param name="baseBL"></param>
             <param name="researchTopicBL"></param>
             <param name="memberTopicBL"></param>
+            <param name="slack"></param>
         </member>
         <member name="M:QLNCKH.API.Controllers.ResearchTopicController.Post(QLNCKH.Common.Dictionary.ResearchTopic)">
             <summary>
             Thêm mới bản ghi
             </summary>
             <param name="topic">Đối tượng cần thêm mới</param>
+            <returns></returns>
+        </member>
+        <member name="M:QLNCKH.API.Controllers.ResearchTopicController.Put(System.Guid,QLNCKH.Common.Dictionary.ResearchTopic)">
+            <summary>
+            Update đề tài
+            </summary>
+            <param name="id"></param>
+            <param name="topic"></param>
             <returns></returns>
         </member>
         <member name="M:QLNCKH.API.Controllers.ResearchTopicController.GetTopicByUserID(System.String)">
@@ -205,12 +227,13 @@
             Biến productBL gọi lên tầng Bussiness xử lý nghiệp vụ hàng hoá
             </summary>
         </member>
-        <member name="M:QLNCKH.API.Controllers.UserController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.User},QLNCKH.BL.Interface.IUserBL)">
+        <member name="M:QLNCKH.API.Controllers.UserController.#ctor(QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.User},QLNCKH.BL.Interface.IUserBL,QLNCKH.Common.NotificationCenter.ISlackNotification)">
             <summary>
             
             </summary>
             <param name="baseBL"></param>
             <param name="userBL"></param>
+            <param name="slack"></param>
         </member>
         <member name="M:QLNCKH.API.Controllers.UserController.UpdateMyInfo(System.Guid,QLNCKH.Common.Dictionary.User)">
             <summary>
