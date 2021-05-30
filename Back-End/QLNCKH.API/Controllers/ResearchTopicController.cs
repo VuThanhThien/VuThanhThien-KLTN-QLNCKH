@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QLNCKH.BL.Interface;
 using QLNCKH.Common.Dictionary;
+using QLNCKH.Common.NotificationCenter;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,17 +27,18 @@ namespace QLNCKH.API.Controllers
         /// </summary>
         private readonly IResearchTopicBL _researchTopicBL;
         private readonly IMemberTopicBL _memberTopicBL;
-
+        private readonly ISlackNotification _slack;
         /// <summary>
         /// Controller đề tài kế thừa từ Base
         /// </summary>
         /// <param name="baseBL"></param>
         /// <param name="researchTopicBL"></param>
         /// <param name="memberTopicBL"></param>
-        public ResearchTopicController(IBaseBL<ResearchTopic> baseBL, IResearchTopicBL researchTopicBL, IMemberTopicBL memberTopicBL) : base(baseBL)
+        public ResearchTopicController(IBaseBL<ResearchTopic> baseBL, IResearchTopicBL researchTopicBL, IMemberTopicBL memberTopicBL, ISlackNotification slack) : base(baseBL)
         {
             _researchTopicBL = researchTopicBL;
             _memberTopicBL = memberTopicBL;
+            _slack = slack;
         }
 
         /// <summary>
@@ -52,6 +54,13 @@ namespace QLNCKH.API.Controllers
             return StatusCode((int)result.HTTPStatusCode, result.Data);
         }
 
+        [HttpPut("{id}")]
+        public override IActionResult Put([FromRoute] Guid id, [FromBody] ResearchTopic topic)
+        {
+            var result = _researchTopicBL.Update(id, topic);
+
+            return StatusCode((int)result.HTTPStatusCode, result.Data);
+        }
 
         /// <summary>
         /// Lấy danh sách đề tài theo userID

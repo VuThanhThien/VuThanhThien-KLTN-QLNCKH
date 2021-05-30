@@ -593,13 +593,14 @@ export default {
             }
           });
       } else {
+        this.uploadMultiFile();
         alert("Đề tài đã hết hạn chỉnh sửa");
         this.cancel();
+        
       }
     },
 
-    /**Sự kiện nút lưu */
-    btnSaveOnClick() {
+    uploadMultiFile(){
       //append file và upload
       let formData = new FormData();
       formData.append("file", this.$refs["present"].files[0]);
@@ -623,10 +624,25 @@ export default {
             },
           }
         )
+        .then((response) => {
+            if (response.data) {
+              this.$notify({
+                type: "success",
+                title: "THÔNG BÁO",
+                text:
+                  "Upload Success ",
+              });
+            }
+          })
         .catch((e) => {
           console.log(e);
         });
+    },
 
+    /**Sự kiện nút lưu */
+    btnSaveOnClick() {
+      this.uploadMultiFile();
+      //validate
       if (this.validateTopic.error) {
         this.$notify({
           title: "THÔNG BÁO",

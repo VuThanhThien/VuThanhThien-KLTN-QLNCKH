@@ -155,6 +155,7 @@ namespace QLNCKH.API
 
             services.AddScoped<IMemberTopicDL, MemberTopicDL>();
             services.AddScoped<IMemberTopicBL, MemberTopicBL>();
+            services.AddScoped<ISlackNotification, SlackNotification>();
 
             var emailConfig = Configuration.GetSection("EmailConfiguration")
                     .Get<EmailConfig>();

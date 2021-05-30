@@ -6,6 +6,8 @@ using QLNCKH.BL.NotificationCenter;
 using QLNCKH.Common.Dictionary;
 using QLNCKH.Common.NotificationCenter;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace QLNCKH.API.Controllers
 {
@@ -20,15 +22,17 @@ namespace QLNCKH.API.Controllers
         /// Biến productBL gọi lên tầng Bussiness xử lý nghiệp vụ hàng hoá
         /// </summary>
         private readonly IUserBL _userBL;
+        private readonly ISlackNotification _slack;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="baseBL"></param>
         /// <param name="userBL"></param>
-        public UserController(IBaseBL<User> baseBL, IUserBL userBL) : base(baseBL)
+        public UserController(IBaseBL<User> baseBL, IUserBL userBL, ISlackNotification slack) : base(baseBL)
         {
             _userBL = userBL;
+            _slack = slack;
         }
 
 

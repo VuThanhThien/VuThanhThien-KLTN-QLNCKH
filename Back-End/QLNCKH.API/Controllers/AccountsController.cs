@@ -8,6 +8,7 @@ using QLNCKH.BL.Interface;
 using QLNCKH.Common.Dictionary;
 using QLNCKH.Common.IdentityApplication;
 using QLNCKH.Common.Model;
+using QLNCKH.Common.NotificationCenter;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -32,9 +33,7 @@ namespace QLNCKH.API.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserBL _userBL;
-        /// <summary>
-        /// Base Bussiness Layer
-        /// </summary>
+        private readonly ISlackNotification _slack;
         protected readonly IBaseBL<UserInfo> _baseBL;
         
         /// <summary>
@@ -51,7 +50,7 @@ namespace QLNCKH.API.Controllers
             SignInManager<ApplicationUser> signInManager, 
             RoleManager<IdentityRole> roleManager, 
             IBaseBL<UserInfo> baseBL,
-            IUserBL userBL
+            IUserBL userBL, ISlackNotification slack
             )
         {
             _userManager = userManager;
@@ -59,8 +58,9 @@ namespace QLNCKH.API.Controllers
             _roleManager = roleManager;
             _baseBL = baseBL;
             _userBL = userBL;
+            _slack = slack;
         }
-        
+
 
 
         // POST api/<AccountsController>
@@ -141,6 +141,16 @@ namespace QLNCKH.API.Controllers
                 FullName = userInfo.FullName,
                 Msg = "Đăng ký thành công"
             };
+
+            var attach = new List<SlackAttach>()
+            {
+                new SlackAttach("Họ và tên: ", response.FullName, true),
+                new SlackAttach("Email: ", userInfo.Email, true),
+                new SlackAttach("Địa chỉ: ", userInfo.BusinessAddress, true),
+                new SlackAttach("Số điện thoại: ", userInfo.PhoneNumber, true),
+            };
+
+            _ = Task.Run(() => _slack.SendSlackNotification(content: "Tạo mới tài khoản thành công!", slackAttachs: attach));
             return Ok(response);
         }
 
