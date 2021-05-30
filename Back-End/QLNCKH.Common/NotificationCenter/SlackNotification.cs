@@ -32,7 +32,6 @@ namespace QLNCKH.Common.NotificationCenter
                     attachment.SetColor(ConvertColor(color));
                     message.AddAttachment(attachment);
                 }
-
                 var resultSend = await _slackClient.SendAsync(message);
                 result.Message = resultSend;
 
