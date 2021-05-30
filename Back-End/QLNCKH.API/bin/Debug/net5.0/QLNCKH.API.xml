@@ -9,11 +9,14 @@
             Quản lý tài khoản
             </summary>
         </member>
+<<<<<<< HEAD
         <member name="F:QLNCKH.API.Controllers.AccountsController._baseBL">
             <summary>
             
             </summary>
         </member>
+=======
+>>>>>>> 732523236d35ad03c2ac5740c55b88a2edc59bcb
         <member name="M:QLNCKH.API.Controllers.AccountsController.#ctor(Microsoft.AspNetCore.Identity.UserManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{QLNCKH.Common.IdentityApplication.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},QLNCKH.BL.Interface.IBaseBL{QLNCKH.Common.Dictionary.UserInfo},QLNCKH.BL.Interface.IUserBL,QLNCKH.Common.NotificationCenter.ISlackNotification)">
             <summary>
             
