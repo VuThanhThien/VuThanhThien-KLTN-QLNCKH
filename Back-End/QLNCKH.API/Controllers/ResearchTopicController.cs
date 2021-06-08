@@ -162,7 +162,7 @@ namespace QLNCKH.API.Controllers
             }
 
             if (isUpdate)
-                _researchTopicBL.Update(researchId, research);
+                _baseBL.Update(researchId, research);
 
             return Ok();
 

@@ -409,13 +409,6 @@ export default {
       },
     },
   },
-
-  data: function () {
-    return {
-      listFile: [],
-    };
-  },
-
   components: {
     DxDateBox,
     DxTextArea,
@@ -601,7 +594,8 @@ export default {
     },
 
     uploadMultiFile(){
-      //append file và upload
+      try {
+        //append file và upload
       let formData = new FormData();
       formData.append("file", this.$refs["present"].files[0]);
       formData.append("file1", this.$refs["inpISI"].files[0]);
@@ -637,6 +631,15 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+      }
+      catch(e){
+        console.log(e);
+        this.$notify({
+          title: "THÔNG BÁO",
+          type: "warn",
+          text: "Bạn chưa thể đăng dẫn chứng lúc này!!!",
+        });
+      }
     },
 
     /**Sự kiện nút lưu */
@@ -668,7 +671,6 @@ export default {
     return {
       formData: FormData,
       files: FileList,
-      listFile: Array[FileList],
       multiple: false,
       accept: "*",
       uploadMode: "instantly",

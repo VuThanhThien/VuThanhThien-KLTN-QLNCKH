@@ -73,12 +73,13 @@ namespace QLNCKH.BL.Dictionary
 
             var attach = new List<SlackAttach>()
             {
-                new SlackAttach("Tên đề tài : ", topic.ResearchName, true),
+                new SlackAttach("Tên đề tài : ", topic.ResearchName),
                 new SlackAttach("Kết quả : ", ConvertStatus(topic.Status.Value), true),
                 new SlackAttach("Trạng thái đề tài: ", ConvertProcess(topic.Process.Value), true),
             };
 
             _ = Task.Run(() => _slack.SendSlackNotification(content: "Cập nhật đề tài thành công!", slackAttachs: attach));
+
             return base.Update(id, topic);
         }
         /// <summary>
